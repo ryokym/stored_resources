@@ -1,0 +1,47 @@
+html {
+    /* font-family: 'Avenir','Helvetica Neue','Helvetica','Arial','Hiragino Sans','ヒラギノ角ゴシック',YuGothic,'Yu Gothic','メイリオ', Meiryo,'ＭＳ Ｐゴシック','MS PGothic'; */
+    font-size: 15px;
+    width: 100vw;
+    font-family: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Sans-Serif;
+}
+
+h1 {
+    font-size: 2rem;
+    font-family: 'Phosphate-Solid','monospace';
+    color: wheat;
+}
+
+h2 {
+    font-size: 1.5rem;
+    color: hsl(200, 90%, 95%);
+}
+
+p,a {
+    color: hsl(200, 90%, 95%);
+}
+body {
+    display: grid;
+    grid-template-rows: 30px 1fr 30px; /*ページ全体とコンテンツ全体の間の縦margin*/
+    grid-template-columns: 30px 1fr 30px; /*ページ全体とコンテンツ全体の間の横margin*/
+    background-color: rgb(50, 50, 50);
+    width: 100vw;
+}
+span {
+    overflow: scroll;
+}
+
+.wrapper {
+    display: grid;
+    grid-row: 2; /*全体rows2番目の1frエリアに該当*/
+    grid-column: 2; /*全体columnの2番目の1frエリアに該当*/
+    grid-gap: 10px;
+    grid-template:
+    "header" 40px
+    "container" 500px
+    / 1fr;
+    width: 85%;
+}
+
+#fileForm {
+    display: none;
+}

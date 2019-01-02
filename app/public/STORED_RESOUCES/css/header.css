@@ -1,0 +1,70 @@
+/*wrapper header内のグリッドレイアウト*/
+.header {
+    grid-area: header;
+    display: grid;
+    grid-template:
+    "header-left menu" 40px /* 入れ子にする場合は親templateの高さ(header)に合わせる*/
+    /1fr  3fr;
+    width: 100%;
+    max-width: 1215px;
+    min-width: 1215px;
+}
+.header-left {
+    grid-area: header-left;
+    display: grid;
+    grid-template:
+    "margin title" 30px /*margin-left: 10pxを表現する為あえて3カラムレイアウトに*/
+    /10px 1fr;
+}
+
+.title {
+    grid-column: 3; /*2カラム目は余白用なので3カラム目からスタート*/
+    grid-area: title;
+    align-self: end;
+}
+
+/*wrapper header menu内のグリッドレイアウト*/
+.menu {
+    grid-area: menu;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 30px;
+
+}
+.menu_item {
+    display: grid; /*子のa要素を縦横中央寄せする為grid指定(marginは使わない!)*/
+    grid-template-columns: 1em 1fr 1em; /*左右の余白を設ける為gridを指定(paddingも使わない!)*/
+    color: white;
+    cursor: pointer;
+}
+
+.menu_item_icon {
+    height: 100%;
+}
+
+.menu_item .menu_items {
+    justify-self: center;
+    align-self: center;
+    grid-column: 2;
+}
+
+.menu_item:hover .menu_items{
+    color: rgb(137, 189, 255);
+}
+
+.menu_item #destroy {
+    height: 110%;
+}
+
+.menu_item #download {
+    height: 115%;
+}
+
+.menu_item #upload {
+    height: 115%;
+}
+
+.menu_item #logout {
+    height: 120%;
+    display: inherit;
+}

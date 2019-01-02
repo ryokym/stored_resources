@@ -1,0 +1,79 @@
+html {
+    font-size: 15px;
+    font-family: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Sans-Serif;
+}
+
+body {
+    background-color: rgb(50, 50, 50);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#wrapper {
+    width: 50vw;
+    height: 50vh;
+}
+
+#title {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-family: 'Phosphate-Solid','monospace';
+    height: 30%;
+    width: 100%;
+    color: wheat;
+    font-size: 2rem;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 70%;
+    width: 100%;
+}
+
+#inputs {
+    height: 60%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#inputs input {
+    padding-left: 1em;
+}
+
+input {
+    width: 100%;
+    height: 2em;
+    margin: 10px 10px;
+    border: none;
+    border-radius: 10px;
+}
+
+input:focus {
+    outline: none;
+}
+
+#enter {
+    height: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 40%;
+}
+
+#btn {
+    font-family: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Sans-Serif;
+    background-color: RGB(19, 86, 124);
+    color: rgb(231, 246, 254);
+    width: 100%;
+    cursor: pointer;
+}
