@@ -3,9 +3,9 @@ version: 0.1
 phases:
     build:
         commands:
-            - aws deploy push --region ap-northeast-1 --application-name storedresources --s3-location s3://storedresources-codebuild/app --source app
+            - aws deploy push --region ap-northeast-1 --application-name stored_resources --s3-location s3://storedresources-codebuild/app --source app
 artifacts:
     files:
         - '**/*'
     base-directory: app
-    name: storedresources
+    name: stored_resources
