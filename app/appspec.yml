@@ -1,5 +1,9 @@
 version: 0.0
-os: Linux
+os: linux
 files:
-  - source: app.zip
+  - source: index.php
     destination: /var/www/html/
+hooks:
+  BeforeInstall:
+    - location: script/clean.sh
+      runas: root
