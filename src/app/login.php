@@ -1,6 +1,6 @@
 <?php
-include(__DIR__.'/public/STORED_RESOUCES/include/define.inc.php');
-include(__DIR__.'/public/STORED_RESOUCES/include/functions.inc.php');
+include(__DIR__.'/public/STORED_RESOURCES/include/define.inc.php');
+include(__DIR__.'/public/STORED_RESOURCES/include/functions.inc.php');
 
 if (isset($_GET['logout'])) actionLogout();
 
@@ -8,15 +8,15 @@ $userName = (isset($_POST['userName']))? $_POST['userName']: NULL;
 $password = (isset($_POST['password']))? $_POST['password']: NULL;
 
 if (getAuthThenSetCookies($userName, $password))
-    header('Location:/app/public/STORED_RESOUCES/');
+    header('Location:/app/public/STORED_RESOURCES/');
 
 ?>
 <!DOCTYPE html>
 <html lang="ja" dir="ltr">
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="/app/public/STORED_RESOUCES/css/reset.css"/>
-        <link rel="stylesheet" href="/app/public/STORED_RESOUCES/css/login.css"/>
+        <link rel="stylesheet" href="/app/public/STORED_RESOURCES/css/reset.css"/>
+        <link rel="stylesheet" href="/app/public/STORED_RESOURCES/css/login.css"/>
     </head>
     <body>
         <div id="wrapper">
