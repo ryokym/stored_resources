@@ -17,7 +17,7 @@
     <div class="wrapper">
         <div class="header">
             <div class="header-left">
-                    <div class="title"><h1><?= renameProject(PROJECT_NAME) ?></h1></div>
+                    <div class="title"><h1><?= APP_NAME ?></h1></div>
             </div>
             <div class="menu">
                 <div class="menu_item"><img id="expand" class="menu_items menu_item_icon" src="img/expand.png"></div>

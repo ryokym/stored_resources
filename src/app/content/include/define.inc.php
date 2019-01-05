@@ -1,7 +1,10 @@
 <?php
 
+//アプリケーション名称
+define('APP_NAME','STORED_RESOURCES');
+
 //ドキュメントルート
-define('PROJECT_NAME','STORED_RESOURCES');
+define('DOC_ROOT', $_SERVER["DOCUMENT_ROOT"]);
 
 // 秒換算で1週間
 define('WEEKS', 60*60*24*7);
@@ -20,3 +23,9 @@ define('USERNAME', 'storedresources_username');
 
 // CookieAuthValue
 define('AUTH_VALUE', 'storedresources_auth_value');
+
+// S3 StreamWrapperProtocol
+define('S3_PROTOCOL', 's3://');
+
+// S3 BucketName in resources
+define('BUCKET_NAME', 'storedresources.site');

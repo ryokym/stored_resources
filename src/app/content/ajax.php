@@ -10,10 +10,9 @@ $dataLists = [
     'level' => $level,
 ];
 
-$isDir = is_dir($dir.'/'.$name);
+$isDir = is_dir(S3_PROTOCOL.$dir.'/'.$name);
 if ($isDir) {
-    $nextItemLists = scandir($dir.'/'.$name);
-    $nextItemLists = preg_grep($exclusionPattern, scandir($dir.'/'.$name));
+    $nextItemLists = preg_grep($exclusionPattern, scandir(S3_PROTOCOL.$dir.'/'.$name));
     $nextItemLists = array_values($nextItemLists);
     $response = json_encode($nextItemLists);
     echo $response;

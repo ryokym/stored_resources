@@ -20,7 +20,7 @@ if (is_dir($dropedPathName)) {
         return $list;
     }
 
-    if (strpos($name, PROJECT_NAME) === false) {
+    if (strpos($name, APP_NAME) === false) {
         genDestroyList($dropedPathName);
         rmdir($dropedPathName);
     }

@@ -7,10 +7,6 @@ function getParentDirName() {
     return dirname(dirname(__DIR__));
 }
 
-function renameProject($projectName) {
-    $renamed = str_replace('_', ' ', $projectName);
-    return $renamed;
-}
 /**
 * ログインチェック
 */
