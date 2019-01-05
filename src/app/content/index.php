@@ -4,7 +4,6 @@ require_once(__DIR__.'/include/initialize.inc.php');
 
 // 初期表示用にルートディレクトリのファイル、ディレクトリをセット
 $defaultRows[] = preg_grep($exclusionPattern, scandir(S3_PROTOCOL.BUCKET_NAME));
-// $currentDirName = getParentDirName();
 $defaultRows = array_values($defaultRows[0]);
 
 // -------------------------------------------------------//
@@ -12,7 +11,7 @@ $defaultRows = array_values($defaultRows[0]);
 // -------------------------------------------------------//
 
 include(__DIR__.'/layout/base.header.php');
-
+echo file_get_contents(S3_PROTOCOL.BUCKET_NAME.'/AWS/userDataSample.txt');
 $hoge = [''];
 ?>
 <div class="container">
