@@ -67,7 +67,11 @@ $(function(){
                     if (isJSON(response) === true) {
                         var data = JSON.parse(response);
                         var template = $('.template').clone();
-                        var newDir = thisDir + '/' + thisName;
+                        if (thisLevel === 1) {
+                            var newDir = thisName;
+                        } else {
+                            var newDir = thisDir + '/' + thisName;
+                        }
 
                         adjustColumn(thisLevel);
 
@@ -169,10 +173,12 @@ $(function(){
         },
         drop: function(e, data) {
             var name = data.helper.context.textContent;
-            var thisDataDir = data.helper.context.dataset.dir
+            // var thisDataDir = data.helper.context.dataset.dir;
+            var thisDataDir = data.draggable.attr('data-dir');
             var path = thisDataDir + '/';
-            destroyDropArea.css(destoryAreaDefaultColors);
+            var thisLevel = data.draggable.parents('.level').attr('data-level');
             var thisElm = $('[data-dir="'+ thisDataDir +'"]');
+            destroyDropArea.css(destoryAreaDefaultColors);
             if (confirm(path + name + 'を削除しますか?') === false) {
                 return false;
             } else {
@@ -188,15 +194,20 @@ $(function(){
                             if ($(this).text() === name) {
                                 $(this).remove();
                             }
-                        })
-                        var data = JSON.parse(response);
-                        data.forEach(function(value) {
-                            $('.level').each(function(){
-                                if ($(this).attr('data-dir') === value) {
-                                    $(this).remove();
-                                }
-                            });
                         });
+                        $('.level').each(function() {
+                            if ($(this).attr('data-level') > thisLevel) {
+                                $(this).remove();
+                            }
+                        });
+                        // var data = JSON.parse(response);
+                        // data.forEach(function(value) {
+                        //     $('.level').each(function(){
+                        //         if ($(this).attr('data-dir') === value) {
+                        //             $(this).remove();
+                        //         }
+                        //     });
+                        // });
                     }
                 });
             }

@@ -11,12 +11,11 @@ $defaultRows = array_values($defaultRows[0]);
 // -------------------------------------------------------//
 
 include(__DIR__.'/layout/base.header.php');
-echo file_get_contents(S3_PROTOCOL.BUCKET_NAME.'/AWS/userDataSample.txt');
-$hoge = [''];
+
 ?>
 <div class="container">
     <div class="column">
-        <div class="level" data-level="1" data-dir="<?= BUCKET_NAME; ?>"><?php
+        <div class="level" data-level="1" data-dir=""><?php
         $index = 0;
             foreach ($defaultRows as $row): ?>
                 <div class="row <?php if ($index === 1) echo 'createNewDirRow'; ?>"><?php
@@ -26,7 +25,7 @@ $hoge = [''];
                     elseif ($index === 1): ?>
                         <input class="textbox" type="text"/><?php
                     else: ?>
-                        <p class="row_item" data-dir="<?= BUCKET_NAME ?>"><?= $row ?></p><?php
+                        <p class="row_item"><?= $row ?></p><?php
                     endif; ?>
                 </div><?php
                 $index++;
