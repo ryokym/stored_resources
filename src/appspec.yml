@@ -7,3 +7,11 @@ hooks:
   BeforeInstall:
     - location: script/clean.sh
       runas: root
+permissions:
+  - object: /var/www/html/app/content/include/
+    pattern: "authorize.inc.txt"
+    owner: root
+    group: root
+    mode: 666
+    type:
+      - file
