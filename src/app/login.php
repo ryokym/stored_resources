@@ -21,7 +21,7 @@ if (getAuthThenSetCookies($userName, $password))
     <body>
         <div id="wrapper">
             <div id="title">
-                <h1>STORED RESOURCES tmp</h1>
+                <h1>STORED RESOURCES</h1>
             </div>
             <form action="" method="POST">
                 <div id="inputs">
