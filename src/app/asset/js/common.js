@@ -1,3 +1,4 @@
+var ajaxDir = '/app/content/main/ajax/';
 var selectedColor = 'rgb(137, 189, 255)';
 var defaultColor = 'rgb(231, 246, 254)';
 var destroyColor = 'rgb(255, 203, 137)';
@@ -52,7 +53,7 @@ $(function(){
             }
 
             $.ajax({
-                url : "ajax.php",
+                url : ajaxDir + "ajax.php",
                 type : "POST",
                 dataType : "text",
                 data : {
@@ -91,7 +92,7 @@ $(function(){
                         var index = 0;
                         data.forEach(function(value) {
                             if (index == 0) {
-                                $('.template').append('<div class="row"><img src="img/plus10.png" class="plus_icon show_txtbox"/><img src="img/close.png" class="close"/></div><div class="row createNewDirRow"><input class="textbox" type="text"/></div>');
+                                $('.template').append('<div class="row"><img src="/app/asset/img/plus10.png" class="plus_icon show_txtbox"/><img src="/app/asset/img/close.png" class="close"/></div><div class="row createNewDirRow"><input class="textbox" type="text"/></div>');
                             }
                             $('.template').append('<div class="row"><p class="row_item" data-dir="'+ newDir +'">' + value + '</p></div>');
                             index++;
@@ -183,7 +184,7 @@ $(function(){
                 return false;
             } else {
                 $.ajax({
-                    url : "ajax.destroy.php",
+                    url : ajaxDir + "ajax.destroy.php",
                     type : "POST",
                     dataType : "text",
                     data : {
@@ -231,7 +232,7 @@ $(function(){
     });
     /* logout */
     $('#logout').click(function() {
-        location.href = '/app/login.php?logout';
+        location.href = '/app/content/login/index.php?logout';
     });
 
     /* createNewDir */
@@ -275,7 +276,7 @@ $(function(){
         var currentDirName = thisColumn.attr('data-dir') + '/';
         $.ajax({
             type: 'POST',
-            url: "ajax.createDir.php",
+            url: ajaxDir + "ajax.createDir.php",
             data : {
                 newDirName: newDirName,
                 currentDirName: currentDirName
@@ -416,7 +417,7 @@ function fileUpload(f) {
         type: 'POST',
         contentType: false,
         processData: false,
-        url: "ajax.upload.php",
+        url: ajaxDir + "ajax.upload.php",
         data : formData,
         success: function(data) {
         location.reload();

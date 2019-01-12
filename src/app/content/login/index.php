@@ -1,27 +1,24 @@
 <?php
-include(__DIR__.'/content/include/define.inc.php');
-include(__DIR__.'/content/include/functions.inc.php');
+require_once(__DIR__.'/include/initialize.php');
 
 if (isset($_GET['logout'])) actionLogout();
 
 $userName = (isset($_POST['userName']))? $_POST['userName']: NULL;
 $password = (isset($_POST['password']))? $_POST['password']: NULL;
 
-if (getAuthThenSetCookies($userName, $password))
-    header('Location:/app/content/');
+if (getAuthThenSetCookies($userName, $password)) header('Location:/app/content/main/');
 
 ?>
 <!DOCTYPE html>
 <html lang="ja" dir="ltr">
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="/app/content/css/reset.css"/>
-        <link rel="stylesheet" href="/app/content/css/login.css"/>
+        <link rel="stylesheet" href="/app/asset/style/css/login.min.css"/>
     </head>
     <body>
         <div id="wrapper">
             <div id="title">
-                <h1>STORED RESOURCES</h1>
+                <h1><?= APP_NAME ?></h1>
             </div>
             <form action="" method="POST">
                 <div id="inputs">

@@ -1,31 +1,5 @@
 <?php
 /**
-* 親ディレクリの名称を取得する
-* @return string
-*/
-function getParentDirName() {
-    return dirname(dirname(__DIR__));
-}
-
-/**
-* ログインチェック
-*/
-function checkAuthentication() {
-    $userName = (isset($_COOKIE[USERNAME]))? $_COOKIE[USERNAME]: NULL;
-    $authValue = (isset($_COOKIE[AUTH_VALUE]))? $_COOKIE[AUTH_VALUE]: NULL;
-    if ($userName && $authValue) {
-        $userLists = file_get_contents(USER_LIST);
-        $authLists = file_get_contents(AUTH_LIST);
-        if ((in_array($userName, explode(',', trim($userLists))) === true)
-         && (in_array($authValue, explode(',', trim($authLists))) === true)) {
-            return true;
-        }
-        return false;
-    }
-    return false;
-}
-
-/**
 * 第一引数の値がユーザーリストに存在し、且つパスワードが正なら、cookieを発行して承認リストへ追加
 * @param string $userName ユーザー入力値
 * @param string $password ユーザー入力値

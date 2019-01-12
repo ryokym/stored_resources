@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__.'/include/initialize.inc.php');
+require_once(dirname(__DIR__).'/include/initialize.php');
 
 $uploadDir = $_POST['dir'];
 
