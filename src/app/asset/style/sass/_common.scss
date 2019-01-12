@@ -1,0 +1,13 @@
+@import 'variable';
+@import 'mixin';
+
+html {
+    font-size: $baseFontSize;
+    font-family: $baseFontFamily;
+    color: $baseFontColor;
+    body {
+        background-color: $backgroundColor;
+        width: 100vw;
+        height: 100vh;
+    }
+}

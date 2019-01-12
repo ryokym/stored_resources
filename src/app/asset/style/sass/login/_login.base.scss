@@ -1,0 +1,50 @@
+@import '../common';
+/**
+* Color
+*/
+$buttonColor: rgb(19, 86, 124);
+$buttonColorHover: lighten($buttonColor, 5%);
+$tagTextColor: black;
+
+/**
+* Size
+*/
+$titleFontSize: 1.8rem;
+
+/**
+* AdjustpPosition
+*/
+$titleToLeft: 0.15rem;
+$tagSubmitToTop: 0.8rem;
+
+/**
+* Module
+*/
+@mixin adjustPositionTitle($n: 0rem) {
+    position: relative;
+    right: $n;
+}
+
+@mixin adjustPositionTagSubmit($n: 0rem) {
+    position: relative;
+    bottom: $n;
+}
+
+%tagArea {
+    height: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+%tagInput {
+    width: 100%;
+    height: 2em;
+    margin: 10px 10px;
+    padding-left: 1em;
+    border: none;
+    border-radius: 10px;
+    &:focus {
+        outline: none;
+    }
+}

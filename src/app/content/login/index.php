@@ -14,6 +14,7 @@ if (getAuthThenSetCookies($userName, $password)) header('Location:/app/content/m
     <head>
         <meta charset="utf-8">
         <link rel="stylesheet" href="/app/asset/style/css/login.min.css"/>
+        <link rel="stylesheet" href="/app/asset/style/css/reset.css"/>
     </head>
     <body>
         <div id="wrapper">
@@ -21,12 +22,12 @@ if (getAuthThenSetCookies($userName, $password)) header('Location:/app/content/m
                 <h1><?= APP_NAME ?></h1>
             </div>
             <form action="" method="POST">
-                <div id="inputs">
+                <div id="text">
                     <input type="text" name="userName">
                     <input type="password" name="password">
                 </div>
-                <div id="enter">
-                    <input id="btn" type="submit" value="Enter">
+                <div id="submit">
+                    <input type="submit" value="Enter">
                 </div>
             </form>
         </div>
