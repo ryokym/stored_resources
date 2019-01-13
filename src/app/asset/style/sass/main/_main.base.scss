@@ -15,8 +15,49 @@ $txtboxCloseIcon: 2.5vw;
 * Color
 */
 $columnsBorderColor: rgb(81, 81, 81);
+$uploadColor: rgb(137, 189, 255) !important;
+$destroyColor: rgb(255, 203, 137) !important;
+$destroyAreaMouseOverColor: #442c34;
+$destroyAreaBorderColor: gray;
+$uploadAreaMouseOverColor: #1a1a4d;
 
 /**
 * Border
 */
 $columnsRightBorder: 1px solid $columnsBorderColor;
+$destroyAreaBorder: 2px dashed $destroyAreaBorderColor;
+
+.upload {
+    .row_item {
+        color: $uploadColor;
+    }
+}
+
+.destroy {
+    .row_item {
+        color: $destroyColor;
+    }
+}
+
+.uploadMouseOver {
+    background-color: $uploadAreaMouseOverColor;
+    opacity: 0.7;
+}
+
+.destroyMouseOver {
+    background-color: $destroyAreaMouseOverColor;
+}
+
+%firstRowStyle {
+    .open {
+        max-width: $txtboxOpenIcon;
+    }
+    .close {
+        max-width: $txtboxCloseIcon;
+        display: none;
+    }
+    .textbox {
+        width: 11vw;
+        height: 40%;
+    }
+}

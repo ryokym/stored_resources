@@ -4,7 +4,7 @@
     max-width: 100vw;
     .header {
         height: $headerHeight;
-            @include flex(flex-end, center);
+        @include flex(flex-end, center);
         #title {
             width: 30%;
             padding-bottom: 0.5rem;
@@ -38,17 +38,7 @@
                     align-items: center;
                     border-right: $columnsRightBorder;
                     cursor: pointer;
-                    .open {
-                        max-width: $txtboxOpenIcon;
-                    }
-                    .close {
-                        max-width: $txtboxCloseIcon;
-                        display: none;
-                    }
-                    .textbox {
-                        width: 11vw;
-                        height: 40%;
-                    }
+                    @extend %firstRowStyle;
                     .row_item {
                         word-break: break-all;
                     }
@@ -56,6 +46,10 @@
                 .createNewDirRow {
                     display: none;
                 }
+            }
+            .template {
+                @extend %firstRowStyle;
+                display: none;
             }
         }
         .src {
@@ -77,6 +71,19 @@
                     code {
                         background-color: inherit;
                         line-height: $codeLineHeight;
+                    }
+                }
+                #destroy_area {
+                    @include flex();
+                    #destroy_drop_area {
+                        display: none;
+                        height: 50vh;
+                        @include flex();
+                        border: $destroyAreaBorder;
+                        border-radius: 4%;
+                        img {
+                            max-width: 40%
+                        }
                     }
                 }
             }

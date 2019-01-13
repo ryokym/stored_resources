@@ -31,7 +31,13 @@ include(__DIR__.'/layout/base.header.php');
                 $index++;
             endforeach; ?>
         </div>
-        <div class="template"></div>
+        <div class="template level" data-level="">
+            <div class="row">
+                <img src="/app/asset/img/plus10.png" class="open show_txtbox"/>
+                <img src="/app/asset/img/close.png" class="close"/>
+            </div>
+            <div class="row createNewDirRow"><input class="textbox" type="text"/></div>
+        </div>
     </div>
 
     <div class="src">
@@ -42,10 +48,10 @@ include(__DIR__.'/layout/base.header.php');
             <pre id="preview">
                 <code class="prettyprint"></code>
             </pre>
-        </div>
-        <div id="destroy_area">
-            <div id="destroy_drop_area">
-                <img src="/app/asset/img/trush.png"/>
+            <div id="destroy_area">
+                <div id="destroy_drop_area">
+                    <img src="/app/asset/img/trush.png"/>
+                </div>
             </div>
         </div>
     </div>
