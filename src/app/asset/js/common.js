@@ -83,7 +83,7 @@ $(function(){
                             newLevel = ++thisLevel;
                         }
 
-                        setWidth(newLevel);
+                        //setWidth(newLevel);
 
                         $('.template').addClass('level');
                         $('.template').attr('data-level', newLevel);
@@ -92,7 +92,7 @@ $(function(){
                         var index = 0;
                         data.forEach(function(value) {
                             if (index == 0) {
-                                $('.template').append('<div class="row"><img src="/app/asset/img/plus10.png" class="plus_icon show_txtbox"/><img src="/app/asset/img/close.png" class="close"/></div><div class="row createNewDirRow"><input class="textbox" type="text"/></div>');
+                                $('.template').append('<div class="row"><img src="/app/asset/img/plus10.png" class="open show_txtbox"/><img src="/app/asset/img/close.png" class="close"/></div><div class="row createNewDirRow"><input class="textbox" type="text"/></div>');
                             }
                             $('.template').append('<div class="row"><p class="row_item" data-dir="'+ newDir +'">' + value + '</p></div>');
                             index++;
@@ -116,8 +116,8 @@ $(function(){
                         if (flag.isModeDestroy === false) {
                             $('#preview').append('<code class="prettyprint">' + response +'</code>');
                             adjustColumn(thisLevel);
-                            setColumnWidth(thisLevel)
-                            setPreviewWidth(thisLevel, maxLevel);
+                            //setColumnWidth(thisLevel)
+                            //setPreviewWidth(thisLevel, maxLevel);
                         } else {
                             $('#preview').append('<code class="prettyprint" style="display: none;">' + response +'</code>');
                         }
@@ -341,31 +341,31 @@ $(document).on({
     }
 }, '.row');
 
-function setWidth(level) {
-    setColumnWidth(level);
-    setPreviewWidth(level);
-}
-
-function setColumnWidth(level) {
-    var level = parseInt(level);
-    var newWidth = level * 11;
-    $('.column').css('width', newWidth + 'em');
-}
-
-function setPreviewWidth(level, maxLevel) {
-    var level = parseInt(level);
-    var adjustEm = 11;
-    var defaultPreviewEm = 67;
-    var pixelPerEm = 15;
-    if (level > 1) {
-        var subPixel = ((level * adjustEm) - adjustEm) * pixelPerEm;
-        var newPixel = (defaultPreviewEm * pixelPerEm) - subPixel;
-        var newEm = newPixel / pixelPerEm;
-        $('#preview').css('width', newEm + 'em');
-    } else {
-        $('#preview').css('width', defaultPreviewEm + 'em');
-    }
-}
+// function setWidth(level) {
+//     setColumnWidth(level);
+//     setPreviewWidth(level);
+// }
+//
+// function setColumnWidth(level) {
+//     var level = parseInt(level);
+//     var newWidth = level * 11;
+//     $('.column').css('width', newWidth + 'em');
+// }
+//
+// function setPreviewWidth(level, maxLevel) {
+//     var level = parseInt(level);
+//     var adjustEm = 11;
+//     var defaultPreviewEm = 67;
+//     var pixelPerEm = 15;
+//     if (level > 1) {
+//         var subPixel = ((level * adjustEm) - adjustEm) * pixelPerEm;
+//         var newPixel = (defaultPreviewEm * pixelPerEm) - subPixel;
+//         var newEm = newPixel / pixelPerEm;
+//         $('#preview').css('width', newEm + 'em');
+//     } else {
+//         $('#preview').css('width', defaultPreviewEm + 'em');
+//     }
+// }
 
 function adjustColumn(thisLevel) {
     thisLevel = parseInt(thisLevel);

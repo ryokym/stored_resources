@@ -1,5 +1,0 @@
-@mixin flexJustifyCenter($varticalSet: center) {
-    display: flex;
-    justify-content: center;
-    align-items: $varticalSet;
-}

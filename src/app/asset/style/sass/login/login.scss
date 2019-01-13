@@ -1,21 +1,19 @@
 @import 'login.base';
 
 body {
-    @include flexJustifyCenter();
+    @include flex();
+    height: 90vh;
     #wrapper {
         width: 50vw;
         height: 50vh;
         #title {
             @include adjustPositionTitle($titleToLeft);
-            @include flexJustifyCenter(flex-end);
-            font-size: $titleFontSize;
-            font-family: $titleFontFamily;
-            color: $titleFontColor;
+            @include flex(center, flex-end);
             height: 30%;
             width: 100%;
         }
         form {
-            @include flexJustifyCenter();
+            @include flex();
             flex-direction: column;
             height: 70%;
             width: 100%;

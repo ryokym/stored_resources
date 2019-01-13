@@ -20,7 +20,7 @@ include(__DIR__.'/layout/base.header.php');
             foreach ($defaultRows as $row): ?>
                 <div class="row <?php if ($index === 1) echo 'createNewDirRow'; ?>"><?php
                     if ($index === 0): ?>
-                        <img src="/app/asset/img/plus10.png" class="plus_icon show_txtbox"/>
+                        <img src="/app/asset/img/plus10.png" class="open show_txtbox"/>
                         <img src="/app/asset/img/close.png" class="close"/><?php
                     elseif ($index === 1): ?>
                         <input class="textbox" type="text"/><?php

@@ -1,0 +1,22 @@
+@import '../common';
+
+/**
+* Size
+*/
+$headerHeight: 15vh;
+$oneColumnWidth: 12.5vw;
+$rowHeight: 5vh;
+$codeLineHeight: 3vh;
+$menuIcon: 2.5vw;
+$txtboxOpenIcon: 2.5vw;
+$txtboxCloseIcon: 2.5vw;
+
+/**
+* Color
+*/
+$columnsBorderColor: rgb(81, 81, 81);
+
+/**
+* Border
+*/
+$columnsRightBorder: 1px solid $columnsBorderColor;
