@@ -6,7 +6,7 @@ common = {
     currentLevel: '',
     mode: 'upload',
     isPreview: false,
-    toAjax: '/app/content/main/ajax/action.ajax.php',
+    toAjax: '/app/content/main/ajax/execute.ajax.php',
 
     coloringTarget: function(thisElm, mode) {
         modeName = (mode === 'upload')? 'upload': 'remove';
@@ -59,7 +59,7 @@ common = {
         return params;
     },
 
-    postJson: function(dataObj, successFn) {
+    postJson: function(dataObj, successFn, isFormData) {
         var defaults = {
             url : common.toAjax,
             type : "POST",
@@ -67,7 +67,16 @@ common = {
             data : dataObj,
             success : successFn,
         }
-        var params = $.extend({}, defaults, dataObj, successFn);
+        if (isFormData) {
+            var defaultsAdd = {
+                contentType: false,
+                processData: false,
+            }
+            var params = $.extend({}, defaults, defaultsAdd, dataObj, successFn);
+        } else {
+            var params = $.extend({}, defaults, dataObj, successFn);
+        }
+
         return $.ajax(params);
     }
 }

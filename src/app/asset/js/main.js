@@ -8,7 +8,7 @@ common.document.on('click', '.row:has(.row_item)', function() {
     common.currentDirName = thisObj.parents('.level').attr('data-dir');
     common.currentLevel = parseInt(thisObj.parents('.level').attr('data-level'));
     common.coloringTarget(thisObj, common.mode);
-    var changeAction = function(response) {
+    var afterChangeAction = function(response) {
         var maxLevel = parseInt($('.level').eq(-1).attr('data-level'));
         /* 選択された項目がディレクトリだった場合 */
         if (isJSON(response) === true) {
@@ -40,7 +40,7 @@ common.document.on('click', '.row:has(.row_item)', function() {
         }
     }
     actionDataSet = common.getPostDataSet('change');
-    common.postJson(actionDataSet,changeAction)
+    common.postJson(actionDataSet,afterChangeAction)
     .done(function() {
         $(document).ready(function() {
             PR.prettyPrint();
@@ -51,7 +51,6 @@ common.document.on('click', '.row:has(.row_item)', function() {
 /* moderemove */
 common.document.on('click', '#remove', function() {
     common.toggleFontColor();
-    console.log(common.mode);
     if (common.mode === 'upload') {
         common.mode = 'remove';
         $('#preview').hide();
@@ -87,20 +86,13 @@ common.document.on('click', '#remove', function() {
             if (confirm(common.currentDirName + '/' + common.targetName + 'を削除しますか?') === false) {
                 return false;
             } else {
-                $.ajax({
-                    url : common.toAjax,
-                    type : "POST",
-                    dataType : "text",
-                    data : {
-                        action: 'remove',
-                        targetName: common.targetName,
-                        currentDirName: thisDataDir
-                    }, success : function(response) {
-                        var elm = $('[data-dir="'+ thisDataDir +'"]').find('.row_item:contains(' + common.targetName + ')');
-                        elm.parent('.row').remove();
-                        common.adjustColumn();
-                    }
-                });
+                var afterRemoveAction = function() {
+                    var elm = $('[data-dir="'+ common.currentDirName +'"]').find('.row_item:contains(' + common.targetName + ')');
+                    elm.parent('.row').remove();
+                    common.adjustColumn();
+                }
+                var removeActionDataSet = common.getPostDataSet('remove');
+                common.postJson(removeActionDataSet, afterRemoveAction);
             }
         }
     });
@@ -151,30 +143,23 @@ common.document.on('click', '.close', function() {
 $(document).on('click', '.gen_dir', function() {
     var createDirBtnArea = $(this).parent();
     var textboxArea = createDirBtnArea.next();
-    var newDirName = $('.textbox:visible').val();
+    common.targetName = $('.textbox:visible').val();
     var thisColumn = $(this).parents('.level');
     var clone = thisColumn.find('.row:last').clone();
-    var currentDirName = thisColumn.attr('data-dir');
-    $.ajax({
-        type: 'POST',
-        url: common.toAjax,
-        data : {
-            action: 'makedir',
-            targetName: newDirName,
-            currentDirName: currentDirName
-        },
-        success: function() {
-            common.mode = 'upload';
-            clone.find('.row_item').text(newDirName);
-            thisColumn.append(clone);
-            createDirBtnArea.find('.close').hide();
-            createDirBtnArea.find('.gen_dir').addClass('show_txtbox');
-            createDirBtnArea.find('.gen_dir').removeClass('gen_dir');
-            var createNewDirRow = $(this).parent().next('.createNewDirRow');
-            textboxArea.slideUp();
-        }
-    });
-})
+    common.currentDirName = thisColumn.attr('data-dir');
+    afterMakedirAction = function() {
+        common.mode = 'upload';
+        clone.find('.row_item').text(common.targetName);
+        thisColumn.append(clone);
+        createDirBtnArea.find('.close').hide();
+        createDirBtnArea.find('.gen_dir').addClass('show_txtbox');
+        createDirBtnArea.find('.gen_dir').removeClass('gen_dir');
+        var createNewDirRow = $(this).parent().next('.createNewDirRow');
+        textboxArea.slideUp();
+    }
+    var makedirActionDataSet = common.getPostDataSet('makedir');
+    common.postJson(makedirActionDataSet, afterMakedirAction);
+});
 /* createNewDir END */
 /* upload */
 var uploadDropArea = $("#upload_drop_area");
@@ -207,16 +192,10 @@ function fileUpload(f) {
     formData.append('action', 'upload');
     formData.append('file', f);
     formData.append('currentDirName', toUploadDir);
-    $.ajax({
-        type: 'POST',
-        contentType: false,
-        processData: false,
-        url: common.toAjax,
-        data : formData,
-        success: function(data) {
+    var afterUploadAction = function() {
         location.reload();
-        }
-    });
+    }
+    common.postJson(formData, afterUploadAction, true);
 }
 /* upload END */
 
