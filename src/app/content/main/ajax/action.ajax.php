@@ -1,8 +1,8 @@
 <?php
 require_once(dirname(__DIR__).'/include/initialize.php');
-require_once(dirname(__DIR__).'/ajax/DTO.ajax.php');
+require_once(dirname(__DIR__).'/ajax/formatter.ajax.php');
 
-class AjaxAction extends PostJsonDTO {
+class AjaxAction extends JsonFormatter {
 
     public function __construct() {
         parent::__construct();
@@ -13,71 +13,64 @@ class AjaxAction extends PostJsonDTO {
     }
 
     public function change() {
-
-        if (parent::getCurrentLevel() > 1) {
-            $dir = '/'.parent::getCurrentDirName();
-        } else {
-            $dir = parent::getCurrentDirName();
-        }
-        $isDir = is_dir(S3_PROTOCOL.BUCKET_NAME.$dir.'/'.parent::getTargetName());
-        if ($isDir) {
-            $nextItemLists = scandir(S3_PROTOCOL.BUCKET_NAME.$dir.'/'.parent::getTargetName());
+        $pathName = parent::getPathName();
+        if (parent::getCurrentLevel() > 1) $pathName = '/'.$pathName;
+        // $S3PathName = parent::getS3pathName();
+        if (is_dir(self::_S3Protcol.self::_bucketName.$pathName)) {
+            $nextItemLists = scandir(self::_S3Protcol.self::_bucketName.$pathName);
             $nextItemLists = array_values($nextItemLists);
             $response = json_encode($nextItemLists);
             echo $response;
         } else {
             $response = '';
-            $fileName = fopen(S3_PROTOCOL.BUCKET_NAME.$dir.'/'.parent::getTargetName(), 'r', true);
-            while (!feof($fileName)) {
-                $response .= fgets($fileName);
+            $file = fopen(self::_S3Protcol.self::_bucketName.$pathName, 'r', true);
+            while (!feof($file)) {
+                $response .= fgets($file);
             }
-            fclose($fileName);
+            fclose($file);
             echo htmlspecialchars($response);
         }
     }
 
     public function remove() {
-        global $s3;
-        $dropedPathName = parent::getCurrentDirName().'/'.parent::getTargetName();
+        $s3 = parent::getS3Object();
         $results = $s3->listObjects([
-            'Bucket' => BUCKET_NAME,
-            'Prefix' => $dropedPathName
+            'Bucket' => self::_bucketName,
+            'Prefix' => parent::getPathName()
         ]);
         foreach ($results['Contents'] as $result) {
             $s3->deleteObject([
-                'Bucket' => BUCKET_NAME,
+                'Bucket' => self::_bucketName,
                 'Key' => $result['Key']
             ]);
         }
     }
 
     public function makedir() {
-        global $s3;
+        $s3 = parent::getS3Object();
         // streamWrapperではBucketは作れる(mkdir()で)がDirectoryは作れない
         // mkdir(S3_PROTOCOL.$currentDirName.$newDirName);
         $s3->putObject([
-            'Bucket' => BUCKET_NAME,
+            'Bucket' => self::_bucketName,
             // 最後に/付けないとファイルになる
-            'Key'    => parent::getCurrentDirName().'/'.parent::getTargetName().'/',
+            'Key'    => parent::getPathName().'/'
         ]);
-        echo parent::getCurrentDirName().'/'.parent::getTargetName().'/';
+        echo parent::getS3pathName();
     }
 
     public function upload() {
-        global $s3;
-        $uploadDir = parent::getCurrentDirName();
-        $fileName = parent::getFileName();
-        $tmpFile = parent::getTmpFileName();
-
-        if (!empty($uploadDir)) $uploadDir.= '/';
+        $s3 = parent::getS3Object();
         try {
             $s3->putObject(array(
-                'Bucket' => BUCKET_NAME,
-                'Key'    => $uploadDir.$fileName,
-                'Body'   => fopen($tmpFile, 'r')
+                'Bucket' => self::_bucketName,
+                'Key'    => parent::getCurrentDirName().'/'.parent::getFileName(),
+                'Body'   => fopen(parent::getTmpFileName(), 'r')
             ));
         } catch (S3Exception $e) {
             echo $e->getMessage();
         }
+        echo self::_bucketName;
+        echo parent::getCurrentDirName().'/'.parent::getFileName();
+        echo parent::getTmpFileName();
     }
 }

@@ -8,5 +8,5 @@ if (!checkAuthentication()) header('location:/app/content/login/');
 
 use Aws\S3\S3Client;
 
-$s3 = new S3Client($s3Data);
-$s3->registerStreamWrapper();
+$s3Object = new S3Client($s3Data);
+$s3Object->registerStreamWrapper();
