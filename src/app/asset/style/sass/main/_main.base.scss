@@ -16,16 +16,16 @@ $txtboxCloseIcon: 2.5vw;
 */
 $columnsBorderColor: rgb(81, 81, 81);
 $uploadColor: rgb(137, 189, 255) !important;
-$destroyColor: rgb(255, 203, 137) !important;
-$destroyAreaMouseOverColor: #442c34;
-$destroyAreaBorderColor: gray;
+$removeColor: rgb(255, 203, 137) !important;
+$removeAreaMouseOverColor: #442c34;
+$removeAreaBorderColor: gray;
 $uploadAreaMouseOverColor: #1a1a4d;
 
 /**
 * Border
 */
 $columnsRightBorder: 1px solid $columnsBorderColor;
-$destroyAreaBorder: 2px dashed $destroyAreaBorderColor;
+$removeAreaBorder: 2px dashed $removeAreaBorderColor;
 
 .upload {
     .row_item {
@@ -33,9 +33,9 @@ $destroyAreaBorder: 2px dashed $destroyAreaBorderColor;
     }
 }
 
-.destroy {
+.remove {
     .row_item {
-        color: $destroyColor;
+        color: $removeColor;
     }
 }
 
@@ -44,8 +44,8 @@ $destroyAreaBorder: 2px dashed $destroyAreaBorderColor;
     opacity: 0.7;
 }
 
-.destroyMouseOver {
-    background-color: $destroyAreaMouseOverColor;
+.removeMouseOver {
+    background-color: $removeAreaMouseOverColor;
 }
 
 %firstRowStyle {

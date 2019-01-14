@@ -1,5 +1,5 @@
 $(function() {
-    $('#destroy_area').hide();
+    $('#remove_area').hide();
 });
 
 common.document.on('click', '.row:has(.row_item)', function() {
@@ -8,68 +8,59 @@ common.document.on('click', '.row:has(.row_item)', function() {
     common.currentDirName = thisObj.parents('.level').attr('data-dir');
     common.currentLevel = parseInt(thisObj.parents('.level').attr('data-level'));
     common.coloringTarget(thisObj, common.mode);
-    $.ajax({
-        url : common.ajaxDir + "ajax.php",
-        type : "POST",
-        dataType : "text",
-        data : {
-            dir : common.currentDirName,
-            name : common.targetName,
-            level : common.currentLevel,
-        },
-        success : function(response) {
-            var maxLevel = parseInt($('.level').eq(-1).attr('data-level'));
-            /* 選択された項目がディレクトリだった場合 */
-            if (isJSON(response) === true) {
-                var data = JSON.parse(response);
-                var templateClone = $('.template').clone();
-                var template = $('.template')
-                var newDirName = (common.currentLevel == 1)? common.targetName: common.currentDirName + '/' + common.targetName;
-                common.isPreview = false;
-                common.adjustColumn();
-                template.attr('data-level', ++common.currentLevel);
-                template.attr('data-dir', newDirName);
-                data.forEach(function(value) {
-                    template.append('<div class="row"><p class="row_item" data-dir="'+ newDirName +'">' + value + '</p></div>');
-                });
-                template.show().removeClass('template');
-                $('.column').last().append(templateClone);
-                $('.prettyprint').empty();
-                if (common.mode === 'upload') $('#upload_area').show();
-                else common.addDraggable();
-                /* 選択された項目がファイルだった場合 */
-            } else {
-                common.isPreview = true;
-                $('#preview').empty();
-                $('#upload_area').hide();
-                if (common.mode === 'upload') {
-                    $('#preview').append('<code class="prettyprint">' + response +'</code>');
-                    common.adjustColumn();
-                } else {
-                    $('#preview').append('<code class="prettyprint" style="display: none;">' + response +'</code>');
-                }
-            }
+    var changeAction = function(response) {
+        var maxLevel = parseInt($('.level').eq(-1).attr('data-level'));
+        /* 選択された項目がディレクトリだった場合 */
+        if (isJSON(response) === true) {
+            var data = JSON.parse(response);
+            var templateClone = $('.template').clone();
+            var template = $('.template')
+            var newDirName = (common.currentLevel == 1)? common.targetName: common.currentDirName + '/' + common.targetName;
+            common.isPreview = false;
+            common.adjustColumn();
+            template.attr('data-level', ++common.currentLevel);
+            template.attr('data-dir', newDirName);
+            data.forEach(function(value) {
+                template.append('<div class="row"><p class="row_item" data-dir="'+ newDirName +'">' + value + '</p></div>');
+            });
+            template.show().removeClass('template');
+            $('.column').last().append(templateClone);
+            $('.prettyprint').empty();
+            if (common.mode === 'upload') $('#upload_area').show();
+            else common.addDraggable();
+            /* 選択された項目がファイルだった場合 */
+        } else {
+            var previewArea = $('#preview');
+            common.isPreview = true;
+            if (common.mode === 'upload') previewArea.show();
+            previewArea.empty();
+            $('#upload_area').hide();
+            previewArea.append('<code class="prettyprint">' + response +'</code>');
+            common.adjustColumn();
         }
-    }).done(function() {
+    }
+    actionDataSet = common.getPostDataSet('change');
+    common.postJson(actionDataSet,changeAction)
+    .done(function() {
         $(document).ready(function() {
             PR.prettyPrint();
-        })
+        });
     });
 });
 
-/* modeDestroy */
-common.document.on('click', '#destroy', function() {
+/* moderemove */
+common.document.on('click', '#remove', function() {
     common.toggleFontColor();
     console.log(common.mode);
     if (common.mode === 'upload') {
-        common.mode = 'destroy';
+        common.mode = 'remove';
         $('#preview').hide();
         $('#upload_area').hide();
-        $('#destroy_area').show();
+        $('#remove_area').show();
         common.addDraggable();
     } else {
         common.mode = 'upload';
-        $('#destroy_area').hide();
+        $('#remove_area').hide();
         if (common.isPreview) $('#preview').show();
         else $('#upload_area').show();
 
@@ -79,31 +70,31 @@ common.document.on('click', '#destroy', function() {
             })
         })
     }
-    var destroyDropArea = $('#destroy_drop_area');
-    destroyDropArea.droppable({
+    var removeDropArea = $('#remove_drop_area');
+    removeDropArea.droppable({
         accept: '.row_item',
         over: function() {
-            destroyDropArea.addClass('destroyMouseOver');
+            removeDropArea.addClass('removeMouseOver');
         },
         out: function() {
-            destroyDropArea.removeClass('destroyMouseOver');
+            removeDropArea.removeClass('removeMouseOver');
         },
         drop: function(e, data) {
             common.targetName = data.helper.context.textContent;
-            var thisDataDir = data.draggable.parents('.level').attr('data-dir');
-            var path = thisDataDir + '/';
+            common.currentDirName = data.draggable.parents('.level').attr('data-dir');
             common.currentLevel = data.draggable.parents('.level').attr('data-level');
-            destroyDropArea.removeClass('destroyMouseOver');
-            if (confirm(path + common.targetName + 'を削除しますか?') === false) {
+            removeDropArea.removeClass('removeMouseOver');
+            if (confirm(common.currentDirName + '/' + common.targetName + 'を削除しますか?') === false) {
                 return false;
             } else {
                 $.ajax({
-                    url : common.ajaxDir + "ajax.destroy.php",
+                    url : common.toAjax,
                     type : "POST",
                     dataType : "text",
                     data : {
-                        name: common.targetName,
-                        path: path
+                        action: 'remove',
+                        targetName: common.targetName,
+                        currentDirName: thisDataDir
                     }, success : function(response) {
                         var elm = $('[data-dir="'+ thisDataDir +'"]').find('.row_item:contains(' + common.targetName + ')');
                         elm.parent('.row').remove();
@@ -114,7 +105,7 @@ common.document.on('click', '#destroy', function() {
         }
     });
 });
-/* modeDestroy end */
+/* moderemove end */
 
 /* expand */
 common.document.on('click', '#expand', function() {
@@ -163,12 +154,13 @@ $(document).on('click', '.gen_dir', function() {
     var newDirName = $('.textbox:visible').val();
     var thisColumn = $(this).parents('.level');
     var clone = thisColumn.find('.row:last').clone();
-    var currentDirName = thisColumn.attr('data-dir') + '/';
+    var currentDirName = thisColumn.attr('data-dir');
     $.ajax({
         type: 'POST',
-        url: common.ajaxDir + "ajax.createDir.php",
+        url: common.toAjax,
         data : {
-            newDirName: newDirName,
+            action: 'makedir',
+            targetName: newDirName,
             currentDirName: currentDirName
         },
         success: function() {
@@ -212,14 +204,14 @@ common.document.on('drop', uploadDropArea, function(_e) {
 function fileUpload(f) {
     var formData = new FormData();
     var toUploadDir = $('.level').eq(-2).attr('data-dir');
-    alert(toUploadDir);
+    formData.append('action', 'upload');
     formData.append('file', f);
-    formData.append('dir', toUploadDir);
+    formData.append('currentDirName', toUploadDir);
     $.ajax({
         type: 'POST',
         contentType: false,
         processData: false,
-        url: common.ajaxDir + "ajax.upload.php",
+        url: common.toAjax,
         data : formData,
         success: function(data) {
         location.reload();

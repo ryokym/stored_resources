@@ -73,13 +73,13 @@
                         line-height: $codeLineHeight;
                     }
                 }
-                #destroy_area {
+                #remove_area {
                     @include flex();
-                    #destroy_drop_area {
+                    #remove_drop_area {
                         display: none;
                         height: 50vh;
                         @include flex();
-                        border: $destroyAreaBorder;
+                        border: $removeAreaBorder;
                         border-radius: 4%;
                         img {
                             max-width: 40%

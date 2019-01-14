@@ -6,10 +6,10 @@ common = {
     currentLevel: '',
     mode: 'upload',
     isPreview: false,
-    ajaxDir: '/app/content/main/ajax/',
+    toAjax: '/app/content/main/ajax/action.ajax.php',
 
     coloringTarget: function(thisElm, mode) {
-        modeName = (mode === 'upload')? 'upload': 'destroy';
+        modeName = (mode === 'upload')? 'upload': 'remove';
         $('.row').each(function() {
             var someLevel = $(this).parents('.level').attr('data-level');
             if (parseInt(someLevel) >= common.currentLevel) {
@@ -29,13 +29,13 @@ common = {
     },
 
     toggleFontColor: function() {
-        if (common.mode === 'destroy') {
-            var destroy = common.document.find('.destroy');
-            destroy.addClass('upload');
-            destroy.removeClass('destroy');
+        if (common.mode === 'remove') {
+            var remove = common.document.find('.remove');
+            remove.addClass('upload');
+            remove.removeClass('remove');
         } else {
             var upload = common.document.find('.upload');
-            upload.addClass('destroy');
+            upload.addClass('remove');
             upload.removeClass('upload');
         }
     },
@@ -46,8 +46,28 @@ common = {
             revert: true,
             revertDuration: 200,
         });
+    },
+
+    getPostDataSet : function(actionName) {
+        var preset = {
+            targetName: this.targetName,
+            currentDirName: this.currentDirName,
+            currentLevel: this.currentLevel,
+            action: actionName
+        }
+        var params = $.extend({}, preset, actionName);
+        return params;
+    },
+
+    postJson: function(dataObj, successFn) {
+        var defaults = {
+            url : common.toAjax,
+            type : "POST",
+            dataType : "text",
+            data : dataObj,
+            success : successFn,
+        }
+        var params = $.extend({}, defaults, dataObj, successFn);
+        return $.ajax(params);
     }
-
-
-
 }

@@ -48,8 +48,8 @@ include(__DIR__.'/layout/base.header.php');
             <pre id="preview">
                 <code class="prettyprint"></code>
             </pre>
-            <div id="destroy_area">
-                <div id="destroy_drop_area">
+            <div id="remove_area">
+                <div id="remove_drop_area">
                     <img src="/app/asset/img/trush.png"/>
                 </div>
             </div>
