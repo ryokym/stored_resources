@@ -14,3 +14,12 @@ function actionLogout() {
     setcookie(USERNAME, '', time()-60, '/');
     setcookie(AUTH_VALUE,'', time()-60, '/');
 }
+
+/**
+* 初期表示
+*/
+function getDefaultRows() {
+    $rows[] = scandir(S3_PROTOCOL.BUCKET_NAME);
+    $rows = array_values($rows[0]);
+    return $rows;
+}

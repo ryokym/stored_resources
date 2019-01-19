@@ -1,8 +1,8 @@
 <?php
-require_once(dirname(__DIR__).'/include/initialize.php');
-require_once(dirname(__DIR__).'/ajax/DTO.ajax.php');
+namespace Ajax;
+use Ajax\JsonDTO;
 
-class JsonFormatter extends PostJsonDTO {
+class Formatter extends JsonDTO {
 
     public function __construct() {
         parent::setAction(filter_input(INPUT_POST, 'action'));

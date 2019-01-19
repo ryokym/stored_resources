@@ -17,3 +17,39 @@ function checkAuthentication() {
     }
     return false;
 }
+
+function _autoloader($arg) {
+    foreach ($arg as $dirName => $classes)
+    foreach ($classes as $class) {
+        spl_autoload_register(function() use($dirName, $class) {
+            $includePath = DOC_ROOT.$dirName.$class.'.php';
+            if (is_readable($includePath))  {
+                require_once($includePath);
+            } else {
+                echo " ERROR! \n Due to File or Class is not found. \n Please Confirm 'AutoloaderSettings'";
+                die;
+            }
+        });
+    }
+}
+
+
+function autoloader(...$args) {
+    try {
+        $invalid = false;
+        /* 常に$argsはarrayにキャストされる */
+        foreach($args as $arg) {
+            $argRecCount = count($arg, COUNT_RECURSIVE);
+            /* 引数の形式チェック, 多次元配列なら$argCountの値は2以上 || 配列の数は1つ*/
+            if (($argRecCount < 2) || (count($arg) !== 1)) $invalid = true;
+        }
+        if ($invalid) {
+            throw new Exception(" ERROR! \n Due to Type of Argument is not ' Multidimensional Array'. \n Please Confirm 'AutoloaderSettings'");
+        } else {
+            array_map('_autoloader',$args);
+        }
+    } catch(Exception $e) {
+        echo $e->getMessage();
+        die;
+    }
+}

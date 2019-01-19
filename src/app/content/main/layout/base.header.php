@@ -16,11 +16,11 @@
         <div class="header">
             <div id="title"><?= APP_NAME ?></div>
             <div class="menu">
-                <div class="menu_item"><img id="expand" class="menu_items menu_item_icon" src="/app/asset/img/expand.png"></div>
-                <div class="menu_item"><img id="remove" class="menu_items menu_item_icon" src="/app/asset/img/remove.png"></div>
-                <div class="menu_item"><img id="download" class="menu_items menu_item_icon" src="/app/asset/img/download.png"></div>
-                <div class="menu_item"><img id="upload" class="menu_items menu_item_icon" src="/app/asset/img/upload.png"></div>
-                <div class="menu_item"><img id="logout" class="menu_items menu_item_icon" src="/app/asset/img/logout.png"></div>
+                <div class="menu_item"><img id="expand" class="menu_items menu_item_icon" src="/app/asset/img/expand.svg"></div>
+                <div class="menu_item"><img id="remove" class="menu_items menu_item_icon" src="/app/asset/img/remove.svg"></div>
+                <div class="menu_item"><img id="download" class="menu_items menu_item_icon" src="/app/asset/img/download.svg"></div>
+                <div class="menu_item"><img id="upload" class="menu_items menu_item_icon" src="/app/asset/img/upload.svg"></div>
+                <div class="menu_item"><img id="logout" class="menu_items menu_item_icon" src="/app/asset/img/logout.svg"></div>
 
             </div>
       </div>

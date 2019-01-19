@@ -21,7 +21,7 @@ common.document.on('click', '.row:has(.row_item)', function() {
             template.attr('data-level', ++common.currentLevel);
             template.attr('data-dir', newDirName);
             data.forEach(function(value) {
-                template.append('<div class="row"><p class="row_item" data-dir="'+ newDirName +'">' + value + '</p></div>');
+                template.append('<div class="row"><p class="row_item">' + value + '</p></div>');
             });
             template.show().removeClass('template');
             $('.column').last().append(templateClone);
@@ -152,8 +152,8 @@ $(document).on('click', '.gen_dir', function() {
         clone.find('.row_item').text(common.targetName);
         thisColumn.append(clone);
         createDirBtnArea.find('.close').hide();
-        createDirBtnArea.find('.gen_dir').addClass('show_txtbox');
-        createDirBtnArea.find('.gen_dir').removeClass('gen_dir');
+        $('.createNewDirRow:visible').find('.textbox').val('');
+        createDirBtnArea.find('.gen_dir').removeClass('gen_dir').addClass('show_txtbox');
         var createNewDirRow = $(this).parent().next('.createNewDirRow');
         textboxArea.slideUp();
     }
@@ -211,3 +211,10 @@ var isJSON = function(arg) {
         return false;
     }
 };
+
+/* keyboard shortcut */
+common.document.on('keydown', 'input:visible', function(e) {
+    if (e.keyCode === 13) {
+        $('.gen_dir').trigger('click');
+    }
+})

@@ -1,5 +1,7 @@
 <?php
-class PostJsonDTO {
+namespace Ajax;
+
+class JsonDTO {
     private $action;
     private $currentDirName;
     private $targetName = null;

@@ -6,7 +6,7 @@ common = {
     currentLevel: '',
     mode: 'upload',
     isPreview: false,
-    toAjax: '/app/content/main/ajax/execute.ajax.php',
+    toAjax: '/app/content/main/execute.ajax.php',
 
     coloringTarget: function(thisElm, mode) {
         modeName = (mode === 'upload')? 'upload': 'remove';

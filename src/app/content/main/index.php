@@ -1,27 +1,16 @@
 <?php
 require_once(__DIR__.'/include/initialize.php');
-
-
-// 初期表示用にルートディレクトリのファイル、ディレクトリをセット
-$defaultRows[] = preg_grep($exclusionPattern, scandir(S3_PROTOCOL.BUCKET_NAME));
-$defaultRows = array_values($defaultRows[0]);
-
-// -------------------------------------------------------//
-// HTML
-// -------------------------------------------------------//
-
-include(__DIR__.'/layout/base.header.php');
-
+require_once(__DIR__.'/layout/base.header.php');
 ?>
 <div class="container">
     <div class="column">
         <div class="level" data-level="1" data-dir=""><?php
         $index = 0;
-            foreach ($defaultRows as $row): ?>
+            foreach (getDefaultRows() as $row): ?>
                 <div class="row <?php if ($index === 1) echo 'createNewDirRow'; ?>"><?php
                     if ($index === 0): ?>
-                        <img src="/app/asset/img/plus10.png" class="open show_txtbox"/>
-                        <img src="/app/asset/img/close.png" class="close"/><?php
+                        <img src="/app/asset/img/add.svg" class="open show_txtbox"/>
+                        <img src="/app/asset/img/close.svg" class="close"/><?php
                     elseif ($index === 1): ?>
                         <input class="textbox" type="text"/><?php
                     else: ?>
@@ -33,8 +22,8 @@ include(__DIR__.'/layout/base.header.php');
         </div>
         <div class="template level" data-level="">
             <div class="row">
-                <img src="/app/asset/img/plus10.png" class="open show_txtbox"/>
-                <img src="/app/asset/img/close.png" class="close"/>
+                <img src="/app/asset/img/add.svg" class="open show_txtbox"/>
+                <img src="/app/asset/img/close.svg" class="close"/>
             </div>
             <div class="row createNewDirRow"><input class="textbox" type="text"/></div>
         </div>
@@ -56,5 +45,4 @@ include(__DIR__.'/layout/base.header.php');
         </div>
     </div>
 </div><?php
-
-include(__DIR__.'/layout/base.footer.php');
+require_once(__DIR__.'/layout/base.footer.php');

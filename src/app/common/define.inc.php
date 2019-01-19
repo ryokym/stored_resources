@@ -1,7 +1,7 @@
 <?php
 
 //アプリケーション名称
-define('APP_NAME','STORED RESOURCES 2.x');
+define('APP_NAME', 'STORED RESOURCES 2.x');
 
 //ドキュメントルート
 define('DOC_ROOT', $_SERVER["DOCUMENT_ROOT"]);
@@ -14,3 +14,7 @@ define('USER_LIST', __DIR__.'/credential/users.list.txt');
 
 // AccountListFile
 define('AUTH_LIST', __DIR__.'/credential/authorize.list.txt');
+
+// Error switch
+define('ON', 1);
+define('OFF', 0);

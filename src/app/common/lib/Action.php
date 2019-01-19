@@ -1,8 +1,10 @@
 <?php
-require_once(dirname(__DIR__).'/include/initialize.php');
-require_once(dirname(__DIR__).'/ajax/formatter.ajax.php');
+namespace Ajax;
+use Ajax\Formatter;
 
-class AjaxAction extends JsonFormatter {
+require_once(dirname(__DIR__).'/initialize.inc.php');
+
+class Action extends Formatter {
 
     public function __construct() {
         parent::__construct();
@@ -22,11 +24,17 @@ class AjaxAction extends JsonFormatter {
             $response = json_encode($nextItemLists);
             echo $response;
         } else {
+            function getLines($fName) {
+                while (($line = fgets($fName)) !== false) {
+                    yield $line;
+                }
+            }
             $response = '';
             $file = fopen(self::_S3Protcol.self::_bucketName.$pathName, 'r', true);
-            while (!feof($file)) {
-                $response .= fgets($file);
+            foreach (getLines($file) as $line) {
+                $response .= $line;
             }
+
             fclose($file);
             echo htmlspecialchars($response);
         }

@@ -15,6 +15,7 @@
             @include flex(space-evenly, center);
             .menu_item {
                 max-width: $menuIcon;
+                cursor: pointer;
                 img {
                     max-width: 100%;
                 }
