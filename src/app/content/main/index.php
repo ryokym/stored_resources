@@ -19,6 +19,7 @@ require_once(__DIR__.'/layout/base.header.php');
                 </div><?php
                 $index++;
             endforeach; ?>
+            <div class="row" style="display: none;"><p class="row_item"></p></div>
         </div>
         <div class="template level" data-level="">
             <div class="row">

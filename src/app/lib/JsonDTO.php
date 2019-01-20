@@ -8,6 +8,7 @@ class JsonDTO {
     private $currentLevel = null;
     private $fileName = null;
     private $tmpFileName = null;
+    private $s3Object = null;
 
     const _S3Protcol = S3_PROTOCOL;
     const _bucketName = BUCKET_NAME;
@@ -36,13 +37,13 @@ class JsonDTO {
         $this->targetName = $targetName;
     }
 
-    public function getCurrentLevel() {
-        return $this->currentLevel;
-    }
-
-    public function setCurrentLevel($currentLevel) {
-        $this->currentLevel = $currentLevel;
-    }
+    // public function getCurrentLevel() {
+    //     return $this->currentLevel;
+    // }
+    //
+    // public function setCurrentLevel($currentLevel) {
+    //     $this->currentLevel = $currentLevel;
+    // }
 
     public function getFileName() {
         return $this->fileName;
@@ -61,7 +62,10 @@ class JsonDTO {
     }
 
     public function getS3Object() {
-        global $s3Object;
-        return $s3Object;
+        return $this->S3Object;
+    }
+
+    public function setS3Object($s3obj) {
+        $this->S3Object = $s3obj;
     }
 }

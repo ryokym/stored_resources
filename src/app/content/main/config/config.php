@@ -7,10 +7,10 @@
 $exclusionPattern = "/\w+.+/";
 
 $ajaxClasses = [
-    '/app/common/lib/' => [
+    '/app/lib/' => [
+        'JsonDTO',
         'Action',
         'Formatter',
-        'JsonDTO',
         ]
     ];
 

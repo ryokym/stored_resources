@@ -4,7 +4,7 @@
 * Size
 */
 $headerHeight: 15vh;
-$oneColumnWidth: 12.5vw;
+$oneColumnWidth: 13vw;
 $rowHeight: 5vh;
 $codeLineHeight: 3vh;
 $menuIcon: 2.5vw;
@@ -20,6 +20,7 @@ $removeColor: rgb(255, 203, 137) !important;
 $removeAreaMouseOverColor: #442c34;
 $removeAreaBorderColor: gray;
 $uploadAreaMouseOverColor: #1a1a4d;
+$errorColor: rgb(255, 180, 180);
 
 /**
 * Border
@@ -46,6 +47,16 @@ $removeAreaBorder: 2px dashed $removeAreaBorderColor;
 
 .removeMouseOver {
     background-color: $removeAreaMouseOverColor;
+}
+
+.opacity {
+    opacity: 0.7;
+    cursor: default;
+}
+
+.error {
+    background-color: $errorColor;
+    outline: none;
 }
 
 %firstRowStyle {

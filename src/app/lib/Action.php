@@ -2,8 +2,6 @@
 namespace Ajax;
 use Ajax\Formatter;
 
-require_once(dirname(__DIR__).'/initialize.inc.php');
-
 class Action extends Formatter {
 
     public function __construct() {
@@ -15,26 +13,24 @@ class Action extends Formatter {
     }
 
     public function change() {
-        $pathName = parent::getPathName();
-        if (parent::getCurrentLevel() > 1) $pathName = '/'.$pathName;
-        // $S3PathName = parent::getS3pathName();
-        if (is_dir(self::_S3Protcol.self::_bucketName.$pathName)) {
-            $nextItemLists = scandir(self::_S3Protcol.self::_bucketName.$pathName);
+        $path = parent::getCurrentDirName();
+        if (!empty($path)) {
+            Formatter::prependDS($path);
+            parent::setCurrentDirName($path);
+        }
+        $s3Path = parent::getS3pathName();
+        if (is_dir($s3Path)) {
+            $response = array();
+            $nextItemLists = scandir($s3Path);
             $nextItemLists = array_values($nextItemLists);
             $response = json_encode($nextItemLists);
             echo $response;
         } else {
-            function getLines($fName) {
-                while (($line = fgets($fName)) !== false) {
-                    yield $line;
-                }
-            }
             $response = '';
-            $file = fopen(self::_S3Protcol.self::_bucketName.$pathName, 'r', true);
-            foreach (getLines($file) as $line) {
+            $file = fopen($s3Path, 'r', true);
+            foreach (parent::getLines($file) as $line) {
                 $response .= $line;
             }
-
             fclose($file);
             echo htmlspecialchars($response);
         }
@@ -56,29 +52,31 @@ class Action extends Formatter {
 
     public function makedir() {
         $s3 = parent::getS3Object();
+
+        $key = (empty(parent::getCurrentDirName()))? parent::getTargetName():parent::getPathName();
+        // 最後に/付けないとファイルになる
+        $pathName = parent::appendDS($key);
         // streamWrapperではBucketは作れる(mkdir()で)がDirectoryは作れない
         // mkdir(S3_PROTOCOL.$currentDirName.$newDirName);
         $s3->putObject([
             'Bucket' => self::_bucketName,
-            // 最後に/付けないとファイルになる
-            'Key'    => parent::getPathName().'/'
+            'Key'    => $pathName,
         ]);
-        echo parent::getS3pathName();
     }
 
     public function upload() {
         $s3 = parent::getS3Object();
+        $dirName = parent::appendDS(parent::getCurrentDirName());
+        $pathName = $dirName.parent::getFileName();
         try {
             $s3->putObject(array(
                 'Bucket' => self::_bucketName,
-                'Key'    => parent::getCurrentDirName().'/'.parent::getFileName(),
+                'Key'    => $pathName,
                 'Body'   => fopen(parent::getTmpFileName(), 'r')
             ));
         } catch (S3Exception $e) {
             echo $e->getMessage();
         }
-        echo self::_bucketName;
-        echo parent::getCurrentDirName().'/'.parent::getFileName();
-        echo parent::getTmpFileName();
+        echo parent::getFileName();
     }
 }

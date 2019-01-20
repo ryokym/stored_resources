@@ -6,7 +6,7 @@ common = {
     currentLevel: '',
     mode: 'upload',
     isPreview: false,
-    toAjax: '/app/content/main/execute.ajax.php',
+    toAjax: '/app/content/main/execute.php',
 
     coloringTarget: function(thisElm, mode) {
         modeName = (mode === 'upload')? 'upload': 'remove';
@@ -76,7 +76,18 @@ common = {
         } else {
             var params = $.extend({}, defaults, dataObj, successFn);
         }
-
         return $.ajax(params);
+    },
+
+    newDirNameValidation: function(input) {
+        if (
+            input !== '' &&
+            input.length <= 40 &&
+            input.match(/^[A-Za-z0-9_\-.()?!&\[\]]*$/)
+        ) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
