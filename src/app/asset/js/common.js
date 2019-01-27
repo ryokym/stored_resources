@@ -50,10 +50,19 @@ common = {
 
     getPostDataSet : function(actionType) {
         var preset = {
+<<<<<<< HEAD
             targetName: this.targetName,
             currentDirName: this.currentDirName,
             currentLevel: this.currentLevel,
             action: actionType
+=======
+            jsonData : {
+                targetName: this.targetName,
+                currentDirName: this.currentDirName,
+                currentLevel: this.currentLevel,
+                actionType: actionType
+            }
+>>>>>>> 3.x
         }
         var params = $.extend({}, preset, actionType);
         return params;

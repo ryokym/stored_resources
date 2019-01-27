@@ -1,14 +1,5 @@
-<?php
-require_once(__DIR__.'/include/initialize.php');
+<?php require_once(__DIR__.'/include/initialize.php'); ?>
 
-if (isset($_GET['logout'])) actionLogout();
-
-$userName = (isset($_POST['userName']))? $_POST['userName']: NULL;
-$password = (isset($_POST['password']))? $_POST['password']: NULL;
-
-if (getAuthThenSetCookies($userName, $password)) header('Location:/app/content/main/');
-
-?>
 <!DOCTYPE html>
 <html lang="ja" dir="ltr">
     <head>

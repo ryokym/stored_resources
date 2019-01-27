@@ -201,13 +201,20 @@ function fileUpload(f) {
     var toUploadDir = $('.level').eq(-2);
     var toUploadDirName = toUploadDir.attr('data-dir');
     var clone = $('.level').first().find('.row:last').clone();
-    formData.append('action', 'upload');
     formData.append('file', f);
-    formData.append('currentDirName', toUploadDirName);
+    common.currentDirName = toUploadDirName;
+    var jsonData = common.getPostDataSet('upload');
+    jsonData = JSON.stringify(jsonData);
+    formData.append('jsonData', jsonData);
+    formData.append('isUpload', true);
     var afterUploadAction = function(response) {
-        clone.find('.row_item').text(response);
-        clone.show();
-        toUploadDir.append(clone);
+        if (response === '') {
+            alert('ERROR!');
+        } else {
+            clone.find('.row_item').text(response);
+            clone.show();
+            toUploadDir.append(clone);
+        }
         $("#upload_drop_area").removeClass('uploadMouseOver');
     }
     common.postJson(formData, afterUploadAction, true);

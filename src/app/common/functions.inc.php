@@ -53,3 +53,22 @@ function autoloader(...$args) {
         die;
     }
 }
+
+function getFilesData($fileName) {
+    try {
+        $file = $_FILES[$fileName];
+        if (
+            $file['size'] > 0 &&
+            strlen($file['name']) <= 40 &&
+            preg_match(EXCLUDED_PATTERN, $file['name']) === 1
+        ) {
+            return $file;
+        } else {
+            throw new Exception();
+        }
+    } catch(Exception $e) {
+        die;
+    }
+
+
+}

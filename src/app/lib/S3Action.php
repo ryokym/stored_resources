@@ -2,10 +2,10 @@
 namespace Ajax;
 use Ajax\Formatter;
 
-class Action extends Formatter {
+class S3Action extends Formatter {
 
-    public function __construct() {
-        parent::__construct();
+    public function __construct($myBucketName, $s3Object, $jsonDTO) {
+        parent::__construct($myBucketName, $s3Object, $jsonDTO);
     }
 
     public function execute($actionType) {
@@ -13,12 +13,12 @@ class Action extends Formatter {
     }
 
     public function change() {
-        $path = parent::getCurrentDirName();
+        $path = $this->jsonDTO->getCurrentDirName();
         if (!empty($path)) {
-            Formatter::prependDS($path);
-            parent::setCurrentDirName($path);
+            parent::prependDS($path);
+            $this->jsonDTO->setCurrentDirName($path);
         }
-        $s3Path = parent::getS3pathName();
+        $s3Path = parent::formattedS3PathName();
         if (is_dir($s3Path)) {
             $response = array();
             $nextItemLists = scandir($s3Path);
@@ -37,46 +37,42 @@ class Action extends Formatter {
     }
 
     public function remove() {
-        $s3 = parent::getS3Object();
-        $results = $s3->listObjects([
-            'Bucket' => self::_bucketName,
-            'Prefix' => parent::getPathName()
+        $results = $this->s3Object->listObjects([
+            'Bucket' => $this->bucketName,
+            'Prefix' => parent::formattedPathName()
         ]);
         foreach ($results['Contents'] as $result) {
-            $s3->deleteObject([
-                'Bucket' => self::_bucketName,
+            $this->s3Object->deleteObject([
+                'Bucket' => $this->bucketName,
                 'Key' => $result['Key']
             ]);
         }
     }
 
     public function makedir() {
-        $s3 = parent::getS3Object();
-
-        $key = (empty(parent::getCurrentDirName()))? parent::getTargetName():parent::getPathName();
+        $key = (empty($this->jsonDTO->getCurrentDirName()))? $this->jsonDTO->getTargetName(): parent::formattedPathName();
         // 最後に/付けないとファイルになる
         $pathName = parent::appendDS($key);
         // streamWrapperではBucketは作れる(mkdir()で)がDirectoryは作れない
         // mkdir(S3_PROTOCOL.$currentDirName.$newDirName);
-        $s3->putObject([
-            'Bucket' => self::_bucketName,
+        $this->s3Object->putObject([
+            'Bucket' => $this->bucketName,
             'Key'    => $pathName,
         ]);
     }
 
     public function upload() {
-        $s3 = parent::getS3Object();
-        $dirName = parent::appendDS(parent::getCurrentDirName());
-        $pathName = $dirName.parent::getFileName();
+        $dirName = parent::appendDS($this->jsonDTO->getCurrentDirName());
+        $pathName = $dirName.$this->jsonDTO->getFileName();
         try {
-            $s3->putObject(array(
-                'Bucket' => self::_bucketName,
+            $this->s3Object->putObject(array(
+                'Bucket' => $this->bucketName,
                 'Key'    => $pathName,
-                'Body'   => fopen(parent::getTmpFileName(), 'r')
+                'Body'   => fopen($this->jsonDTO->getTmpFileName(), 'r')
             ));
         } catch (S3Exception $e) {
             echo $e->getMessage();
         }
-        echo parent::getFileName();
+        echo $this->jsonDTO->getFileName();
     }
 }

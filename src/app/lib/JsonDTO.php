@@ -2,7 +2,7 @@
 namespace Ajax;
 
 class JsonDTO {
-    private $action;
+    private $actionType;
     private $currentDirName;
     private $targetName = null;
     private $currentLevel = null;
@@ -10,15 +10,12 @@ class JsonDTO {
     private $tmpFileName = null;
     private $s3Object = null;
 
-    const _S3Protcol = S3_PROTOCOL;
-    const _bucketName = BUCKET_NAME;
-
-    public function getAction() {
-        return $this->action;
+    public function getActionType() {
+        return $this->actionType;
     }
 
-    public function setAction($action) {
-        $this->action = $action;
+    public function setActionType($actionType) {
+        $this->actionType = $actionType;
     }
 
     public function getCurrentDirName() {
@@ -36,14 +33,6 @@ class JsonDTO {
     public function setTargetName($targetName) {
         $this->targetName = $targetName;
     }
-
-    // public function getCurrentLevel() {
-    //     return $this->currentLevel;
-    // }
-    //
-    // public function setCurrentLevel($currentLevel) {
-    //     $this->currentLevel = $currentLevel;
-    // }
 
     public function getFileName() {
         return $this->fileName;
@@ -67,5 +56,11 @@ class JsonDTO {
 
     public function setS3Object($s3obj) {
         $this->S3Object = $s3obj;
+    }
+
+    public function setProparties($proparties) {
+        foreach ($proparties as $propaty => $param) {
+            $this->$propaty = $param;
+        }
     }
 }

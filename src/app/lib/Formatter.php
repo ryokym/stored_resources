@@ -2,45 +2,41 @@
 namespace Ajax;
 use Ajax\JsonDTO;
 
-class Formatter extends JsonDTO {
+class Formatter {
 
-    public function __construct() {
-        parent::setAction(filter_input(INPUT_POST, 'action'));
-        parent::setCurrentDirName(filter_input(INPUT_POST, 'currentDirName'));
-        parent::setTargetName(filter_input(INPUT_POST, 'targetName'));
-        // parent::setCurrentLevel(filter_input(INPUT_POST, 'currentLevel'));
-        parent::setFileName($_FILES['file']['name']);
-        parent::setTmpFileName($_FILES['file']['tmp_name']);
+    protected $jsonDTO;
+    protected $s3Object;
+    protected $bucketName;
 
-        // if ($this->isRootDirectory()) self::$isRootDirectory = true;
-        // else self::$isRootDirectory = false;
+    const _S3Protcol = S3_PROTOCOL;
+
+    public function __construct($myBucketName, $s3Object, $jsonDTO) {
+        $this->bucketName = $myBucketName;
+        $this->s3Object = $s3Object;
+        $this->jsonDTO = $jsonDTO;
     }
 
-    public function getPathName() {
-        $pathName = parent::getCurrentDirName().'/'.parent::getTargetName();
+    protected function formattedPathName() {
+        $pathName = $this->jsonDTO->getCurrentDirName().'/'.$this->jsonDTO->getTargetName();
         return $pathName;
     }
 
-    public function getS3pathName() {
-        $pathName = $this->getPathName();
-        return self::_S3Protcol.self::_bucketName.$pathName;
+    protected function formattedS3pathName() {
+        $pathName = $this->formattedPathName();
+        return self::_S3Protcol.$this->bucketName.$pathName;
     }
 
-    // public function isRootDirectory() {
-    //     if (empty(parent::getCurrentDirName())) return true;
-    //     else return false;
-    // }
-    public function prependDS(&$str) {
+    protected function prependDS(&$str) {
         $str = substr_replace($str, '/', 0, 0);
     }
 
-    public function appendDS(&$str) {
+    protected function appendDS(&$str) {
         $len = strlen($str);
         $str = substr_replace($str, '/', $len, 0);
         return $str;
     }
 
-    public function getLines($fName) {
+    protected function getLines($fName) {
         while (($line = fgets($fName)) !== false) {
             yield $line;
         }
