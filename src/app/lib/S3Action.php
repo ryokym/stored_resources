@@ -2,10 +2,10 @@
 namespace Ajax;
 use Ajax\Formatter;
 
-class Action extends Formatter {
+class S3Action extends Formatter {
 
-    public function __construct() {
-        parent::__construct();
+    public function __construct($s3Object, $jsonDTO) {
+        parent::__construct($s3Object, $jsonDTO);
     }
 
     public function execute($actionType) {
@@ -13,10 +13,10 @@ class Action extends Formatter {
     }
 
     public function change() {
-        $path = parent::getCurrentDirName();
+        $path = $this->jsonDTO->getCurrentDirName();
         if (!empty($path)) {
             Formatter::prependDS($path);
-            parent::setCurrentDirName($path);
+            $this->jsonDTO->setCurrentDirName($path);
         }
         $s3Path = parent::getS3pathName();
         if (is_dir($s3Path)) {
@@ -37,29 +37,29 @@ class Action extends Formatter {
     }
 
     public function remove() {
-        $s3 = parent::getS3Object();
-        $results = $s3->listObjects([
-            'Bucket' => self::_bucketName,
+        // $s3 = parent::getS3Object();
+        $results = $this->$S3Object->listObjects([
+            'Bucket' => $this->myBucketName,
             'Prefix' => parent::getPathName()
         ]);
         foreach ($results['Contents'] as $result) {
             $s3->deleteObject([
-                'Bucket' => self::_bucketName,
+                'Bucket' => $this->myBucketName,
                 'Key' => $result['Key']
             ]);
         }
     }
 
     public function makedir() {
-        $s3 = parent::getS3Object();
+        // $s3 = parent::getS3Object();
 
         $key = (empty(parent::getCurrentDirName()))? parent::getTargetName():parent::getPathName();
         // 最後に/付けないとファイルになる
         $pathName = parent::appendDS($key);
         // streamWrapperではBucketは作れる(mkdir()で)がDirectoryは作れない
         // mkdir(S3_PROTOCOL.$currentDirName.$newDirName);
-        $s3->putObject([
-            'Bucket' => self::_bucketName,
+        $this->S3Object->putObject([
+            'Bucket' => $this->myBucketName,
             'Key'    => $pathName,
         ]);
     }
@@ -70,7 +70,7 @@ class Action extends Formatter {
         $pathName = $dirName.parent::getFileName();
         try {
             $s3->putObject(array(
-                'Bucket' => self::_bucketName,
+                'Bucket' => $this->myBucketName,
                 'Key'    => $pathName,
                 'Body'   => fopen(parent::getTmpFileName(), 'r')
             ));

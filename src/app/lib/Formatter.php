@@ -2,34 +2,30 @@
 namespace Ajax;
 use Ajax\JsonDTO;
 
-class Formatter extends JsonDTO {
+class Formatter {
 
-    public function __construct() {
-        parent::setAction(filter_input(INPUT_POST, 'action'));
-        parent::setCurrentDirName(filter_input(INPUT_POST, 'currentDirName'));
-        parent::setTargetName(filter_input(INPUT_POST, 'targetName'));
-        // parent::setCurrentLevel(filter_input(INPUT_POST, 'currentLevel'));
-        parent::setFileName($_FILES['file']['name']);
-        parent::setTmpFileName($_FILES['file']['tmp_name']);
+    public $jsonDTO;
+    public $s3Object;
+    private $bucketName;
 
-        // if ($this->isRootDirectory()) self::$isRootDirectory = true;
-        // else self::$isRootDirectory = false;
+    const _S3Protcol = S3_PROTOCOL;
+
+    public function __construct($myBucketName, $s3Object, $jsonDTO) {
+        $this->myBucketName = $myBucketName;
+        $this->s3Object = $s3Object;
+        $this->jsonDTO = $jsonDTO;
     }
 
     public function getPathName() {
-        $pathName = parent::getCurrentDirName().'/'.parent::getTargetName();
+        $pathName = $this->jsonDTO->getCurrentDirName().'/'.$this->jsonDTO->getTargetName();
         return $pathName;
     }
 
     public function getS3pathName() {
         $pathName = $this->getPathName();
-        return self::_S3Protcol.self::_bucketName.$pathName;
+        return self::_S3Protcol.$this->bucketName.$pathName;
     }
 
-    // public function isRootDirectory() {
-    //     if (empty(parent::getCurrentDirName())) return true;
-    //     else return false;
-    // }
     public function prependDS(&$str) {
         $str = substr_replace($str, '/', 0, 0);
     }
