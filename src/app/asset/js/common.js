@@ -48,14 +48,14 @@ common = {
         });
     },
 
-    getPostDataSet : function(actionName) {
+    getPostDataSet : function(actionType) {
         var preset = {
             targetName: this.targetName,
             currentDirName: this.currentDirName,
             currentLevel: this.currentLevel,
-            action: actionName
+            action: actionType
         }
-        var params = $.extend({}, preset, actionName);
+        var params = $.extend({}, preset, actionType);
         return params;
     },
 
