@@ -18,8 +18,8 @@ function actionLogout() {
 /**
 * 初期表示
 */
-function getDefaultRows() {
-    $rows[] = scandir(S3_PROTOCOL.BUCKET_NAME);
+function getDefaultRows($myBucketName) {
+    $rows[] = scandir(S3_PROTOCOL.$myBucketName);
     $rows = array_values($rows[0]);
     return $rows;
 }

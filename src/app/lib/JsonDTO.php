@@ -2,7 +2,7 @@
 namespace Ajax;
 
 class JsonDTO {
-    private $action;
+    private $actionType;
     private $currentDirName;
     private $targetName = null;
     private $currentLevel = null;
@@ -10,12 +10,12 @@ class JsonDTO {
     private $tmpFileName = null;
     private $s3Object = null;
 
-    public function getAction() {
-        return $this->action;
+    public function getActionType() {
+        return $this->actionType;
     }
 
-    public function setAction($action) {
-        $this->action = $action;
+    public function setActionType($actionType) {
+        $this->actionType = $actionType;
     }
 
     public function getCurrentDirName() {

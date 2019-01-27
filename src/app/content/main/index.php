@@ -6,7 +6,7 @@ require_once(__DIR__.'/layout/base.header.php');
     <div class="column">
         <div class="level" data-level="1" data-dir=""><?php
         $index = 0;
-            foreach (getDefaultRows() as $row): ?>
+            foreach (getDefaultRows($myBucketName) as $row): ?>
                 <div class="row <?php if ($index === 1) echo 'createNewDirRow'; ?>"><?php
                     if ($index === 0): ?>
                         <img src="/app/asset/img/add.svg" class="open show_txtbox"/>
