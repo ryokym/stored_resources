@@ -11,7 +11,7 @@ define('ON', 1);
 define('OFF', 0);
 
 // Path of UserList
-define('USER_LIST', __DIR__.'/auth/users.list.txt');
+define('USER_LIST', DOC_ROOT.'/app/common/auth/users.list.txt');
 
 // Path of AccountList
-define('AUTH_LIST', __DIR__.'/auth/authorize.list.txt');
+define('AUTH_LIST',  DOC_ROOT.'/app/common/auth/authorize.list.txt');
