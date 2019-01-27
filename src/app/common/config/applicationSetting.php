@@ -16,4 +16,4 @@ define('EXCLUDED_PATTERN', '/^[A-Za-z0-9_\-.()?!&\[\]]*$/');
 * PHP
 */
 // DisplayErrorSetting
-ini_set('display_errors', OFF);
+ini_set('display_errors', ON);
