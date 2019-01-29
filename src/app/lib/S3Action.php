@@ -19,21 +19,24 @@ class S3Action extends Formatter {
             $this->jsonDTO->setCurrentDirName($path);
         }
         $s3Path = parent::formattedS3PathName();
+        $response = array();
+
         if (is_dir($s3Path)) {
-            $response = array();
-            $nextItemLists = scandir($s3Path);
-            $nextItemLists = array_values($nextItemLists);
-            $response = json_encode($nextItemLists);
-            echo $response;
+            $response['isFile'] = false;
+            $response['result'] = scandir($s3Path);
+            $response['result'] = array_values($response['result']);
         } else {
-            $response = '';
+            $response['result'] = '';
+            $response['isFile'] = true;
             $file = fopen($s3Path, 'r', true);
             foreach (parent::getLines($file) as $line) {
-                $response .= $line;
+                $response['result'] .= $line;
             }
             fclose($file);
-            echo htmlspecialchars($response);
+            $response['result'] = htmlspecialchars($response['result']);
         }
+        $response = json_encode($response);
+        echo $response;
     }
 
     public function remove() {

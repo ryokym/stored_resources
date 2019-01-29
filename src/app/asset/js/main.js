@@ -2,17 +2,24 @@ $(function() {
     $('#remove_area').hide();
 });
 
+common.document.on('click', function () {
+  $(this).css('pointer-events','none');
+});
+
 common.document.on('click', '.row:has(.row_item)', function() {
     var thisObj = $(this);
     common.targetName = thisObj.find('.row_item').text();
     common.currentDirName = thisObj.parents('.level').attr('data-dir');
     common.currentLevel = parseInt(thisObj.parents('.level').attr('data-level'));
+    if (common.mode === 'createNewDir') {
+        common.mode = 'upload';
+        $('.close:visible').trigger('click');
+    }
     common.coloringTarget(thisObj, common.mode);
     var afterChangeAction = function(response) {
         var maxLevel = parseInt($('.level').eq(-1).attr('data-level'));
-        /* 選択された項目がディレクトリだった場合 */
-        if (isJSON(response) === true) {
-            var data = JSON.parse(response);
+        var data = JSON.parse(response);
+        if (data.isFile === false) {
             var templateClone = $('.template').clone();
             var template = $('.template')
             var newDirName = (common.currentLevel == 1)? common.targetName: common.currentDirName + '/' + common.targetName;
@@ -20,7 +27,7 @@ common.document.on('click', '.row:has(.row_item)', function() {
             common.adjustColumn();
             template.attr('data-level', ++common.currentLevel);
             template.attr('data-dir', newDirName);
-            data.forEach(function(value) {
+            data.result.forEach(function(value) {
                 template.append('<div class="row"><p class="row_item">' + value + '</p></div>');
             });
             template.show().removeClass('template');
@@ -28,14 +35,13 @@ common.document.on('click', '.row:has(.row_item)', function() {
             $('.prettyprint').empty();
             if (common.mode === 'upload') $('#upload_area').show();
             else common.addDraggable();
-            /* 選択された項目がファイルだった場合 */
         } else {
             var previewArea = $('#preview');
             common.isPreview = true;
             if (common.mode === 'upload') previewArea.show();
             previewArea.empty();
             $('#upload_area').hide();
-            previewArea.append('<code class="prettyprint">' + response +'</code>');
+            previewArea.append('<code class="prettyprint">' + data.result +'</code>');
             common.adjustColumn();
         }
     }
@@ -51,10 +57,10 @@ common.document.on('click', '.row:has(.row_item)', function() {
 /* moderemove */
 common.document.on('click', '#remove', function() {
     common.toggleFontColor();
+    $('.close:visible').trigger('click');
+    $('.show_txtbox').addClass('opacity');
     if (common.mode === 'upload') {
         common.mode = 'remove';
-        $('.close:visible').trigger('click');
-        $('.show_txtbox').addClass('opacity');
         $('#preview').hide();
         $('#upload_area').hide();
         $('#remove_area').show();
@@ -124,6 +130,7 @@ common.document.on('click', '.show_txtbox', function() {
         thisBtn.removeClass('show_txtbox');
         thisBtn.addClass('gen_dir');
         thisBtn.next('.close').show();
+        $('.show_txtbox').addClass('opacity');
         createNewDirRow.slideDown({
             start: function() {
                 $(this).css({display: "flex"});
@@ -138,7 +145,8 @@ common.document.on('click', '.close', function() {
     var createNewDirRow = plusBtn.parent().next('.createNewDirRow');
     common.mode = 'upload';
     plusBtn.removeClass('gen_dir');
-    plusBtn.addClass('show_txtbox')
+    plusBtn.addClass('show_txtbox');
+    $('.show_txtbox').removeClass('opacity');
     $(this).hide();
     createNewDirRow.slideUp();
 })
@@ -153,6 +161,7 @@ $(document).on('click', '.gen_dir', function() {
         var clone = thisColumn.find('.row:last').clone();
         common.currentDirName = thisColumn.attr('data-dir');
         afterMakedirAction = function() {
+            var createNewDirRow = $(this).parent().next('.createNewDirRow');
             common.mode = 'upload';
             clone.find('.row_item').text(common.targetName);
             thisColumn.append(clone);
@@ -160,14 +169,13 @@ $(document).on('click', '.gen_dir', function() {
             createDirBtnArea.find('.close').hide();
             // $('.createNewDirRow:visible').find('.textbox').val('');
             createDirBtnArea.find('.gen_dir').removeClass('gen_dir').addClass('show_txtbox');
-            var createNewDirRow = $(this).parent().next('.createNewDirRow');
+            $('.show_txtbox').removeClass('opacity');
             textboxArea.slideUp();
         }
         var makedirActionDataSet = common.getPostDataSet('makedir');
         common.postJson(makedirActionDataSet, afterMakedirAction);
     } else {
         textbox.addClass('error');
-        // textbox.css('background-color', 'red');
     }
 });
 /* createNewDir END */
@@ -221,26 +229,11 @@ function fileUpload(f) {
 }
 /* upload END */
 
-var isJSON = function(arg) {
-    arg = (typeof arg === "function") ? arg() : arg;
-    if (typeof arg  !== "string") {
-        return false;
-    }
-    try {
-    arg = (!JSON) ? eval("(" + arg + ")") : JSON.parse(arg);
-        return true;
-    } catch (e) {
-        return false;
-    }
-};
-
 /* keyboard shortcut */
 common.document.on('keydown', 'input:visible', function(e) {
     if (e.keyCode === 13) {
         $('.gen_dir').trigger('click');
     } else {
-        if ($(this).hasClass('error')) {
-            $(this).removeClass('error');
-        }
+        if ($(this).hasClass('error')) $(this).removeClass('error');
     }
 });

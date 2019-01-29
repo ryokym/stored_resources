@@ -65,6 +65,7 @@ common = {
         var defaults = {
             url : common.toAjax,
             type : "POST",
+            async: false,
             dataType : "text",
             data : dataObj,
             success : successFn,
@@ -92,4 +93,5 @@ common = {
             return false;
         }
     }
+
 }
