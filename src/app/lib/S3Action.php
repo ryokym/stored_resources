@@ -13,9 +13,8 @@ class S3Action extends Formatter {
     }
 
     public function change() {
-        $path = $this->jsonDTO->getCurrentDirName();
-        if (!empty($path)) {
-            parent::prependDS($path);
+        if (!parent::isRootDirectory()) {
+            $path = parent::prependDS($this->jsonDTO->getCurrentDirName());
             $this->jsonDTO->setCurrentDirName($path);
         }
         $s3Path = parent::formattedS3PathName();
@@ -40,9 +39,10 @@ class S3Action extends Formatter {
     }
 
     public function remove() {
+        $prefix = (parent::isRootDirectory())? $this->jsonDTO->getTargetName(): parent::formattedPathName();
         $results = $this->s3Object->listObjects([
             'Bucket' => $this->bucketName,
-            'Prefix' => parent::formattedPathName()
+            'Prefix' => $prefix
         ]);
         foreach ($results['Contents'] as $result) {
             $this->s3Object->deleteObject([
@@ -53,7 +53,7 @@ class S3Action extends Formatter {
     }
 
     public function makedir() {
-        $key = (empty($this->jsonDTO->getCurrentDirName()))? $this->jsonDTO->getTargetName(): parent::formattedPathName();
+        $key = (parent::isRootDirectory())? $this->jsonDTO->getTargetName(): parent::formattedPathName();
         // 最後に/付けないとファイルになる
         $pathName = parent::appendDS($key);
         // streamWrapperではBucketは作れる(mkdir()で)がDirectoryは作れない

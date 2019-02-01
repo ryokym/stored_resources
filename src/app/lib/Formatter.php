@@ -26,11 +26,12 @@ class Formatter {
         return self::_S3Protcol.$this->bucketName.$pathName;
     }
 
-    protected function prependDS(&$str) {
+    protected function prependDS($str) {
         $str = substr_replace($str, '/', 0, 0);
+        return $str;
     }
 
-    protected function appendDS(&$str) {
+    protected function appendDS($str) {
         $len = strlen($str);
         $str = substr_replace($str, '/', $len, 0);
         return $str;
@@ -39,6 +40,12 @@ class Formatter {
     protected function getLines($fName) {
         while (($line = fgets($fName)) !== false) {
             yield $line;
+        }
+    }
+
+    protected function isRootDirectory() {
+        if (empty($this->jsonDTO->getCurrentDirName())){
+            return true;
         }
     }
 }

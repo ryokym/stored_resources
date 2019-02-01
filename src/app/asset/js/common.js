@@ -22,21 +22,17 @@ common = {
     adjustColumn: function() {
         $('.level').each(function(){
             var level = parseInt($(this).attr('data-level'));
-            if (level > common.currentLevel) {
-                $(this).remove();
-            }
+            if (level > common.currentLevel) $(this).remove();
         });
     },
 
     toggleFontColor: function() {
         if (common.mode === 'remove') {
             var remove = common.document.find('.remove');
-            remove.addClass('upload');
-            remove.removeClass('remove');
+            remove.addClass('upload').removeClass('remove');
         } else {
             var upload = common.document.find('.upload');
-            upload.addClass('remove');
-            upload.removeClass('upload');
+            upload.addClass('remove').removeClass('upload');
         }
     },
 

@@ -4,20 +4,18 @@ require_once(__DIR__.'/layout/base.header.php');
 ?>
 <div class="container">
     <div class="column">
-        <div class="level" data-level="1" data-dir=""><?php
-        $index = 0;
+        <div class="level" data-level="1" data-dir="">
+            <div class="row">
+                <img src="/app/asset/img/add.svg" class="open show_txtbox"/>
+                <img src="/app/asset/img/close.svg" class="close"/>
+            </div>
+            <div class="row createNewDirRow">
+                <input class="textbox" type="text"/>
+            </div><?php
             foreach (getDefaultRows($myBucketName) as $row): ?>
-                <div class="row <?php if ($index === 1) echo 'createNewDirRow'; ?>"><?php
-                    if ($index === 0): ?>
-                        <img src="/app/asset/img/add.svg" class="open show_txtbox"/>
-                        <img src="/app/asset/img/close.svg" class="close"/><?php
-                    elseif ($index === 1): ?>
-                        <input class="textbox" type="text"/><?php
-                    else: ?>
-                        <p class="row_item"><?= $row ?></p><?php
-                    endif; ?>
+                <div class="row">
+                    <p class="row_item"><?= $row ?></p>
                 </div><?php
-                $index++;
             endforeach; ?>
             <div class="row" style="display: none;"><p class="row_item"></p></div>
         </div>
@@ -27,6 +25,7 @@ require_once(__DIR__.'/layout/base.header.php');
                 <img src="/app/asset/img/close.svg" class="close"/>
             </div>
             <div class="row createNewDirRow"><input class="textbox" type="text"/></div>
+            <div class="row" style="display: none;"><p class="row_item"></p></div>
         </div>
     </div>
 

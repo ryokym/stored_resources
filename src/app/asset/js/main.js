@@ -165,6 +165,7 @@ $(document).on('click', '.gen_dir', function() {
             common.mode = 'upload';
             clone.find('.row_item').text(common.targetName);
             thisColumn.append(clone);
+            clone.show();
             textbox.val('');
             createDirBtnArea.find('.close').hide();
             // $('.createNewDirRow:visible').find('.textbox').val('');

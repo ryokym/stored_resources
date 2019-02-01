@@ -10,4 +10,5 @@ define('S3_SET_OPTIONS', [
     'region'  => 'ap-northeast-1'
 ]);
 
-$myBucketName = 'storedresources.site';
+$myBucketName = 'ryotakoyama.ml';
+// $myBucketName = 'storedresources.site';
