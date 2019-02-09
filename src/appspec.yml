@@ -9,7 +9,7 @@ hooks:
       runas: root
 permissions:
   - object: /var/www/html/app/common/auth/
-    pattern: "authorize.list.txt"
+    pattern: "tokenList.txt, userDataList.txt",
     owner: root
     group: root
     mode: 666
