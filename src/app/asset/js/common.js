@@ -1,12 +1,15 @@
 window.common = {}
 common = {
     document: $(document),
+    userName: '',
+    password: '',
+    bucket: '',
     targetName: '',
     currentDirName: '',
     currentLevel: '',
     mode: 'upload',
     isPreview: false,
-    toAjax: '/app/content/main/execute.php',
+    toAjax: '',
 
     coloringTarget: function(thisElm, mode) {
         modeName = (mode === 'upload')? 'upload': 'remove';
@@ -88,6 +91,18 @@ common = {
         } else {
             return false;
         }
+    },
+
+    classSwitcher: function(before, after, callback) {
+        this.each(function() {
+            var elm = $(this);
+            if (elm.hasClass(before)) {
+                elm.addClass(after).removeClass(before);
+            } else {
+                elm.addClass(before).removeClass(after);
+            }
+        });
+        if (callback) callback();
     }
 
 }

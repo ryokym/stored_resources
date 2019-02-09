@@ -1,5 +1,5 @@
 <?php
-namespace Ajax;
+namespace S3;
 
 class JsonDTO {
     private $actionType;

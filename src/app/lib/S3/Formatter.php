@@ -1,8 +1,9 @@
 <?php
-namespace Ajax;
-use Ajax\JsonDTO;
+namespace S3;
+use S3\JsonDTO;
 
-class Formatter {
+
+class Formatter extends \Validator {
 
     protected $jsonDTO;
     protected $s3Object;
@@ -37,15 +38,16 @@ class Formatter {
         return $str;
     }
 
-    protected function getLines($fName) {
-        while (($line = fgets($fName)) !== false) {
-            yield $line;
-        }
-    }
-
     protected function isRootDirectory() {
         if (empty($this->jsonDTO->getCurrentDirName())){
             return true;
         }
     }
+
+    public static function getFiles($fileName) {
+        $file = $_FILES[$fileName];
+        if (\Validator::isValidFile($file)) return $file;
+        else throw new \Exception('ERROR. uploaded files can not be accepted');
+    }
+
 }

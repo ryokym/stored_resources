@@ -1,11 +1,12 @@
 <?php
 require_once($_SERVER["DOCUMENT_ROOT"].'/app/common/initialize.inc.php');
-require_once(__DIR__.'/functions.php');
 
-$logout = filter_input(INPUT_GET, 'logout');
-if (isset($logout)) actionLogout();
+autoloader(ACCOUNT_CLASSES);
 
-$userName = filter_input(INPUT_POST, 'userName');
-$password = filter_input(INPUT_POST, 'password');
+$SESToken = ($_SESSION['token'])?? NULL;
 
-if (getAuthThenSetCookies($userName, $password)) header('Location:/app/content/main/');
+if (filter_input(INPUT_GET, 'action') === 'logout') {
+    Account\Action::logout();
+} elseif (Account\Filter::isAllowAutoLogin($credentialOptions['TOKEN_LIST_FILE_PASS'], $SESToken)) {
+    header('Location:/app/content/main/');
+}

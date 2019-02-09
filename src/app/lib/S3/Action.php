@@ -1,8 +1,8 @@
 <?php
-namespace Ajax;
-use Ajax\Formatter;
+namespace S3;
+use S3\Formatter;
 
-class S3Action extends Formatter {
+class Action extends Formatter {
 
     public function __construct($myBucketName, $s3Object, $jsonDTO) {
         parent::__construct($myBucketName, $s3Object, $jsonDTO);
@@ -28,7 +28,7 @@ class S3Action extends Formatter {
             $response['result'] = '';
             $response['isFile'] = true;
             $file = fopen($s3Path, 'r', true);
-            foreach (parent::getLines($file) as $line) {
+            foreach (\Common::getLines($file) as $line) {
                 $response['result'] .= $line;
             }
             fclose($file);

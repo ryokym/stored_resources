@@ -12,7 +12,7 @@ require_once(__DIR__.'/layout/base.header.php');
             <div class="row createNewDirRow">
                 <input class="textbox" type="text"/>
             </div><?php
-            foreach (getDefaultRows($myBucketName) as $row): ?>
+            foreach (\Common::getDefaultRows($myBucketName) as $row): ?>
                 <div class="row">
                     <p class="row_item"><?= $row ?></p>
                 </div><?php

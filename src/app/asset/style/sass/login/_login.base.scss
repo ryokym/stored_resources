@@ -2,30 +2,32 @@
 /**
 * Color
 */
-$buttonColor: rgb(19, 86, 124);
-$buttonColorHover: lighten($buttonColor, 5%);
+$signInColor: rgb(21, 98, 142);
+$signUpColor: rgb(160, 22, 22);
 $tagTextColor: black;
 
 /**
 * Size
 */
 $titleFontSize: 1.8rem;
+$signFontSize: 0.4rem;
 
 /**
 * AdjustpPosition
 */
 $titleToLeft: 0.25rem;
-$tagSubmitToTop: 0.8rem;
+$titleToTop: 2.2vh;
+$tagSubmitToTop: 4.8vh;
 
 /**
 * Module
 */
-@mixin adjustPositionTitle($n: 0rem) {
+@mixin adjustPositionToLeft($n: 0rem) {
     position: relative;
     right: $n;
 }
 
-@mixin adjustPositionTagSubmit($n: 0rem) {
+@mixin adjustPositionToTop($n: 0rem) {
     position: relative;
     bottom: $n;
 }
@@ -41,10 +43,49 @@ $tagSubmitToTop: 0.8rem;
     width: 100%;
     height: 2em;
     margin: 10px 10px;
-    padding-left: 1em;
     border: none;
     border-radius: 10px;
     &:focus {
         outline: none;
     }
+}
+
+%unselectable {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+.sign_up_bk {
+    background-color: $signUpColor;
+    &:hover {
+        background-color: lighten($signUpColor, 5%);
+    }
+}
+
+.sign_in_bk {
+    background-color: $signInColor;
+    &:hover {
+        background-color: lighten($signInColor, 5%);
+    }
+}
+
+.sign_up_txt {
+    color: $signUpColor;
+    &:hover {
+        color: lighten($signUpColor, 5%);
+    }
+}
+
+.sign_in_txt {
+    color: $signInColor;
+    &:hover {
+        color: lighten($signInColor, 5%);
+    }
+}
+
+input[name="bucket"] {
+    display: none;
 }

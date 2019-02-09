@@ -1,4 +1,5 @@
 $(function() {
+    common.toAjax = '/app/content/main/execute.php';
     $('#remove_area').hide();
 });
 
@@ -118,7 +119,7 @@ common.document.on('click', '#expand', function() {
 
 /* logout */
 common.document.on('click', '#logout', function() {
-    location.href = '/app/content/login/index.php?logout';
+    location.href = '/app/content/login/index.php?action=logout';
 })
 
 /* createNewDir */

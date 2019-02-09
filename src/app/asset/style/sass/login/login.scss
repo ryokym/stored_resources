@@ -1,18 +1,43 @@
 @import 'login.base';
 
-body {
+#menu {
+    @include flex(flex-end, center);
+    @extend %tagArea;
+    width: 100vw;
+    height: 4vh;
+    cursor: pointer;
+    background-color: white;
+    #menu_wrapper {
+        @include flex();
+        flex-direction: horizontal;
+        position: relative;
+        right: 5vw;
+        span {
+            color: #323232;
+            margin: 0 1rem;
+        }
+        #sign {
+            @extend %unselectable;
+            font-size: $signFontSize;
+        }
+    }
+}
+
+#container {
     @include flex();
     height: 90vh;
+    clear: both;
     #wrapper {
         width: 50vw;
         height: 50vh;
         #title {
-            @include adjustPositionTitle($titleToLeft);
+            @include adjustPositionToLeft($titleToLeft);
+            @include adjustPositionToTop($titleToTop);
             @include flex(center, flex-end);
             height: 30%;
             width: 100%;
         }
-        form {
+        #form {
             @include flex();
             flex-direction: column;
             height: 70%;
@@ -21,24 +46,24 @@ body {
                 @extend %tagArea;
                 flex-direction: column;
                 width: 50%;
+                height: 50%;
                 input {
                     @extend %tagInput;
                     color: $tagTextColor;
+                    padding-left: 1em;
                 }
             }
             #submit {
                 @extend %tagArea;
                 width: 40%;
+                height: 50%;
                 input {
                     @extend %tagInput;
-                    @include adjustPositionTagSubmit($tagSubmitToTop);
-                    background-color: $buttonColor;
+                    @include adjustPositionToTop($tagSubmitToTop);
                     color: $baseFontColor;
                     cursor: pointer;
                     width: 100%;
-                    &:hover {
-                        background-color: $buttonColorHover;
-                    }
+                    text-align: center;
                 }
             }
         }
