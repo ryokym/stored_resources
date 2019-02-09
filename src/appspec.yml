@@ -8,8 +8,8 @@ hooks:
     - location: script/clean.sh
       runas: root
 permissions:
-  - object: /var/www/html/app/common/auth/
-    pattern: "*.txt",
+  - object: /var/www/html/app/common/auth
+    pattern: "**"
     owner: root
     group: root
     mode: 666
