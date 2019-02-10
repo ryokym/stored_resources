@@ -3,9 +3,9 @@ $(function() {
     $('#remove_area').hide();
 });
 
-common.document.on('click', function () {
-  $(this).css('pointer-events','none');
-});
+var rowClone = $('.row:last').clone();
+var template = $('.level').clone();
+template.find('.row:has(.row_item)').remove();
 
 common.document.on('click', '.row:has(.row_item)', function() {
     var thisObj = $(this);
@@ -18,24 +18,24 @@ common.document.on('click', '.row:has(.row_item)', function() {
     }
     common.coloringTarget(thisObj, common.mode);
     var afterChangeAction = function(response) {
-        var maxLevel = parseInt($('.level').eq(-1).attr('data-level'));
         var data = JSON.parse(response);
         if (data.isFile === false) {
-            var templateClone = $('.template').clone();
-            var template = $('.template')
+            var templateClone = template.clone();
             var newDirName = (common.currentLevel == 1)? common.targetName: common.currentDirName + '/' + common.targetName;
             common.isPreview = false;
             common.adjustColumn();
-            template.attr('data-level', ++common.currentLevel);
-            template.attr('data-dir', newDirName);
+            templateClone.attr('data-level', ++common.currentLevel);
+            templateClone.attr('data-dir', newDirName);
             data.result.forEach(function(value) {
-                template.append('<div class="row"><p class="row_item">' + value + '</p></div>');
+                templateClone.append('<div class="row"><p class="row_item">' + value + '</p></div>');
             });
-            template.show().removeClass('template');
-            $('.column').last().append(templateClone);
+            templateClone.show();
+            $('.column').append(templateClone);
             $('.prettyprint').empty();
+            delete templateClone;
             if (common.mode === 'upload') $('#upload_area').show();
             else common.addDraggable();
+
         } else {
             var previewArea = $('#preview');
             common.isPreview = true;
@@ -57,9 +57,10 @@ common.document.on('click', '.row:has(.row_item)', function() {
 
 /* moderemove */
 common.document.on('click', '#remove', function() {
+    var tagText = $('.show_txtbox');
     common.toggleFontColor();
+    common.classSwitcher.call(tagText,'opacity','');
     $('.close:visible').trigger('click');
-    $('.show_txtbox').addClass('opacity');
     if (common.mode === 'upload') {
         common.mode = 'remove';
         $('#preview').hide();
@@ -68,7 +69,6 @@ common.document.on('click', '#remove', function() {
         common.addDraggable();
     } else {
         common.mode = 'upload';
-        $('.show_txtbox').removeClass('opacity');
         $('#remove_area').hide();
         if (common.isPreview) $('#preview').show();
         else $('#upload_area').show();
@@ -98,8 +98,6 @@ common.document.on('click', '#remove', function() {
             } else {
                 data.draggable.parent().remove();
                 var afterRemoveAction = function() {
-                    // 遅い var elm = $('[data-dir="'+ common.currentDirName +'"]').find('.row_item:contains(' + common.targetName + ')');
-                    // elm.parent('.row').remove();
                     common.adjustColumn();
                 }
                 var removeActionDataSet = common.getPostDataSet('remove');
@@ -124,42 +122,35 @@ common.document.on('click', '#logout', function() {
 
 /* createNewDir */
 common.document.on('click', '.show_txtbox', function() {
-    if (common.mode === 'upload') {
-        common.mode = 'createNewDir';
-        var thisBtn = $(this);
-        var createNewDirRow = $(this).parent().next('.createNewDirRow');
-        thisBtn.removeClass('show_txtbox');
-        thisBtn.addClass('gen_dir');
-        thisBtn.next('.close').show();
-        $('.show_txtbox').addClass('opacity');
-        createNewDirRow.slideDown({
-            start: function() {
-                $(this).css({display: "flex"});
-                $(this).find('.textbox').focus();
-            }
-        });
-    }
+    var createNewDirRow = $(this).parent().next('.createNewDirRow');
+    common.classSwitcher.call($(this), 'gen_dir', 'show_txtbox');
+    common.classSwitcher.call($('.show_txtbox'), 'opacity', '');
+    common.mode = 'createNewDir';
+    $(this).next('.close').show();
+    createNewDirRow.slideDown({
+        start: function() {
+            $(this).css({display: "flex"});
+            $(this).find('.textbox').focus();
+        }
+    });
 });
 
 common.document.on('click', '.close', function() {
-    var plusBtn = $(this).prev();
-    var createNewDirRow = plusBtn.parent().next('.createNewDirRow');
+    var makeDirBtn = $(this).siblings('.gen_dir');
+    common.classSwitcher.call($('.show_txtbox'), 'opacity', '');
+    common.classSwitcher.call(makeDirBtn, 'gen_dir', 'show_txtbox');
+    $('.createNewDirRow:visible').slideUp();
     common.mode = 'upload';
-    plusBtn.removeClass('gen_dir');
-    plusBtn.addClass('show_txtbox');
-    $('.show_txtbox').removeClass('opacity');
     $(this).hide();
-    createNewDirRow.slideUp();
 })
 
-$(document).on('click', '.gen_dir', function() {
+common.document.on('click', '.gen_dir', function() {
     var textbox = $('.textbox:visible');
     common.targetName = textbox.val();
     if (common.newDirNameValidation(common.targetName)) {
         var createDirBtnArea = $(this).parent();
-        var textboxArea = createDirBtnArea.next();
         var thisColumn = $(this).parents('.level');
-        var clone = thisColumn.find('.row:last').clone();
+        var clone = rowClone.clone();
         common.currentDirName = thisColumn.attr('data-dir');
         afterMakedirAction = function() {
             var createNewDirRow = $(this).parent().next('.createNewDirRow');
@@ -169,10 +160,9 @@ $(document).on('click', '.gen_dir', function() {
             clone.show();
             textbox.val('');
             createDirBtnArea.find('.close').hide();
-            // $('.createNewDirRow:visible').find('.textbox').val('');
-            createDirBtnArea.find('.gen_dir').removeClass('gen_dir').addClass('show_txtbox');
-            $('.show_txtbox').removeClass('opacity');
-            textboxArea.slideUp();
+            common.classSwitcher.call($('.show_txtbox'), 'opacity', '');
+            common.classSwitcher.call(createDirBtnArea.find('.gen_dir'), 'gen_dir', 'show_txtbox');
+            $('.createNewDirRow:visible').slideUp();
         }
         var makedirActionDataSet = common.getPostDataSet('makedir');
         common.postRequest(makedirActionDataSet, afterMakedirAction);
@@ -208,9 +198,9 @@ common.document.on('drop', uploadDropArea, function(_e) {
 
 function fileUpload(f) {
     var formData = new FormData();
-    var toUploadDir = $('.level').eq(-2);
+    var toUploadDir = $('.level').eq(-1);
     var toUploadDirName = toUploadDir.attr('data-dir');
-    var clone = $('.level').first().find('.row:last').clone();
+    var clone = rowClone.clone();
     formData.append('file', f);
     common.currentDirName = toUploadDirName;
     var requestData = common.getPostDataSet('upload');

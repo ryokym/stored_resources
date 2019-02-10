@@ -19,14 +19,6 @@ require_once(__DIR__.'/layout/base.header.php');
             endforeach; ?>
             <div class="row" style="display: none;"><p class="row_item"></p></div>
         </div>
-        <div class="template level" data-level="">
-            <div class="row">
-                <img src="/app/asset/img/add.svg" class="open show_txtbox"/>
-                <img src="/app/asset/img/close.svg" class="close"/>
-            </div>
-            <div class="row createNewDirRow"><input class="textbox" type="text"/></div>
-            <div class="row" style="display: none;"><p class="row_item"></p></div>
-        </div>
     </div>
 
     <div class="src">
