@@ -1,16 +1,16 @@
 <?php
 require_once(__DIR__.'/include/initialize.php');
-use Account\JsonDTO;
+use Account\RequestDTO;
 use Account\Action;
 
-$jsonDTO = new JsonDTO();
+$RequestDTO = new RequestDTO();
 
-$jsonData = filter_input(INPUT_POST, 'jsonData', FILTER_DEFAULT,FILTER_REQUIRE_ARRAY);
-$jsonDTO->setProparties($jsonData);
+$requestData = filter_input(INPUT_POST, 'requestData', FILTER_DEFAULT,FILTER_REQUIRE_ARRAY);
+$RequestDTO->setProparties($requestData);
 
 try {
-    $action = new Action($jsonDTO, $credentialOptions);
-    $action->execute($jsonDTO->getActionType());
+    $action = new Action($RequestDTO, $credentialOptions);
+    $action->execute($RequestDTO->getActionType());
 } catch(\Exception $e) {
     echo $e->getMessage();
 }

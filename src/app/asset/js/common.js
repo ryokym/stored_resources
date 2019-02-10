@@ -49,7 +49,7 @@ common = {
 
     getPostDataSet : function(actionType) {
         var preset = {
-            jsonData : {
+            requestData : {
                 targetName: this.targetName,
                 currentDirName: this.currentDirName,
                 currentLevel: this.currentLevel,
@@ -60,7 +60,7 @@ common = {
         return params;
     },
 
-    postJson: function(dataObj, successFn, isFormData) {
+    postRequest: function(dataObj, successFn, isFormData) {
         var defaults = {
             url : common.toAjax,
             type : "POST",

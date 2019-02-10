@@ -1,16 +1,16 @@
 <?php
 namespace Account;
 use Common\Common;
-use Account\JsonDTO;
+use Account\RequestDTO;
 use Account\Filter;
 
 class Action extends Filter {
 
-    private $JsonDTO;
+    private $RequestDTO;
 
-    public function __construct(JsonDTO $JsonDTO, array $credentialOptions) {
+    public function __construct(RequestDTO $RequestDTO, array $credentialOptions) {
         parent::__construct($credentialOptions);
-        $this->JsonDTO = $JsonDTO;
+        $this->RequestDTO = $RequestDTO;
     }
 
     public function execute($actionType) {
@@ -18,8 +18,8 @@ class Action extends Filter {
     }
 
     public function signIn() {
-        $input['user'] = $this->JsonDTO->getUserName();
-        $input['pass'] = $this->JsonDTO->getPassword();
+        $input['user'] = $this->RequestDTO->getUserName();
+        $input['pass'] = $this->RequestDTO->getPassword();
         $udfp = $this->USER_DATA_FILE_PATH;
         $tlfp = $this->TOKEN_LIST_FILE_PASS;
         $errorMsg = 'Error! username or password is invalid';
@@ -50,9 +50,9 @@ class Action extends Filter {
 
     public function signUp() {
         $errorMsg = 'input user name is already in use';
-        $input['user'] = $this->JsonDTO->getUserName();
-        $input['pass'] = $this->JsonDTO->getPassword();
-        $input['bucket'] = $this->JsonDTO->getBucket();
+        $input['user'] = $this->RequestDTO->getUserName();
+        $input['pass'] = $this->RequestDTO->getPassword();
+        $input['bucket'] = $this->RequestDTO->getBucket();
         $udfp = $this->USER_DATA_FILE_PATH;
         $tlfp = $this->TOKEN_LIST_FILE_PASS;
         if (parent::isWriteAndReadable($udfp, $tlfp)) {

@@ -4,8 +4,8 @@ use S3\Formatter;
 
 class Action extends Formatter {
 
-    public function __construct($myBucketName, $s3Object, $jsonDTO) {
-        parent::__construct($myBucketName, $s3Object, $jsonDTO);
+    public function __construct($myBucketName, $s3Object, $RequestDTO) {
+        parent::__construct($myBucketName, $s3Object, $RequestDTO);
     }
 
     public function execute($actionType) {
@@ -14,8 +14,8 @@ class Action extends Formatter {
 
     public function change() {
         if (!parent::isRootDirectory()) {
-            $path = parent::prependDS($this->jsonDTO->getCurrentDirName());
-            $this->jsonDTO->setCurrentDirName($path);
+            $path = parent::prependDS($this->RequestDTO->getCurrentDirName());
+            $this->RequestDTO->setCurrentDirName($path);
         }
         $s3Path = parent::formattedS3PathName();
         $response = array();
@@ -39,7 +39,7 @@ class Action extends Formatter {
     }
 
     public function remove() {
-        $prefix = (parent::isRootDirectory())? $this->jsonDTO->getTargetName(): parent::formattedPathName();
+        $prefix = (parent::isRootDirectory())? $this->RequestDTO->getTargetName(): parent::formattedPathName();
         $results = $this->s3Object->listObjects([
             'Bucket' => $this->bucketName,
             'Prefix' => $prefix
@@ -53,7 +53,7 @@ class Action extends Formatter {
     }
 
     public function makedir() {
-        $key = (parent::isRootDirectory())? $this->jsonDTO->getTargetName(): parent::formattedPathName();
+        $key = (parent::isRootDirectory())? $this->RequestDTO->getTargetName(): parent::formattedPathName();
         // 最後に/付けないとファイルになる
         $pathName = parent::appendDS($key);
         // streamWrapperではBucketは作れる(mkdir()で)がDirectoryは作れない
@@ -65,17 +65,17 @@ class Action extends Formatter {
     }
 
     public function upload() {
-        $dirName = parent::appendDS($this->jsonDTO->getCurrentDirName());
-        $pathName = $dirName.$this->jsonDTO->getFileName();
+        $dirName = parent::appendDS($this->RequestDTO->getCurrentDirName());
+        $pathName = $dirName.$this->RequestDTO->getFileName();
         try {
             $this->s3Object->putObject(array(
                 'Bucket' => $this->bucketName,
                 'Key'    => $pathName,
-                'Body'   => fopen($this->jsonDTO->getTmpFileName(), 'r')
+                'Body'   => fopen($this->RequestDTO->getTmpFileName(), 'r')
             ));
         } catch (S3Exception $e) {
             echo $e->getMessage();
         }
-        echo $this->jsonDTO->getFileName();
+        echo $this->RequestDTO->getFileName();
     }
 }

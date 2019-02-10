@@ -42,8 +42,8 @@ submitBtn.click(function() {
         }
     }
 
-    common.postJson({
-        jsonData: {
+    common.postRequest({
+        requestData: {
             actionType: common.mode,
             userName: common.userName,
             password: common.password,

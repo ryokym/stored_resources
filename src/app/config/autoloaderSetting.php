@@ -2,7 +2,7 @@
 
 define('S3_CLASSES', [
     '/app/lib/S3/' => [
-        'JsonDTO',
+        'RequestDTO',
         'Action',
         'Formatter',
     ]
@@ -10,7 +10,7 @@ define('S3_CLASSES', [
 
 define('ACCOUNT_CLASSES', [
     '/app/lib/Account/' => [
-        'JsonDTO',
+        'RequestDTO',
         'Filter',
         'Action',
     ]

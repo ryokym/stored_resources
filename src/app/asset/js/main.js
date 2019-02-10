@@ -47,7 +47,7 @@ common.document.on('click', '.row:has(.row_item)', function() {
         }
     }
     actionDataSet = common.getPostDataSet('change');
-    common.postJson(actionDataSet,afterChangeAction)
+    common.postRequest(actionDataSet,afterChangeAction)
     .done(function() {
         $(document).ready(function() {
             PR.prettyPrint();
@@ -103,7 +103,7 @@ common.document.on('click', '#remove', function() {
                     common.adjustColumn();
                 }
                 var removeActionDataSet = common.getPostDataSet('remove');
-                common.postJson(removeActionDataSet, afterRemoveAction);
+                common.postRequest(removeActionDataSet, afterRemoveAction);
             }
         }
     });
@@ -175,7 +175,7 @@ $(document).on('click', '.gen_dir', function() {
             textboxArea.slideUp();
         }
         var makedirActionDataSet = common.getPostDataSet('makedir');
-        common.postJson(makedirActionDataSet, afterMakedirAction);
+        common.postRequest(makedirActionDataSet, afterMakedirAction);
     } else {
         textbox.addClass('error');
     }
@@ -213,9 +213,9 @@ function fileUpload(f) {
     var clone = $('.level').first().find('.row:last').clone();
     formData.append('file', f);
     common.currentDirName = toUploadDirName;
-    var jsonData = common.getPostDataSet('upload');
-    jsonData = JSON.stringify(jsonData);
-    formData.append('jsonData', jsonData);
+    var requestData = common.getPostDataSet('upload');
+    requestData = JSON.stringify(requestData);
+    formData.append('requestData', requestData);
     formData.append('isUpload', true);
     var afterUploadAction = function(response) {
         if (response === '') {
@@ -227,7 +227,7 @@ function fileUpload(f) {
         }
         $("#upload_drop_area").removeClass('uploadMouseOver');
     }
-    common.postJson(formData, afterUploadAction, true);
+    common.postRequest(formData, afterUploadAction, true);
 }
 /* upload END */
 

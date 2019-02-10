@@ -1,7 +1,7 @@
 <?php
 namespace Account;
 
-class JsonDTO {
+class RequestDTO {
     private $actionType;
     private $userName;
     private $password;

@@ -1,7 +1,7 @@
 <?php
 namespace S3;
 
-class JsonDTO {
+class RequestDTO {
     private $actionType;
     private $currentDirName;
     private $targetName = null;

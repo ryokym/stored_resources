@@ -1,24 +1,24 @@
 <?php
 namespace S3;
-use S3\JsonDTO;
+use S3\RequestDTO;
 
 
 class Formatter extends \Validator {
 
-    protected $jsonDTO;
+    protected $RequestDTO;
     protected $s3Object;
     protected $bucketName;
 
     const _S3Protcol = S3_PROTOCOL;
 
-    public function __construct($myBucketName, $s3Object, $jsonDTO) {
+    public function __construct($myBucketName, $s3Object, $RequestDTO) {
         $this->bucketName = $myBucketName;
         $this->s3Object = $s3Object;
-        $this->jsonDTO = $jsonDTO;
+        $this->RequestDTO = $RequestDTO;
     }
 
     protected function formattedPathName() {
-        $pathName = $this->jsonDTO->getCurrentDirName().'/'.$this->jsonDTO->getTargetName();
+        $pathName = $this->RequestDTO->getCurrentDirName().'/'.$this->RequestDTO->getTargetName();
         return $pathName;
     }
 
@@ -39,7 +39,7 @@ class Formatter extends \Validator {
     }
 
     protected function isRootDirectory() {
-        if (empty($this->jsonDTO->getCurrentDirName())){
+        if (empty($this->RequestDTO->getCurrentDirName())){
             return true;
         }
     }
