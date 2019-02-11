@@ -19,4 +19,4 @@ define('WEEKS', 60*60*24*7);
 define('CUSTOM', 8);
 define('COKIE_LIMIT', CUSTOM * WEEKS);
 
-session_set_cookie_params(COKIE_LIMIT);
+// session_set_cookie_params(COKIE_LIMIT);
