@@ -4,16 +4,19 @@
 define('APP_NAME', 'STORED RESOURCES 3.x');
 
 /**
-* UPLOAD
-*/
-// Maximum number of characters in uploaded file
-define('MAX_LENGTH', 40);
-
-// Name of file to be excluded
-define('EXCLUDED_PATTERN', '/^[A-Za-z0-9_\-.()?!&\[\]]*$/');
-
-/**
 * PHP
 */
 // DisplayErrorSetting
-ini_set('display_errors', ON);
+ini_set('display_errors', 'ON');
+
+/**
+* COOKIE
+*/
+// Cookie expiration date
+// One week in terms of seconds
+define('WEEKS', 60*60*24*7);
+// Customize
+define('CUSTOM', 8);
+define('COKIE_LIMIT', CUSTOM * WEEKS);
+
+session_set_cookie_params(COKIE_LIMIT);

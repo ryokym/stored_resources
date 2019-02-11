@@ -1,3 +1,4 @@
+"use strict";
 window.common = {}
 common = {
     document: $(document),
@@ -7,14 +8,22 @@ common = {
     targetName: '',
     currentDirName: '',
     currentLevel: '',
+    thisColumn: '',
     mode: 'upload',
     isPreview: false,
     toAjax: '',
 
+    setElementData: function(obj, callback) {
+        this.currentDirName = obj.parents('.level').attr('data-dir');
+        this.currentLevel = parseInt(obj.parents('.level').attr('data-level'));
+        this.thisColumn = obj.parents('.level');
+        if (callback) callback(obj);
+    },
+
     coloringTarget: function(thisElm, mode) {
-        modeName = (mode === 'upload')? 'upload': 'remove';
+        const modeName = (mode === 'upload')? 'upload': 'remove';
         $('.row').each(function() {
-            var someLevel = $(this).parents('.level').attr('data-level');
+            let someLevel = $(this).parents('.level').attr('data-level');
             if (parseInt(someLevel) >= common.currentLevel) {
                 $(this).removeClass(modeName);
             }
@@ -24,17 +33,17 @@ common = {
 
     adjustColumn: function() {
         $('.level').each(function(){
-            var level = parseInt($(this).attr('data-level'));
+            let level = parseInt($(this).attr('data-level'));
             if (level > common.currentLevel) $(this).remove();
         });
     },
 
     toggleFontColor: function() {
         if (common.mode === 'remove') {
-            var remove = common.document.find('.remove');
+            const remove = common.document.find('.remove');
             remove.addClass('upload').removeClass('remove');
         } else {
-            var upload = common.document.find('.upload');
+            const upload = common.document.find('.upload');
             upload.addClass('remove').removeClass('upload');
         }
     },
@@ -48,7 +57,7 @@ common = {
     },
 
     getPostDataSet : function(actionType) {
-        var preset = {
+        let preset = {
             requestData : {
                 targetName: this.targetName,
                 currentDirName: this.currentDirName,
@@ -61,7 +70,7 @@ common = {
     },
 
     postRequest: function(dataObj, successFn, isFormData) {
-        var defaults = {
+        let defaults = {
             url : common.toAjax,
             type : "POST",
             async: false,
@@ -70,7 +79,7 @@ common = {
             success : successFn,
         }
         if (isFormData) {
-            var defaultsAdd = {
+            let defaultsAdd = {
                 contentType: false,
                 processData: false,
             }
@@ -81,7 +90,7 @@ common = {
         return $.ajax(params);
     },
 
-    newDirNameValidation: function(input) {
+    fileOrDirNameValidation: function(input) {
         if (
             input !== '' &&
             input.length <= 40 &&
@@ -95,7 +104,7 @@ common = {
 
     classSwitcher: function(before, after, callback) {
         this.each(function() {
-            var elm = $(this);
+            const elm = $(this);
             if (elm.hasClass(before)) {
                 elm.addClass(after).removeClass(before);
             } else {

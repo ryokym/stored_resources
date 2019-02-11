@@ -3,7 +3,7 @@ namespace S3;
 use S3\RequestDTO;
 
 
-class Formatter extends \Validator {
+class Formatter extends Filter {
 
     protected $RequestDTO;
     protected $s3Object;
@@ -44,10 +44,40 @@ class Formatter extends \Validator {
         }
     }
 
+    protected function getOpenFileOnlyRead($path) {
+        if (file_exists($path)) {
+            $file = fopen($path, 'r', true);
+            return $file;
+        } else {
+            parent::getDisOpenFileException();
+        }
+    }
+
+    private function _getLines($fName) {
+        while (($line = fgets($fName)) !== false) {
+            yield $line;
+        }
+    }
+
+    protected function getLines($fName) {
+        $response = '';
+        $lineCnt = 0;
+        try {
+            foreach ($this->_getLines($fName) as $line) {
+                if (parent::isTolerableLineCount($lineCnt)) {
+                    $response .= $line;
+                    $lineCnt++;
+                }
+            }
+            return htmlspecialchars($response);
+        } finally {
+            fclose($fName);
+        }
+    }
+
     public static function getFiles($fileName) {
         $file = $_FILES[$fileName];
-        if (\Validator::isValidFile($file)) return $file;
-        else throw new \Exception('ERROR. uploaded files can not be accepted');
+        if (parent::isValidFile($file)) return $file;
     }
 
 }

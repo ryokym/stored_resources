@@ -3,8 +3,9 @@
 define('S3_CLASSES', [
     '/app/lib/S3/' => [
         'RequestDTO',
-        'Action',
+        'Filter',
         'Formatter',
+        'Action',
     ]
 ]);
 
@@ -19,6 +20,6 @@ define('ACCOUNT_CLASSES', [
 define('COMMON_CLASSES', [
     '/app/lib/Common/' => [
         'Common',
-        'Validator',
+        'Constants',
     ]
 ]);

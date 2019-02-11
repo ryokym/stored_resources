@@ -22,5 +22,5 @@ try {
     $action = new Action($myBucketName, $s3Object, $RequestDTO);
     $action->execute($RequestDTO->getActionType());
 } catch(\Exception $e) {
-    $e->getMessage();
+    echo $e->getMessage();
 }

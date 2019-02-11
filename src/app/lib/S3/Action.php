@@ -25,14 +25,9 @@ class Action extends Formatter {
             $response['result'] = scandir($s3Path);
             $response['result'] = array_values($response['result']);
         } else {
-            $response['result'] = '';
             $response['isFile'] = true;
-            $file = fopen($s3Path, 'r', true);
-            foreach (\Common::getLines($file) as $line) {
-                $response['result'] .= $line;
-            }
-            fclose($file);
-            $response['result'] = htmlspecialchars($response['result']);
+            $file = parent::getOpenFileOnlyRead($s3Path);
+            $response['result'] = parent::getLines($file);
         }
         $response = json_encode($response);
         echo $response;
@@ -67,15 +62,11 @@ class Action extends Formatter {
     public function upload() {
         $dirName = parent::appendDS($this->RequestDTO->getCurrentDirName());
         $pathName = $dirName.$this->RequestDTO->getFileName();
-        try {
-            $this->s3Object->putObject(array(
-                'Bucket' => $this->bucketName,
-                'Key'    => $pathName,
-                'Body'   => fopen($this->RequestDTO->getTmpFileName(), 'r')
-            ));
-        } catch (S3Exception $e) {
-            echo $e->getMessage();
-        }
+        $this->s3Object->putObject(array(
+            'Bucket' => $this->bucketName,
+            'Key'    => $pathName,
+            'Body'   => fopen($this->RequestDTO->getTmpFileName(), 'r')
+        ));
         echo $this->RequestDTO->getFileName();
     }
 }

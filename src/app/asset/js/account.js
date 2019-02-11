@@ -1,14 +1,16 @@
-var submitBtn = $('#submit input');
-var switch_txt = $('.switch_txt');
-var switch_bk = $('.switch_bk');
+const submitBtn = $('#submit input');
+const switch_txt = $('.switch_txt');
+const switch_bk = $('.switch_bk');
+const toUrl = '/app/content/main/index.php';
+const successMsg = 'Account creation succeeded';
 
 $(function() {
     common.mode = 'signIn';
     common.toAjax = '/app/content/login/execute.php';
 })
 
-var switchAccountMode = function() {
-    var inputBucket = $('input[name="bucket"]');
+const switchAccountMode = function() {
+    const inputBucket = $('input[name="bucket"]');
     if (submitBtn.hasClass('sign_in_bk')) {
         common.mode = 'signIn';
         submitBtn.val('Enter');
@@ -31,12 +33,12 @@ submitBtn.click(function() {
     common.userName = $('input[name="userName"]').val();
     common.password = $('input[name="password"]').val();
     common.bucket = $('input[name="bucket"]').val();
-    var afterSignAction = function(response) {
+    const afterSignAction = function(response) {
         if (response === 'enter') {
-            location.href = '/app/content/main/index.php';
+            location.href = toUrl;
         } else if (response === 'create') {
-            alert('Account creation succeeded');
-            location.href = '/app/content/main/index.php';
+            alert(successMsg);
+            location.href = toUrl;
         } else {
             alert(response);
         }
