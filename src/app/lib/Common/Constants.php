@@ -3,6 +3,15 @@
 class Constants {
 
     /**
+    * TOKEN String length
+    */
+    // MIN
+    public const TOKEN_MIN_LENGTH = 25;
+
+    // MAX
+    public const TOKEN_MAX_LENGTH = 32;
+
+    /**
     * S3\Action/ Change
     */
     public const LIMIT_LINE = 5000;

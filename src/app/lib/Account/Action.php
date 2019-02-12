@@ -27,20 +27,22 @@ class Action extends Filter {
             $userDataList = file_get_contents($udfp);
             $tokenList = file_get_contents($tlfp);
             $userDataLists = json_decode($userDataList, true);
-            foreach ($userDataLists as $key => $account) {
-                if ($account['user'] === $input['user'] && password_verify($input['pass'], $account['pass'])) {
-                    $newToken = bin2hex(random_bytes(mt_rand(25, 32)));
-                    $newUserDataList = str_replace($account['token'], $newToken, $userDataList);
-                    if (parent::isResisted($tokenList, $account['token'], false)) {
-                        $newTokenList = str_replace($account['token'], $newToken, $tokenList);
-                    } else {
-                        $newTokenList = $tokenList.$newToken.',';
+            if (is_array($userDataLists)) {
+                foreach ($userDataLists as $key => $account) {
+                    if ($account['user'] === $input['user'] && password_verify($input['pass'], $account['pass'])) {
+                        $newToken = bin2hex(random_bytes(mt_rand(\Common::TOKEN_MIN_LENGTH, \Common::TOKEN_MAX_LENGTH)));
+                        $newUserDataList = str_replace($account['token'], $newToken, $userDataList);
+                        if (parent::isResisted($tokenList, $account['token'], false)) {
+                            $newTokenList = str_replace($account['token'], $newToken, $tokenList);
+                        } else {
+                            $newTokenList = $tokenList.$newToken.',';
+                        }
+                        file_put_contents($tlfp, $newTokenList);
+                        file_put_contents($udfp, $newUserDataList);
+                        $_SESSION['token'] = $newToken;
+                        $_SESSION['bucket'] = $account['bucket'];
+                        $errorMsg = false;
                     }
-                    file_put_contents($tlfp, $newTokenList);
-                    file_put_contents($udfp, $newUserDataList);
-                    $_SESSION['token'] = $newToken;
-                    $_SESSION['bucket'] = $account['bucket'];
-                    $errorMsg = false;
                 }
             }
         }

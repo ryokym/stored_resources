@@ -13,10 +13,9 @@ ini_set('display_errors', 'ON');
 * COOKIE
 */
 // Cookie expiration date
+// Customize
+define('CUSTOM', 4);
 // One week in terms of seconds
 define('WEEKS', 60*60*24*7);
-// Customize
-define('CUSTOM', 8);
 define('COKIE_LIMIT', CUSTOM * WEEKS);
-
-// session_set_cookie_params(COKIE_LIMIT);
+ini_set( 'session.gc_maxlifetime', COKIE_LIMIT );
