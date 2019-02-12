@@ -1,6 +1,5 @@
 <?php
 namespace S3;
-use S3\Formatter;
 
 class Action extends Formatter {
 

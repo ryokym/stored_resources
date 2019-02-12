@@ -1,8 +1,5 @@
 <?php
 namespace Account;
-use Common\Common;
-use Account\RequestDTO;
-use Account\Filter;
 
 class Action extends Filter {
 
@@ -30,7 +27,7 @@ class Action extends Filter {
             if (is_array($userDataLists)) {
                 foreach ($userDataLists as $key => $account) {
                     if ($account['user'] === $input['user'] && password_verify($input['pass'], $account['pass'])) {
-                        $newToken = bin2hex(random_bytes(mt_rand(\Common::TOKEN_MIN_LENGTH, \Common::TOKEN_MAX_LENGTH)));
+                        $newToken = bin2hex(random_bytes(mt_rand(\Constants::TOKEN_MIN_LENGTH, \Constants::TOKEN_MAX_LENGTH)));
                         $newUserDataList = str_replace($account['token'], $newToken, $userDataList);
                         if (parent::isResisted($tokenList, $account['token'], false)) {
                             $newTokenList = str_replace($account['token'], $newToken, $tokenList);

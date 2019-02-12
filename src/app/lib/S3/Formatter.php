@@ -1,7 +1,5 @@
 <?php
 namespace S3;
-use S3\RequestDTO;
-
 
 class Formatter extends Filter {
 

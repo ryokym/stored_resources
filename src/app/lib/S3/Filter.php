@@ -1,6 +1,5 @@
 <?php
 namespace S3;
-use Exception;
 
 class Filter {
 
@@ -14,7 +13,7 @@ class Filter {
         {
             return true;
         } else {
-            throw new Exception('ERROR / Uploaded files can not be accepted');
+            throw new \Exception('ERROR / Uploaded files can not be accepted');
         }
     }
 
@@ -23,13 +22,13 @@ class Filter {
     */
     protected function isTolerableLineCount($count) {
         if ($count === \Constants::LIMIT_LINE) {
-            throw new Exception('{"result":"ERROR. It can not be displayed because it exceeds '.$count.' rows with the maximum number of lines"}');
+            throw new \Exception('{"result":"ERROR. It can not be displayed because it exceeds '.$count.' rows with the maximum number of lines"}');
         } else {
             return true;
         }
     }
 
     protected function getDisOpenFileException() {
-        throw new Exception('{"result":"ERROR. No such file or directory"}');
+        throw new \Exception('{"result":"ERROR. No such file or directory"}');
     }
 }

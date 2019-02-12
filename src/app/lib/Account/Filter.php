@@ -1,6 +1,5 @@
 <?php
 namespace Account;
-use \Exception;
 
 class Filter {
 
@@ -22,29 +21,26 @@ class Filter {
         foreach ($classOptions as $classOption) {
             if (!array_key_exists($classOption, $credentialOptions)) $isActivate = false;
         }
-        if (!$isActivate) throw new Exception("system error occurred \none of the credentialoptions is not set");
+        if (!$isActivate) throw new \Exception("system error occurred \none of the credentialoptions is not set");
         else return true;
     }
 
     protected function isWriteAndReadable(...$files) {
-        $isFail = false;
         foreach ($files as $file) {
             if (!is_readable($file)) {
-                throw new Exception("system error occurred \npassword file is unreadable");
-                $isFail = true;
+                throw new \Exception("system error occurred \none of the account setting files is unreadable");
             }
             if (!is_writable($file)) {
-                throw new Exception("system error occurred \npassword file is write disabled");
-                $isFail = true;
+                throw new \Exception("system error occurred \none of the account setting files is write disabled");
             }
         }
-        if (!$isFail) return true;
+        return true;
     }
 
     /* Fetch TokenList and check if there is a token in it  */
     public static function isResisted($list, $str, $isPath = true) {
         if ($isPath) {
-            if (!is_readable($list)) throw new Exception("system error occurred \nfile is unreadable");
+            if (!is_readable($list)) throw new \Exception("system error occurred \nfile is unreadable");
             $list = file_get_contents($list);
         }
         if (strpos($list, $str) === false) return false;
@@ -53,6 +49,7 @@ class Filter {
 
     /* Validate login permission */
     public static function isAllowAutoLogin($tokenListPath, $SESToken) {
+        if (!$tokenListPath) throw new \Exception("system error occurred \ntoken list file is not found");
         if (empty($SESToken)) return false;
         if (self::isResisted($tokenListPath, $SESToken)) return true;
         else return false;
