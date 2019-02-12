@@ -40,7 +40,7 @@ class Filter {
     /* Fetch TokenList and check if there is a token in it  */
     public static function isResisted($list, $str, $isPath = true) {
         if ($isPath) {
-            if (!is_readable($list)) throw new \Exception("system error occurred \nfile is unreadable");
+            if (!is_readable($list)) throw new \Exception("system error occurred \nauth file is unreadable");
             $list = file_get_contents($list);
         }
         if (strpos($list, $str) === false) return false;
