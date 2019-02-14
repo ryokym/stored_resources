@@ -1,8 +1,13 @@
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_URI} !/app/content/main/index\.php$
+RewriteRule .* /app/content/main/index\.php [L]
+
 <Files ~ "^\.htaccess$">
 deny from all
 </Files>
 
-<FilesMatch "^(tokenList\.php|userDataList\.php)">
+<FilesMatch "^(tokenList\.txt|userDataList\.txt)">
 deny from all
 </FilesMatch>
 
