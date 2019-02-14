@@ -1,7 +1,6 @@
-RewriteEngine On
+RewriteEngine ON
 RewriteBase /
-RewriteCond %{REQUEST_URI} !/app/content/main/index\.php$
-RewriteRule .* /app/content/main/index\.php [L]
+RewriteRule ^$ /app/content/main/ [L]
 
 <Files ~ "^\.htaccess$">
 deny from all

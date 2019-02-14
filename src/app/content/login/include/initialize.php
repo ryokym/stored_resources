@@ -9,7 +9,7 @@ try {
     if (filter_input(INPUT_GET, 'action') === 'logout') {
         Account\Action::logout();
     } elseif (Account\Filter::isAllowAutoLogin($tokenList, $SESToken)) {
-        header('Location:/app/content/main/');
+        header('Location:/');
     }
 } catch(\Exception $e) {
     die($e->getMessage());

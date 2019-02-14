@@ -1,7 +1,7 @@
 const submitBtn = $('#submit input');
 const switch_txt = $('.switch_txt');
 const switch_bk = $('.switch_bk');
-const toUrl = '/app/content/main/index.php';
+const toUrl = '/';
 const successMsg = 'Account creation succeeded';
 
 $(function() {
