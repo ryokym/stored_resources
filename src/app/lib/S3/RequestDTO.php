@@ -3,7 +3,7 @@ namespace S3;
 
 class RequestDTO {
     private $actionType;
-    private $currentDirName;
+    private $currentDirName = null;
     private $targetName = null;
     private $currentLevel = null;
     private $fileName = null;

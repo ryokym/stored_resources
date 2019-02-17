@@ -17,73 +17,73 @@ class Action extends Filter {
     public function signIn() {
         $input['user'] = $this->RequestDTO->getUserName();
         $input['pass'] = $this->RequestDTO->getPassword();
-        $udfp = $this->USER_DATA_FILE_PATH;
-        $tlfp = $this->TOKEN_LIST_FILE_PASS;
-        $errorMsg = 'Error! username or password is invalid';
-        if (parent::isWriteAndReadable($udfp, $tlfp)) {
-            $userDataList = file_get_contents($udfp);
-            $tokenList = file_get_contents($tlfp);
-            $userDataLists = json_decode($userDataList, true);
-            if (is_array($userDataLists)) {
-                foreach ($userDataLists as $key => $account) {
-                    if ($account['user'] === $input['user'] && password_verify($input['pass'], $account['pass'])) {
-                        $newToken = bin2hex(random_bytes(mt_rand(\Constants::TOKEN_MIN_LENGTH, \Constants::TOKEN_MAX_LENGTH)));
-                        $newUserDataList = str_replace($account['token'], $newToken, $userDataList);
-                        if (parent::isResisted($tokenList, $account['token'], false)) {
-                            $newTokenList = str_replace($account['token'], $newToken, $tokenList);
-                        } else {
-                            $newTokenList = $tokenList.$newToken.',';
-                        }
-                        file_put_contents($tlfp, $newTokenList);
-                        file_put_contents($udfp, $newUserDataList);
-                        $_SESSION['token'] = $newToken;
-                        $_SESSION['bucket'] = $account['bucket'];
-                        $errorMsg = false;
+        $msg = '';
+        $isFound = false;
+        $userDataList = file_get_contents($this->USER_DATA_FILE_PATH);
+        $tokenList = file_get_contents($this->TOKEN_LIST_FILE_PASS);
+        $userDataLists = json_decode($userDataList, true);
+        if (is_array($userDataLists)) {
+            foreach ($userDataLists as $key => $account) {
+                if ($account['user'] === $input['user'] && password_verify($input['pass'], $account['pass'])) {
+                    $newToken = bin2hex(random_bytes(mt_rand(\Constants::TOKEN_MIN_LENGTH, \Constants::TOKEN_MAX_LENGTH)));
+                    $newUserDataList = str_replace($account['token'], $newToken, $userDataList);
+                    if (parent::isResisted($tokenList, $account['token'], false)) {
+                        $newTokenList = str_replace($account['token'], $newToken, $tokenList);
+                    } else {
+                        $newTokenList = $tokenList.$newToken.',';
                     }
+                    file_put_contents($this->USER_DATA_FILE_PATH, $newUserDataList);
+                    file_put_contents($this->TOKEN_LIST_FILE_PASS, $newTokenList);
+                    $_SESSION['token'] = $newToken;
+                    $_SESSION['bucket']  = parent::getOslDecryptStirng($account['bucket'], ENC_METHOD, $input['pass'], $account['iv']);
+                    $isFound = true;
                 }
             }
         }
-        if ($errorMsg) echo $errorMsg;
+        if (!$isFound) echo 'Error! username or password is invalid';
         else echo 'enter';
     }
 
     public function signUp() {
-        $errorMsg = 'input user name is already in use';
+        $msg = '';
         $input['user'] = $this->RequestDTO->getUserName();
         $input['pass'] = $this->RequestDTO->getPassword();
         $input['bucket'] = $this->RequestDTO->getBucket();
-        $udfp = $this->USER_DATA_FILE_PATH;
-        $tlfp = $this->TOKEN_LIST_FILE_PASS;
-        if (parent::isWriteAndReadable($udfp, $tlfp)) {
-            $userDataList = file_get_contents($udfp);
-            $tokenList = file_get_contents($tlfp);
+        if (parent::isNotEmptyUserInputs($input)) {
+            $userDataList = file_get_contents($this->USER_DATA_FILE_PATH);
+            $tokenList = file_get_contents($this->TOKEN_LIST_FILE_PASS);
             $userDataLists = json_decode($userDataList, true);
-            $exist = false;
+            $used = false;
             if (!empty($userDataLists)) {
                 foreach ($userDataLists as $key => $account) {
-                    if ($account['user'] === $input['user']) $exist = true;
+                    if ($account['user'] === $input['user']) $used = true;
                 }
             }
-            if (!$exist) {
-                $newToken = bin2hex(random_bytes(mt_rand(25, 32)));
+            if (!$used) {
+                \S3\Init::checkAvailableBucket(NULL, $input['bucket'], S3_SET_OPTIONS);
+                $newToken = bin2hex(random_bytes(mt_rand(\Constants::TOKEN_MIN_LENGTH, \Constants::TOKEN_MAX_LENGTH)));
+                $userBucket = $input['bucket'];
+                $input['iv'] = parent::getIvParam(openssl_cipher_iv_length(ENC_METHOD));
+                $input['bucket'] = parent::getOslEncryptString($input['bucket'], ENC_METHOD, $input['pass'], $input['iv']);
                 $input['pass'] = password_hash($input['pass'], PASSWORD_DEFAULT);
                 $input['token'] =  $newToken;
                 $userDataLists[] =  $input;
                 $newTokenList = $tokenList.$newToken.',';
-                file_put_contents($udfp, json_encode($userDataLists));
-                file_put_contents($tlfp, $newTokenList);
+                file_put_contents($this->USER_DATA_FILE_PATH, json_encode($userDataLists));
+                file_put_contents($this->TOKEN_LIST_FILE_PASS, $newTokenList);
                 $_SESSION['token'] = $newToken;
-                $_SESSION['bucket'] = $input['bucket'];
+                $_SESSION['bucket'] = $userBucket;
                 $errorMsg = false;
             }
+            if ($used) $msg = 'input user name is already in use';
         }
-        if ($errorMsg) echo $errorMsg;
+        if ($msg) echo $msg;
         else echo 'create';
     }
 
     public static function logout() {
         session_destroy();
-        header('Location:./');
+        header('Location:/app/content/login/');
     }
 
 }

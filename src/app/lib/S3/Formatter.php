@@ -4,15 +4,12 @@ namespace S3;
 class Formatter extends Filter {
 
     protected $RequestDTO;
-    protected $s3Object;
-    protected $bucketName;
 
     const _S3Protcol = S3_PROTOCOL;
 
     public function __construct($myBucketName, $s3Object, $RequestDTO) {
-        $this->bucketName = $myBucketName;
-        $this->s3Object = $s3Object;
         $this->RequestDTO = $RequestDTO;
+        parent::__construct($myBucketName, $s3Object);
     }
 
     protected function formattedPathName() {

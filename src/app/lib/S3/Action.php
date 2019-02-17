@@ -68,4 +68,8 @@ class Action extends Formatter {
         ));
         echo $this->RequestDTO->getFileName();
     }
+
+    public static function logout() {
+        session_destroy();
+    }
 }

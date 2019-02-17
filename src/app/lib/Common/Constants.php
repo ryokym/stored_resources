@@ -2,7 +2,11 @@
 
 class Constants {
 
-    /**
+    /*********************
+    * ACCOUNT            *
+    *********************/
+
+    /*
     * TOKEN String length
     */
     // MIN
@@ -11,12 +15,17 @@ class Constants {
     // MAX
     public const TOKEN_MAX_LENGTH = 32;
 
-    /**
+    /*********************
+    * S3                 *
+    *********************/
+
+    /*
     * S3\Action/ Change
     */
+    // MAX LINE
     public const LIMIT_LINE = 5000;
 
-    /**
+    /*
     * S3\Action/ Upload
     */
     // Minimum number of size in uploaded file

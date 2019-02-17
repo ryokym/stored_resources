@@ -19,6 +19,9 @@ try {
         $requestData = filter_input(INPUT_POST, 'requestData', FILTER_DEFAULT,FILTER_REQUIRE_ARRAY);
         $RequestDTO->setProparties($requestData);
     }
+
+    if ($RequestDTO->getActionType() === 'logout') Action::logout();
+
     $action = new Action($myBucketName, $s3Object, $RequestDTO);
     $action->execute($RequestDTO->getActionType());
 } catch(\Exception $e) {

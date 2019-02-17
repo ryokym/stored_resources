@@ -1,6 +1,11 @@
 RewriteEngine ON
 RewriteBase /
+RewriteCond %{QUERY_STRING} (logout|signin)
+RewriteRule ^index\.php$ /app/content/login/ [L]
 RewriteRule ^$ /app/content/main/ [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /app/content/main/ [L]
 
 <Files ~ "^\.htaccess$">
 deny from all

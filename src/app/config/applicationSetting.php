@@ -7,7 +7,7 @@ define('APP_NAME', 'STORED RESOURCES 3.x');
 * PHP
 */
 // DisplayErrorSetting
-ini_set('display_errors', 'OFF');
+ini_set('display_errors', 'ON');
 
 /**
 * COOKIE
