@@ -3,7 +3,8 @@
 <!DOCTYPE html>
 <html lang="ja" dir="ltr">
     <head>
-        <meta charset="utf-8">
+        <meta charset="utf-8"/>
+        <meta name="robots" content="none"/>
         <link rel="stylesheet" href="/app/asset/style/css/login.min.css"/>
         <link rel="stylesheet" href="/app/asset/style/css/reset.css"/>
     </head>

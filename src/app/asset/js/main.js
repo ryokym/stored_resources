@@ -2,17 +2,18 @@ $(function() {
     $('#remove_area').hide();
 });
 
-common.toAjax = '/app/content/main/execute.php';
-const rowClone = $('.row:last').clone();
-const template = $('.level').clone();
+common.toAjax   =   '/app/content/main/execute.php';
+const rowClone  =   $('.row:last').clone();
+const template  =   $('.level').clone();
 template.find('.row:has(.row_item)').remove();
 
-const previewArea = $('#preview');
-const uploadArea = $('#upload_area');
-const uploadDropArea = $('#upload_drop_area');
-const removeArea = $('#remove_area');
-const removeDropArea = $('#remove_drop_area');
-const column = $('.column');
+const previewArea    =  $('#preview');
+const uploadArea     =  $('#upload_area');
+const uploadDropArea =  $('#upload_drop_area');
+const removeArea     =  $('#remove_area');
+const removeDropArea =  $('#remove_drop_area');
+const columnArea     =  $('.column');
+const groundLevel    =  1;
 
 
 common.document.on('click', '.row:has(.row_item)', function() {
@@ -28,18 +29,19 @@ common.document.on('click', '.row:has(.row_item)', function() {
         const data = JSON.parse(response);
         if (data.isFile === false) {
             const templateClone = template.clone();
-            const newDirName = (common.currentLevel == 1)?
-                common.targetName:
-                common.currentDirName + '/' + common.targetName;
+            const newDirName = (common.currentLevel === groundLevel)
+                ? common.targetName
+                : common.currentDirName + '/' + common.targetName;
             common.isPreview = false;
             common.adjustColumn();
-            templateClone.attr('data-level', ++common.currentLevel);
-            templateClone.attr('data-dir', newDirName);
+            templateClone.data('level', ++common.currentLevel);
+            templateClone.data('dir', newDirName);
+            var elm = '';
             data.result.forEach(function(value) {
-                templateClone.append('<div class="row"><p class="row_item">' + value + '</p></div>');
+                elm += '<div class="row"><p class="row_item">' + value + '</p></div>';
             });
-            templateClone.show();
-            column.append(templateClone);
+            columnArea.append(templateClone);
+            templateClone.show().append(elm);
             $('.prettyprint').empty();
             if (common.mode === 'upload') uploadArea.show();
             else common.addDraggable();
@@ -115,8 +117,8 @@ common.document.on('click', '#remove', function() {
 
 /* expand */
 common.document.on('click', '#expand', function() {
-    if (column.hasClass('hide')) column.show('slide', '', 300).removeClass('hide')
-    else column.hide('slide', '', 300).promise().done(function(){ column.addClass('hide');});
+    if (columnArea.hasClass('hide')) columnArea.show('slide', '', 300).removeClass('hide')
+    else columnArea.hide('slide', '', 300).promise().done(function(){ columnArea.addClass('hide');});
 });
 
 /* logout */
@@ -132,7 +134,7 @@ common.document.on('click', '#logout', function() {
 common.document.on('click', '.show_txtbox', function() {
     const textbox = $('.show_txtbox');
     common.setElementData($(this));
-    const createNewDirRow = common.thisColumn.find('.createNewDirRow');
+    const createNewDirRow = common.currentDirElm.find('.createNewDirRow');
     common.classSwitcher.call($(this), 'gen_dir', 'show_txtbox');
     common.classSwitcher.call($('.show_txtbox'), 'opacity', '');
     common.mode = 'createNewDir';
@@ -160,13 +162,13 @@ common.document.on('click', '.gen_dir', function() {
         common.targetName = elm.val();
     })
     if (common.fileOrDirNameValidation(common.targetName)) {
-        const createDirBtnArea = common.thisColumn.find('.row:first');
+        const createDirBtnArea = common.currentDirElm.find('.row').first();
         const clone = rowClone.clone();
         afterMakedirAction = function() {
-            const createNewDirRow = common.thisColumn.find('.createNewDirRow');
+            const createNewDirRow = common.currentDirElm.find('.createNewDirRow');
             common.mode = 'upload';
             clone.find('.row_item').text(common.targetName);
-            common.thisColumn.append(clone);
+            common.currentDirElm.append(clone);
             clone.show();
             textbox.val('');
             createDirBtnArea.find('.close').hide();
@@ -209,7 +211,7 @@ function fileUpload(f) {
     const clone = rowClone.clone();
     const formData = new FormData();
     const toUploadDir = $('.level').eq(-1);
-    common.currentDirName = toUploadDir.attr('data-dir');
+    common.currentDirName = toUploadDir.data('dir');
     formData.append('file', f);
     let requestData = common.getPostDataSet('upload');
     requestData = JSON.stringify(requestData);

@@ -1,29 +1,30 @@
 "use strict";
 window.common = {}
 common = {
-    document: $(document),
-    userName: '',
-    password: '',
-    bucket: '',
-    targetName: '',
-    currentDirName: '',
-    currentLevel: '',
-    thisColumn: '',
-    mode: 'upload',
-    isPreview: false,
-    toAjax: '',
+    userName       :    '',
+    password       :    '',
+    bucket         :    '',
+    targetName     :    '',
+    currentDirName :    '',
+    currentLevel   :    '',
+    currentDirElm  :    '',
+    toAjax         :    '',
+
+    mode           :    'upload',
+    isPreview      :    false,
+    document       :    $(document),
 
     setElementData: function(obj, callback) {
-        this.currentDirName = obj.parents('.level').attr('data-dir');
-        this.currentLevel = parseInt(obj.parents('.level').attr('data-level'));
-        this.thisColumn = obj.parents('.level');
+        this.currentDirElm = obj.parents('.level');
+        this.currentDirName = this.currentDirElm.data('dir');
+        this.currentLevel = parseInt(this.currentDirElm.data('level'));
         if (callback) callback(obj);
     },
 
     coloringTarget: function(thisElm, mode) {
         const modeName = (mode === 'upload')? 'upload': 'remove';
         $('.row').each(function() {
-            let someLevel = $(this).parents('.level').attr('data-level');
+            let someLevel = $(this).parents('.level').data('level');
             if (parseInt(someLevel) >= common.currentLevel) {
                 $(this).removeClass(modeName);
             }
@@ -33,7 +34,7 @@ common = {
 
     adjustColumn: function() {
         $('.level').each(function(){
-            let level = parseInt($(this).attr('data-level'));
+            let level = parseInt($(this).data('level'));
             if (level > common.currentLevel) $(this).remove();
         });
     },
@@ -95,11 +96,10 @@ common = {
             input !== '' &&
             input.length <= 40 &&
             input.match(/^[A-Za-z0-9_\-.()?!&\[\]]*$/)
-        ) {
-            return true;
-        } else {
-            return false;
-        }
+        )
+        { return true; }
+        else
+        { return false;}
     },
 
     classSwitcher: function(before, after, callback) {
