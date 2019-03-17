@@ -1,97 +1,70 @@
+/**
+* common js
+*/
+
 "use strict";
+
+/* common objects
+-------------------------------------------------------*/
+
 window.common = {}
+
 common = {
-    userName       :    '',
-    password       :    '',
-    bucket         :    '',
-    targetName     :    '',
-    currentDirName :    '',
-    currentLevel   :    '',
-    currentDirElm  :    '',
-    toAjax         :    '',
+    mode     : '',
+    toAjax   : '',
+    basePath : '/app/content/',
+    document : $(document),
 
-    mode           :    'upload',
-    isPreview      :    false,
-    document       :    $(document),
-
-    setElementData: function(obj, callback) {
-        this.currentDirElm = obj.parents('.level');
-        this.currentDirName = this.currentDirElm.data('dir');
-        this.currentLevel = parseInt(this.currentDirElm.data('level'));
-        if (callback) callback(obj);
+    getmode : function() {
+        return this.mode;
     },
 
-    coloringTarget: function(thisElm, mode) {
-        const modeName = (mode === 'upload')? 'upload': 'remove';
-        $('.row').each(function() {
-            let someLevel = $(this).parents('.level').data('level');
-            if (parseInt(someLevel) >= common.currentLevel) {
-                $(this).removeClass(modeName);
-            }
-        });
-        thisElm.addClass(modeName);
+    setmode : function(mode) {
+        this.mode = mode;
     },
 
-    adjustColumn: function() {
+    ismode  : function(mode) {
+        if (this.mode === mode) return true;
+        else return false;
+    },
+
+    adjustColumn : function(level) {
         $('.level').each(function(){
-            let level = parseInt($(this).data('level'));
-            if (level > common.currentLevel) $(this).remove();
+            let anyLevel = parseInt($(this).data('level'));
+            if (anyLevel > level) $(this).remove();
         });
     },
 
-    toggleFontColor: function() {
-        if (common.mode === 'remove') {
-            const remove = common.document.find('.remove');
-            remove.addClass('upload').removeClass('remove');
-        } else {
-            const upload = common.document.find('.upload');
-            upload.addClass('remove').removeClass('upload');
-        }
-    },
-
-    addDraggable: function() {
-        $('.row_item').draggable({
-            disabled: false,
-            revert: true,
-            revertDuration: 200,
+    addDraggable : function() {
+            this.draggable({
+            disabled       : false,
+            revert         : true,
+            revertDuration : 200,
         });
     },
 
-    getPostDataSet : function(actionType) {
-        let preset = {
-            requestData : {
-                targetName: this.targetName,
-                currentDirName: this.currentDirName,
-                currentLevel: this.currentLevel,
-                actionType: actionType
-            }
-        }
-        var params = $.extend({}, preset, actionType);
-        return params;
-    },
-
-    postRequest: function(dataObj, successFn, isFormData) {
+    postRequest : function(dataSet, successFn, isFormData) {
         let defaults = {
-            url : common.toAjax,
-            type : "POST",
-            async: false,
+            url      : common.toAjax,
+            type     : "POST",
+            async    : false,
             dataType : "text",
-            data : dataObj,
-            success : successFn,
+            data     : dataSet,
+            success  : successFn,
         }
         if (isFormData) {
             let defaultsAdd = {
                 contentType: false,
                 processData: false,
             }
-            var params = $.extend({}, defaults, defaultsAdd, dataObj, successFn);
+            var params = $.extend({}, defaults, defaultsAdd, dataSet, successFn);
         } else {
-            var params = $.extend({}, defaults, dataObj, successFn);
+            var params = $.extend({}, defaults, dataSet, successFn);
         }
         return $.ajax(params);
     },
 
-    fileOrDirNameValidation: function(input) {
+    validateFiles : function(input) {
         if (
             input !== '' &&
             input.length <= 40 &&
@@ -102,16 +75,17 @@ common = {
         { return false;}
     },
 
-    classSwitcher: function(before, after, callback) {
+    swapAttParams : function(before, after, callback) {
         this.each(function() {
             const elm = $(this);
             if (elm.hasClass(before)) {
                 elm.addClass(after).removeClass(before);
-            } else {
+            }
+            else if (elm.hasClass(after)) {
                 elm.addClass(before).removeClass(after);
             }
         });
         if (callback) callback();
-    }
+    },
 
 }

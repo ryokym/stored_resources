@@ -3,8 +3,8 @@ namespace S3;
 
 class Action extends Formatter {
 
-    public function __construct($myBucketName, $s3Object, $RequestDTO) {
-        parent::__construct($myBucketName, $s3Object, $RequestDTO);
+    public function __construct($bucketname, $s3Object, $RequestDTO) {
+        parent::__construct($bucketname, $s3Object, $RequestDTO);
     }
 
     public function execute($actionType) {
@@ -12,13 +12,12 @@ class Action extends Formatter {
     }
 
     public function change() {
-        if (!parent::isRootDirectory()) {
-            $path = parent::prependDS($this->RequestDTO->getCurrentDirName());
-            $this->RequestDTO->setCurrentDirName($path);
+        if (!parent::isRootDir()) {
+            $path = parent::prependDS($this->RequestDTO->getDirname());
+            $this->RequestDTO->setDirName($path);
         }
-        $s3Path = parent::formattedS3PathName();
-        $response = array();
-
+        $s3Path = parent::getS3PathName();
+        $response = [];
         if (is_dir($s3Path)) {
             $response['isFile'] = false;
             $response['result'] = scandir($s3Path);
@@ -33,36 +32,36 @@ class Action extends Formatter {
     }
 
     public function remove() {
-        $prefix = (parent::isRootDirectory())? $this->RequestDTO->getTargetName(): parent::formattedPathName();
+        $prefix = (parent::isRootDir())? $this->RequestDTO->getName(): parent::getPathName();
         $results = $this->s3Object->listObjects([
-            'Bucket' => $this->bucketName,
+            'Bucket' => $this->bucketname,
             'Prefix' => $prefix
         ]);
         foreach ($results['Contents'] as $result) {
             $this->s3Object->deleteObject([
-                'Bucket' => $this->bucketName,
+                'Bucket' => $this->bucketname,
                 'Key' => $result['Key']
             ]);
         }
     }
 
     public function makedir() {
-        $key = (parent::isRootDirectory())? $this->RequestDTO->getTargetName(): parent::formattedPathName();
+        $key = (parent::isRootDir())? $this->RequestDTO->getName(): parent::getPathName();
         // 最後に/付けないとファイルになる
         $pathName = parent::appendDS($key);
         // streamWrapperではBucketは作れる(mkdir()で)がDirectoryは作れない
         // mkdir(S3_PROTOCOL.$currentDirName.$newDirName);
         $this->s3Object->putObject([
-            'Bucket' => $this->bucketName,
+            'Bucket' => $this->bucketname,
             'Key'    => $pathName,
         ]);
     }
 
     public function upload() {
-        $dirName = parent::appendDS($this->RequestDTO->getCurrentDirName());
+        $dirName = parent::appendDS($this->RequestDTO->getDirname());
         $pathName = $dirName.$this->RequestDTO->getFileName();
         $this->s3Object->putObject(array(
-            'Bucket' => $this->bucketName,
+            'Bucket' => $this->bucketname,
             'Key'    => $pathName,
             'Body'   => fopen($this->RequestDTO->getTmpFileName(), 'r')
         ));

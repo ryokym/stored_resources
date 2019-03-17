@@ -3,16 +3,16 @@ require_once(__DIR__.'/include/initialize.php');
 require_once(__DIR__.'/layout/base.header.php');
 ?>
 <div class="container">
-    <div class="column">
+    <div id="column">
         <div class="level" data-level="1" data-dir="">
             <div class="row">
-                <img src="/app/asset/img/add.svg" class="open show_txtbox"/>
+                <img src="/app/asset/img/add.svg" class="open enable"/>
                 <img src="/app/asset/img/close.svg" class="close"/>
             </div>
             <div class="row createNewDirRow">
                 <input class="textbox" type="text"/>
             </div><?php
-            foreach (\Common::getDefaultRows($myBucketName) as $row): ?>
+            foreach (\Common::getDefaultRows($bucketname) as $row): ?>
                 <div class="row">
                     <p class="row_item"><?= $row ?></p>
                 </div><?php
@@ -21,7 +21,7 @@ require_once(__DIR__.'/layout/base.header.php');
         </div>
     </div>
 
-    <div class="src">
+    <div id="display">
         <div id="toggles">
             <div id="upload_area">
                 <img id="upload_drop_area" src="/app/asset/img/dragDrop.svg"/>

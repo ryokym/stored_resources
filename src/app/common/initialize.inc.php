@@ -11,12 +11,10 @@ require_once(DOC_ROOT.'/app/config/autoloaderSetting.php');
 require_once(DOC_ROOT.'/app/config/s3ClientSetting.php');
 require_once(__DIR__.'/functions.inc.php');
 
-$myBucketName = $_SESSION['bucket']?? NULL;
-
 autoloader(COMMON_CLASSES, ACCOUNT_CLASSES, S3_INIT_CLASS);
 
 try {
-    new Account\Init($credentialOptions);
+    new Account\Init($pathset);
 } catch(\Exception $e) {
     die($e->getMessage());
 }

@@ -1,43 +1,45 @@
+/**
+* main css
+*/
+
 @import '../common';
 
-/**
-* Size
-*/
-$headerHeight: 15vh;
-$oneColumnWidth: 13vw;
-$rowHeight: 5vh;
-$codeLineHeight: 3vh;
-$menuIcon: 2.5vw;
-$txtboxOpenIcon: 2.5vw;
-$txtboxCloseIcon: 2.5vw;
+/* Size
+-------------------------------------------------------*/
 
-/**
-* Color
-*/
-$columnsBorderColor: rgb(81, 81, 81);
-$uploadColor: rgb(137, 189, 255) !important;
-$removeColor: rgb(255, 203, 137) !important;
-$removeAreaMouseOverColor: #442c34;
-$removeAreaBorderColor: gray;
-$uploadAreaMouseOverColor: #1a1a4d;
-$errorColor: rgb(255, 180, 180);
+$headerHeight    : 15vh;
+$oneColumnWidth  : 11vw;
+$rowHeight       : 4.5vh;
+$codeLineHeight  : 2.6vh;
+$menuIconWidth   : 2.2vw;
+$mkdirOpenWidth  : 2vw;
+$mkdirCloseWidth : 2vw;
+$titleFontWidth   : 2.2vw;
 
-/**
-* Border
-*/
-$columnsRightBorder: 1px solid $columnsBorderColor;
-$removeAreaBorder: 2px dashed $removeAreaBorderColor;
+/* Color
+-------------------------------------------------------*/
 
-.upload {
-    .row_item {
-        color: $uploadColor;
-    }
+$columnsBorderColor       : rgb(81, 81, 81);
+$uploadColor              : rgb(137, 189, 255) !important;
+$removeColor              : rgb(255, 203, 137) !important;
+$removeAreaMouseOverColor : rgb(68, 44, 52);
+$removeAreaBorderColor    : gray;
+$uploadAreaMouseOverColor : rgb(26, 26, 77);
+$errorColor               : rgb(255, 180, 180);
+
+/* Border
+-------------------------------------------------------*/
+
+$columnsRightBorder : 1px solid $columnsBorderColor;
+$removeAreaBorder   : 2px dashed $removeAreaBorderColor;
+
+
+.upload > .row_item {
+    color: $uploadColor;
 }
 
-.remove {
-    .row_item {
-        color: $removeColor;
-    }
+.remove > .row_item {
+    color: $removeColor;
 }
 
 .uploadMouseOver {
@@ -49,7 +51,7 @@ $removeAreaBorder: 2px dashed $removeAreaBorderColor;
     background-color: $removeAreaMouseOverColor;
 }
 
-.opacity {
+.disable {
     opacity: 0.7;
     cursor: default;
 }
@@ -57,18 +59,4 @@ $removeAreaBorder: 2px dashed $removeAreaBorderColor;
 .error {
     background-color: $errorColor;
     outline: none;
-}
-
-%firstRowStyle {
-    .open {
-        max-width: $txtboxOpenIcon;
-    }
-    .close {
-        max-width: $txtboxCloseIcon;
-        display: none;
-    }
-    .textbox {
-        width: 11vw;
-        height: 40%;
-    }
 }

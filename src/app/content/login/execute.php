@@ -9,7 +9,7 @@ $requestData = filter_input(INPUT_POST, 'requestData', FILTER_DEFAULT,FILTER_REQ
 $RequestDTO->setProparties($requestData);
 
 try {
-    $action = new Action($RequestDTO, $credentialOptions);
+    $action = new Action($RequestDTO, $pathset);
     $action->execute($RequestDTO->getActionType());
 } catch(\Exception $e) {
     echo $e->getMessage();

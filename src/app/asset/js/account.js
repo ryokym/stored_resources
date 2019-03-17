@@ -1,55 +1,73 @@
-const submitBtn = $('#submit input');
-const switch_txt = $('.switch_txt');
-const switch_bk = $('.switch_bk');
-const toUrl = '/';
-const successMsg = 'Account creation succeeded';
+/**
+* account js
+*
+* account obujects
+-------------------------------------------------------*/
 
-$(function() {
-    common.mode = 'signIn';
-    common.toAjax = '/app/content/login/execute.php';
-})
+window.account = {}
 
-const switchAccountMode = function() {
-    const inputBucket = $('input[name="bucket"]');
-    if (submitBtn.hasClass('sign_in_bk')) {
-        common.mode = 'signIn';
+account = {
+    userName   : '',
+    password   : '',
+    bucket     : '',
+    forward    : '/',
+    toAjax     : 'login/execute.php',
+    successMsg : 'Account creation succeeded',
+}
+
+common.mode   = 'signIn';
+common.toAjax = common.basePath + account.toAjax;
+
+/* jQuery objects
+-------------------------------------------------------*/
+
+const submitBtn   = $('#submit input');
+const switch_txt  = $('.switch_txt');
+const switch_bk   = $('.switch_bk');
+const inputBucket = $('input[name="bucket"]');
+const toggleSign  = function() {
+    if (common.ismode('signIn')) {
         submitBtn.val('Enter');
         switch_txt.text('SIGN UP');
         inputBucket.hide();
     } else {
-        common.mode = 'signUp';
         submitBtn.val('Create Account');
         switch_txt.text('SIGN IN');
         inputBucket.show();
     }
 }
+/* methods
+-------------------------------------------------------*/
 
 common.document.on('click', '#switcher', function() {
-    common.classSwitcher.call($('.switch_bk'),'sign_up_bk', 'sign_in_bk', switchAccountMode);
-    common.classSwitcher.call($('.switch_txt'),'sign_up_txt', 'sign_in_txt');
+    common.swapAttParams.call($('.switch_bk'),'sign_up_bk', 'sign_in_bk', (function() {
+        (common.ismode('signIn'))? common.setmode('signUp'): common.setmode('signIn');
+    }));
+    common.swapAttParams.call($('.switch_txt'),'sign_up_txt', 'sign_in_txt', toggleSign);
 });
 
 submitBtn.click(function() {
-    common.userName = $('input[name="userName"]').val();
-    common.password = $('input[name="password"]').val();
-    common.bucket = $('input[name="bucket"]').val();
+    account.userName = $('input[name ="userName"]').val();
+    account.password = $('input[name ="password"]').val();
+    account.bucket   = $('input[name ="bucket"]').val();
+
     const afterSignAction = function(response) {
         if (response === 'enter') {
-            location.href = toUrl;
+            location.href = account.forward;
         } else if (response === 'create') {
-            alert(successMsg);
-            location.href = toUrl;
+            alert(account.successMsg);
+            location.href = account.forward;
         } else {
             alert(response);
         }
     }
 
     common.postRequest({
-        requestData: {
-            actionType: common.mode,
-            userName: common.userName,
-            password: common.password,
-            bucket: common.bucket,
+        requestData : {
+            actionType : common.mode,
+            userName   : account.userName,
+            password   : account.password,
+            bucket     : account.bucket,
         }
     }, afterSignAction);
-})
+});

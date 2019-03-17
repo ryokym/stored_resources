@@ -14,5 +14,3 @@ deny from all
 <FilesMatch "^(tokenList\.txt|userDataList\.txt)">
 deny from all
 </FilesMatch>
-
-Options -Indexes

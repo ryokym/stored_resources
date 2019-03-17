@@ -1,42 +1,51 @@
+/**
+* login css
+*/
+
 @import '../common';
-/**
-* Color
-*/
-$signInColor: rgb(21, 98, 142);
-$signUpColor: rgb(160, 22, 22);
-$tagTextColor: black;
 
-/**
-* Size
-*/
-$titleFontSize: 1.8rem;
-$signFontSize: 0.4rem;
+/* size
+-------------------------------------------------------*/
 
-/**
-* AdjustpPosition
-*/
-$titleToLeft: 0.25rem;
-$titleToTop: 2.2vh;
-$tagSubmitToTop: 4.8vh;
+$titleFontSize : 2.1rem;
+$signFontSize  : 0.9rem;
 
-/**
-* Module
-*/
-@mixin adjustPositionToLeft($n: 0rem) {
+/* color
+-------------------------------------------------------*/
+
+$signInColor   : rgb(21, 98, 142);
+$signUpColor   : rgb(160, 22, 22);
+$signInfoColor : rgb(63, 63, 63);
+$inputTxtColor : rgb(0, 0, 0);
+
+/* position
+-------------------------------------------------------*/
+
+$titleToLeft    : 0.25rem;
+$titleToTop     : 2.2vh;
+$tagSubmitToTop : 4.8vh;
+
+/* font
+-------------------------------------------------------*/
+
+$signSwitchFont: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Sans-Serif;
+
+/* module
+-------------------------------------------------------*/
+
+@mixin toLeft($n: 0rem) {
     position: relative;
     right: $n;
 }
 
-@mixin adjustPositionToTop($n: 0rem) {
+@mixin toTop($n: 0rem) {
     position: relative;
     bottom: $n;
 }
 
 %tagArea {
     height: 40%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include flex();
 }
 
 %tagInput {
@@ -58,32 +67,24 @@ $tagSubmitToTop: 4.8vh;
 }
 
 
+.sign_in_txt, .sign_up_txt {
+    font-family: $signSwitchFont;
+}
+
 .sign_up_bk {
-    background-color: $signUpColor;
-    &:hover {
-        background-color: lighten($signUpColor, 5%);
-    }
+    @include hoverLingten('background-color', $signUpColor);
 }
 
 .sign_in_bk {
-    background-color: $signInColor;
-    &:hover {
-        background-color: lighten($signInColor, 5%);
-    }
+    @include hoverLingten('background-color', $signInColor);
 }
 
-.sign_up_txt {
-    color: $signUpColor;
-    &:hover {
-        color: lighten($signUpColor, 5%);
-    }
+#switcher.sign_up_txt {
+    @include hoverLingten('color', $signUpColor);
 }
 
-.sign_in_txt {
-    color: $signInColor;
-    &:hover {
-        color: lighten($signInColor, 5%);
-    }
+#switcher.sign_in_txt {
+    @include hoverLingten('color', $signInColor);
 }
 
 input[name="bucket"] {

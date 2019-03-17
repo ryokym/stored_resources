@@ -1,18 +1,16 @@
 /**
-* Font
-*/
-$baseFontFamily: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Sans-Serif;
+* common css
+*
+* font
+-------------------------------------------------------*/
+
+$baseFontFamily : 'ricty';
 $titleFontFamily: 'Phosphate-Solid','monospace, Tahoma, Sans-Serif';
-$baseFontSize: 1vw !important;
+$baseFontSize   : 1.15vw !important;
 
-/**
-* Color
-*/
-$baseFontColor: rgb(231, 246, 254);
-$titleFontColor: wheat;
+/* color
+-------------------------------------------------------*/
+
+$baseFontColor  : rgb(231, 246, 254);
+$titleFontColor : wheat;
 $backgroundColor: rgb(50, 50, 50);
-
-/**
-* Size
-*/
-$titleFontSize: 2.2vw;

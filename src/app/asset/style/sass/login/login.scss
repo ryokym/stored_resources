@@ -1,24 +1,33 @@
+/**
+* login css
+*/
+
 @import 'login.base';
 
+#title {
+    font-size: $titleFontSize;
+}
 #menu {
     @include flex(flex-end, center);
     @extend %tagArea;
     width: 100vw;
     height: 4vh;
-    cursor: pointer;
     background-color: white;
     #menu_wrapper {
         @include flex();
+        @include toLeft(5vw);
         flex-direction: horizontal;
-        position: relative;
-        right: 5vw;
         span {
-            color: #323232;
+            color: $signInfoColor;
             margin: 0 1rem;
+            font-family: $signSwitchFont;
+            font-size: $signFontSize;
         }
-        #sign {
+        #switcher {
             @extend %unselectable;
             font-size: $signFontSize;
+            font-family: $signSwitchFont;
+            cursor: pointer;
         }
     }
 }
@@ -31,8 +40,8 @@
         width: 50vw;
         height: 50vh;
         #title {
-            @include adjustPositionToLeft($titleToLeft);
-            @include adjustPositionToTop($titleToTop);
+            @include toLeft($titleToLeft);
+            @include toTop($titleToTop);
             @include flex(center, flex-end);
             height: 30%;
             width: 100%;
@@ -49,7 +58,7 @@
                 height: 50%;
                 input {
                     @extend %tagInput;
-                    color: $tagTextColor;
+                    color: $inputTxtColor;
                     padding-left: 1em;
                 }
             }
@@ -59,7 +68,7 @@
                 height: 50%;
                 input {
                     @extend %tagInput;
-                    @include adjustPositionToTop($tagSubmitToTop);
+                    @include toTop($tagSubmitToTop);
                     color: $baseFontColor;
                     cursor: pointer;
                     width: 100%;

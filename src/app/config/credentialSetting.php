@@ -11,8 +11,7 @@ define('UD_FILE', DOC_ROOT.'/app/common/auth/userDataList.txt');
 // File path of token list used for automatic login authentication
 define('TL_FILE', DOC_ROOT.'/app/common/auth/tokenList.txt');
 
-$credentialOptions = [
-    'SESSION_KEY' => SES_KEY,
-    'USER_DATA_FILE_PATH' => UD_FILE,
-    'TOKEN_LIST_FILE_PASS' => TL_FILE,
+$pathset = [
+    'user'  => UD_FILE,
+    'token' => TL_FILE,
 ];

@@ -1,3 +1,7 @@
+/**
+* main css
+*/
+
 @import 'main.base';
 
 .wrapper {
@@ -8,13 +12,14 @@
         #title {
             width: 30%;
             padding-bottom: 0.5rem;
+            font-size: $titleFontWidth;
             @include flex(center, start);
         }
         .menu {
             width: 70%;
             @include flex(space-evenly, center);
             .menu_item {
-                max-width: $menuIcon;
+                max-width: $menuIconWidth;
                 cursor: pointer;
                 img {
                     max-width: 100%;
@@ -24,10 +29,11 @@
     }
     .container {
         @include flex(center, unset);
-        .column {
+        #column {
             display: flex;
             /* 幅可変拡張 */
             flex-basis:  auto;
+            position: relative;
             .level {
                 float: left;
                 width: $oneColumnWidth;
@@ -39,25 +45,32 @@
                     align-items: center;
                     border-right: $columnsRightBorder;
                     cursor: pointer;
-                    @extend %firstRowStyle;
+                    .open {
+                        max-width: $mkdirOpenWidth;
+                    }
+                    .close {
+                        max-width: $mkdirCloseWidth;
+                        display: none;
+                    }
                     .row_item {
                         word-break: break-all;
+                    }
+                    .textbox {
+                        width: 11vw;
+                        height: 40%;
                     }
                 }
                 .createNewDirRow {
                     display: none;
                 }
             }
-            .template {
-                @extend %firstRowStyle;
-                display: none;
-            }
         }
-        .src {
+        #display {
             display: flex;
             /* デフォルトが画面幅一杯、columnの幅が拡張する毎に幅可変縮小*/
             flex-basis: 100vw;
             overflow: scroll;
+            position: relative;
             #toggles {
                 width: 100%;
                 #upload_area {
@@ -72,10 +85,14 @@
                     code {
                         background-color: inherit;
                         line-height: $codeLineHeight;
+                        span {
+                            font-family: $baseFontFamily;
+                        }
                     }
                 }
                 #remove_area {
                     @include flex();
+                    display: none;
                     #remove_drop_area {
                         display: none;
                         height: 50vh;

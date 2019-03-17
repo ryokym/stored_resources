@@ -44,4 +44,17 @@ class RequestDTO {
             $this->$propaty = $param;
         }
     }
+
+    /**
+    * Get all the values ​​set in the property
+    * @return array
+    */
+    public function getPropaties() {
+        $results = [];
+        $props = array_keys(get_class_vars(get_class($this)));
+        foreach ($props as $prop) {
+            $results[$prop] = $this->$prop;
+        }
+        return $results;
+    }
 }

@@ -3,12 +3,12 @@ namespace S3;
 
 class RequestDTO {
     private $actionType;
-    private $currentDirName = null;
-    private $targetName = null;
-    private $currentLevel = null;
-    private $fileName = null;
+    private $dirname     = null;
+    private $name        = null;
+    private $level       = null;
+    private $fileName    = null;
     private $tmpFileName = null;
-    private $s3Object = null;
+    private $s3Object    = null;
 
     public function getActionType() {
         return $this->actionType;
@@ -18,20 +18,20 @@ class RequestDTO {
         $this->actionType = $actionType;
     }
 
-    public function getCurrentDirName() {
-        return $this->currentDirName;
+    public function getDirname() {
+        return $this->dirname;
     }
 
-    public function setCurrentDirName($currentDirName) {
-        $this->currentDirName = $currentDirName;
+    public function setDirName($dirname) {
+        $this->dirname = $dirname;
     }
 
-    public function getTargetName() {
-        return $this->targetName;
+    public function getName() {
+        return $this->name;
     }
 
-    public function setTargetName($targetName) {
-        $this->targetName = $targetName;
+    public function setName($name) {
+        $this->name = $name;
     }
 
     public function getFileName() {

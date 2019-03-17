@@ -7,19 +7,19 @@ class Formatter extends Filter {
 
     const _S3Protcol = S3_PROTOCOL;
 
-    public function __construct($myBucketName, $s3Object, $RequestDTO) {
+    public function __construct($bucketname, $s3Object, $RequestDTO) {
         $this->RequestDTO = $RequestDTO;
-        parent::__construct($myBucketName, $s3Object);
+        parent::__construct($bucketname, $s3Object);
     }
 
-    protected function formattedPathName() {
-        $pathName = $this->RequestDTO->getCurrentDirName().'/'.$this->RequestDTO->getTargetName();
+    protected function getPathName() {
+        $pathName = $this->RequestDTO->getDirname().'/'.$this->RequestDTO->getName();
         return $pathName;
     }
 
-    protected function formattedS3pathName() {
-        $pathName = $this->formattedPathName();
-        return self::_S3Protcol.$this->bucketName.$pathName;
+    protected function getS3PathName() {
+        $pathName = $this->getPathName();
+        return self::_S3Protcol.$this->bucketname.$pathName;
     }
 
     protected function prependDS($str) {
@@ -33,8 +33,8 @@ class Formatter extends Filter {
         return $str;
     }
 
-    protected function isRootDirectory() {
-        if (empty($this->RequestDTO->getCurrentDirName())){
+    protected function isRootDir() {
+        if (empty($this->RequestDTO->getDirname())){
             return true;
         }
     }

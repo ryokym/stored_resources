@@ -1,3 +1,7 @@
+/**
+* common css
+*/
+
 @import 'common.variable';
 @import 'common.mixin';
 
@@ -10,9 +14,13 @@ html {
         background-color: $backgroundColor;
         width: 100vw;
         #title {
-            font-size: $titleFontSize;
             font-family: $titleFontFamily;
             color: $titleFontColor;
         }
     }
+}
+
+@font-face{
+  font-family: 'ricty';
+  src: url('/app/asset/font/ricty.woff') format('woff');
 }

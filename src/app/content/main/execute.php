@@ -22,7 +22,7 @@ try {
 
     if ($RequestDTO->getActionType() === 'logout') Action::logout();
 
-    $action = new Action($myBucketName, $s3Object, $RequestDTO);
+    $action = new Action($bucketname, $s3Object, $RequestDTO);
     $action->execute($RequestDTO->getActionType());
 } catch(\Exception $e) {
     echo $e->getMessage();

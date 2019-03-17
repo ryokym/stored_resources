@@ -3,21 +3,61 @@ namespace Account;
 
 class Filter extends Init {
 
-    /* Fetch TokenList and check if there is a token in it  */
-    public static function isResisted($list, $str, $isPath = true) {
-        if ($isPath) $list = file_get_contents($list);
+    protected $RequestDTO;
+    public $account;
 
-        if (strpos($list, $str) === false) return false;
-        else return true;
+    public function __construct($RequestDTO, $pathset) {
+        parent::__construct($pathset);
+        $this->RequestDTO = $RequestDTO;
     }
 
-    public static function isNotEmptyUserInputs($inputs) {
-        foreach ($inputs as $input) {
-            if (empty($input)) throw new \Exception('Please fill in all the input fields');
+    /**
+    * Search for exactly matching user data then return this data
+    * @param  array    $accountList   = array('user' =>  $username, 'pass' => $password);
+    * @param  boolean  $requireVerify = Whether hashed by PHP builtin method password_hash()
+    * @param  boolean  $onlyUsername  = When the lookup target is only the username
+    * @return boolean  Were there or not
+    */
+    public function lookupAccount(array $accountList, $requireVerify = true, $onlyUsername = false) {
+        $inputname = $this->RequestDTO->getUserName();
+        if (!$onlyUsername) $inputpass = $this->RequestDTO->getPassword();
+        foreach ($accountList as $account) {
+            // case : only username
+            if (($onlyUsername) && ($account['user'] === $inputname)) {
+                return true;
+            }
+            // case : username and password
+            if ($account['user'] === $inputname
+            && ($requireVerify)? password_verify($inputpass, $account['pass']): $inputpass === $account['pass']) {
+                $this->account = $account;
+                return true;
+            }
         }
+        return false;
+    }
+
+    /**
+    * lookup TokenList and check if there is a token in it
+    * @param  string  $contents
+    * @param  string  $token
+    * @return boolean
+    */
+    public static function lookupToken($contents, $token) {
+        if (strpos($contents, $token) === false) return false;
         return true;
     }
 
+    /**
+    * Check if all input values ​​are filled
+    * @return boolean
+    */
+    public function isfillAll() {
+        $props = $this->RequestDTO->getPropaties();
+        foreach ($props as $prop) {
+            if (empty($prop)) throw new \Exception('Please fill in all the input fields');
+        }
+        return true;
+    }
 
     /* Validate login permission */
     public static function isAllowAutoLogin($tokenListPath, $SESToken) {
@@ -27,21 +67,6 @@ class Filter extends Init {
         else return false;
     }
 
-    public static function getOslEncryptString($str, $method, $password, $iv) {
-        return base64_encode(openssl_encrypt($str, $method, $password, OPENSSL_RAW_DATA, $iv));
-    }
 
-    public static function getOslDecryptStirng($encStr, $method, $password, $iv) {
-        return openssl_decrypt(base64_decode($encStr), $method, $password, OPENSSL_RAW_DATA, $iv);
-    }
-
-    public static function getIvParam($length) {
-        $result = '';
-        for ($i = 0; $i < $length; $i++) {
-            $integer = mt_rand(0, 9);
-            $result .= $integer;
-        }
-        return $result;
-    }
 
 }

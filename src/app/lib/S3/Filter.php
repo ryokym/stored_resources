@@ -3,8 +3,8 @@ namespace S3;
 
 class Filter extends Init {
 
-    public function __construct($myBucketName, $s3Object) {
-        parent::__construct($myBucketName, $s3Object);
+    public function __construct($bucketname, $s3Object) {
+        parent::__construct($bucketname, $s3Object);
     }
     /**
     * Action Upload
@@ -32,7 +32,7 @@ class Filter extends Init {
     }
 
     protected function getDisOpenFileException() {
-        throw new \Exception('{"result":"ERROR. No such file or directory"}');
+        // throw new \Exception('{"result":"ERROR. No such file or directory"}');
     }
 
 }

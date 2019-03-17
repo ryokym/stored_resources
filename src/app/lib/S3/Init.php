@@ -3,21 +3,21 @@ namespace S3;
 
 class Init {
     protected $s3Object;
-    protected $bucketName;
+    protected $bucketname;
 
-    public function __construct($bucketName, $s3Object) {
+    public function __construct($bucketname, $s3Object) {
         $this->s3Object = $s3Object;
-        $this->bucketName = $bucketName;
-        self::checkAvailableBucket($s3Object, $bucketName);
+        $this->bucketname = $bucketname;
+        self::checkAvailableBucket($s3Object, $bucketname);
     }
 
-    public static function checkAvailableBucket($s3Object=NULL, $bucketName, $S3Option=NULL) {
-        if ($S3Option) {
-            $s3Object = self::getS3Object($S3Option);
+    public static function checkAvailableBucket($s3Object = NULL, $bucketname, $s3Option = NULL) {
+        if ($s3Option) {
+            $s3Object = self::getS3Object($s3Option);
         }
         if ($s3Object) {
-            if ($bucketName !== false) {
-                if (!$s3Object->doesBucketExist($bucketName)) {
+            if ($bucketname !== false) {
+                if (!$s3Object->doesBucketExist($bucketname)) {
                     session_destroy();
                     throw new \Exception("Invalid bucket");
                 }
@@ -27,9 +27,9 @@ class Init {
         }
     }
 
-    public static function getS3Object($S3Option) {
+    public static function getS3Object($s3Option) {
         try {
-            $s3Object = new \Aws\S3\S3Client($S3Option);
+            $s3Object = new \Aws\S3\S3Client($s3Option);
             return $s3Object;
         } catch(\InvalidArgumentException $e) {
             die($e->getMessage());

@@ -3,39 +3,20 @@ namespace Account;
 
 class Init {
 
-    var $SESSION_KEY = '';
-    var $USER_DATA_FILE_PATH = '';
-    var $TOKEN_LIST_FILE_PASS = '';
+    private $pathsetUser;
+    private $pathsetToken;
 
-    public function __construct($credentialOptions) {
-        if ($this->isActivateOptions($credentialOptions, $this)) {
-            foreach ($credentialOptions as $propaty => $param) {
-                $this->$propaty = $param;
-            }
-            $this->isWriteAndReadable($this->USER_DATA_FILE_PATH, $this->TOKEN_LIST_FILE_PASS);
-        }
+    public function __construct($pathset) {
+        $this->pathsetUser  = $pathset['user'];
+        $this->pathsetToken = $pathset['token'];
     }
 
-    private function isActivateOptions($credentialOptions, $class) {
-        $isActivate = true;
-        $classOptions = array_keys(get_class_vars(get_class($class)));
-        foreach ($classOptions as $classOption) {
-            if (!array_key_exists($classOption, $credentialOptions)) $isActivate = false;
-        }
-        if (!$isActivate) throw new \Exception("system error occurred \none of the credentialoptions is not set");
-        else return true;
+    public function getPathsetUser() {
+        return $this->pathsetUser;
     }
 
-    protected function isWriteAndReadable(...$files) {
-        foreach ($files as $file) {
-            if (!is_readable($file)) {
-                throw new \Exception("system error occurred \none of the account setting files is unreadable");
-            }
-            if (!is_writable($file)) {
-                throw new \Exception("system error occurred \none of the account setting files is write disabled");
-            }
-        }
-        return true;
+    public function getPathsetToken() {
+        return $this->pathsetToken;
     }
 
 }

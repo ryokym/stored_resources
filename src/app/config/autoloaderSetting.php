@@ -21,6 +21,7 @@ define('ACCOUNT_CLASSES', [
         'RequestDTO',
         'Filter',
         'Action',
+        'Crypt',
     ]
 ]);
 
@@ -28,5 +29,6 @@ define('COMMON_CLASSES', [
     '/app/lib/Common/' => [
         'Common',
         'Constants',
+        'Stream',
     ]
 ]);

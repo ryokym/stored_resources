@@ -9,17 +9,19 @@ autoloader(S3_CLASSES);
 use Aws\S3\S3Client;
 use S3\Init;
 
-$SESToken = ($_SESSION['token'])?? NULL;
-$tokenList = ($credentialOptions['TOKEN_LIST_FILE_PASS'])?? NULL;
+$token = [
+    'ses'  => (\Common::getSession('token'))?? NULL,
+    'path' => ($pathset['token'])?? NULL,
+];
 
-if (!Account\Filter::isAllowAutoLogin($tokenList, $SESToken)) {
-    header('Location:/index.php?=signin');
-}
+$stream = new \Stream($token['path']);
+if (!Account\Filter::lookupToken($stream, $token['ses'])) header('Location:/index.php?=signin');
 
 $s3Object = Init::getS3Object(S3_SET_OPTIONS);
 
 try {
-    Init::checkAvailableBucket($s3Object, $myBucketName);
+    $bucketname = \Common::getSession('bucket')?? NULL;
+    Init::checkAvailableBucket($s3Object, $bucketname);
 } catch(Exception $e) {
     // echo $e->getMessage();
     // die;
