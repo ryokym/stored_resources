@@ -21,7 +21,7 @@ try {
 
     if ($request->getActionType() === 'logout') Action::logout();
 
-    $action = new Action($bucketname, $S3Client, $request);
+    $action = new Action($request);
     $action->execute($request->getActionType());
 } catch(\Exception $e) {
     echo $e->getMessage();

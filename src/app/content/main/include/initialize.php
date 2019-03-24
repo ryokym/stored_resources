@@ -8,9 +8,9 @@ autoloader(S3_CLASSES);
 
 use Aws\S3\S3Client;
 use Common\Common;
-use \S3\Filter;
+use \S3\Init;
 
-$filter = new Filter();
+$Init = new Init();
 
 /* Check Auto login */
 $token = [
@@ -18,16 +18,16 @@ $token = [
     'path' => ($pathset['token'])?? NULL,
 ];
 
-$isAutologin = $filter->isAuthenticatesToken($token['path'], $token['ses']);
+$isAutologin = $Init->isAuthenticatesToken($token['path'], $token['ses']);
 
 if (!$isAutologin) header('Location:/index.php?=signin');
 
 /* Bucket status check */
 $bucketname = Common::getSession('bucket');
-$isAvailableBucket = $filter->isAvailableBucket(S3_SET_OPTIONS, $bucketname);
+$isAvailableBucket = $Init->isAvailableBucket(S3_SET_OPTIONS, $bucketname);
 
 if (!$isAvailableBucket) header('Location:/index.php?=signin');
 
-$S3Client = $filter->getFilteredS3Instance();
+$Init->save();
 
-$S3Client->registerStreamWrapper();
+$Init::$S3Client->registerStreamWrapper();

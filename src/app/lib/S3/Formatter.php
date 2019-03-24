@@ -1,16 +1,13 @@
 <?php
 namespace S3;
 
-class Formatter extends Filter {
+class Formatter extends Init {
 
-    protected $bucketname;
     protected $request;
-
 
     const _S3Protcol = S3_PROTOCOL;
 
-    public function __construct($bucketname, $request) {
-        $this->bucketname = $bucketname;
+    public function __construct($request) {
         $this->request = $request;
     }
 
@@ -21,7 +18,7 @@ class Formatter extends Filter {
 
     protected function getS3PathName() {
         $pathName = $this->getPathName();
-        return self::_S3Protcol.$this->bucketname.$pathName;
+        return self::_S3Protcol.self::$bucketname.$pathName;
     }
 
     protected function prependDS($str) {

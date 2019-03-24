@@ -3,6 +3,7 @@
 define('S3_CLASSES', [
     '/app/lib/S3/' => [
         'Request',
+        'Init',
         'Filter',
         'Formatter',
         'Action',

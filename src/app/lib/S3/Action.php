@@ -3,11 +3,8 @@ namespace S3;
 
 class Action extends Formatter {
 
-    private $S3Client;
-
-    public function __construct($bucketname, $S3Client, $request) {
-        $this->S3Client = $S3Client;
-        parent::__construct($bucketname, $request);
+    public function __construct($request) {
+        parent::__construct($request);
     }
 
     public function execute($actionType) {
@@ -36,13 +33,13 @@ class Action extends Formatter {
 
     public function remove() {
         $prefix = (parent::isRootDir())? $this->request->getName(): parent::getPathName();
-        $results = $this->S3Client->listObjects([
-            'Bucket' => $this->bucketname,
+        $results = self::$S3Client->listObjects([
+            'Bucket' => self::$bucketname,
             'Prefix' => $prefix
         ]);
         foreach ($results['Contents'] as $result) {
-            $this->S3Client->deleteObject([
-                'Bucket' => $this->bucketname,
+            self::$S3Client->deleteObject([
+                'Bucket' => self::$bucketname,
                 'Key' => $result['Key']
             ]);
         }
@@ -54,8 +51,8 @@ class Action extends Formatter {
         $pathName = parent::appendDS($key);
         // streamWrapperではBucketは作れる(mkdir()で)がDirectoryは作れない
         // mkdir(S3_PROTOCOL.$currentDirName.$newDirName);
-        $this->S3Client->putObject([
-            'Bucket' => $this->bucketname,
+        self::$S3Client->putObject([
+            'Bucket' => self::$bucketname,
             'Key'    => $pathName,
         ]);
     }
@@ -63,8 +60,8 @@ class Action extends Formatter {
     public function upload() {
         $dirName = parent::appendDS($this->request->getDirname());
         $pathName = $dirName.$this->request->getFileName();
-        $this->S3Client->putObject(array(
-            'Bucket' => $this->bucketname,
+        self::$S3Client->putObject(array(
+            'Bucket' => self::$bucketname,
             'Key'    => $pathName,
             'Body'   => fopen($this->request->getTmpFileName(), 'r')
         ));

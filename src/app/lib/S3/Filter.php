@@ -6,11 +6,9 @@ class Filter extends \Common\Common {
     use \BucketChecker;
     use \TokenChecker;
 
-    private $S3Client = NULL;
+    protected $filteredS3Client = NULL;
+    protected $filteredBucket = NULL;
 
-    public function getFilteredS3Instance() {
-        return $this->S3Client;
-    }
     /**
     * Action Upload
     */
@@ -52,12 +50,16 @@ class Filter extends \Common\Common {
         if (!$bucketname) return false;
 
         $S3Client = $this->getS3Client($s3Options);
-        $this->S3Client = $S3Client;
+        $this->filteredS3Client = $S3Client;
 
         $isAvailable = $this->checkBucket($bucketname, $S3Client);
 
-        if ($isAvailable) return true;
-        else return false;
+        if ($isAvailable) {
+            $this->filteredBucket = $bucketname;
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
