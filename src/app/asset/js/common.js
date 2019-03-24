@@ -4,9 +4,8 @@
 
 "use strict";
 
-/* common objects
+/* object literal
 -------------------------------------------------------*/
-
 window.common = {}
 
 common = {
@@ -28,11 +27,30 @@ common = {
         else return false;
     },
 
-    adjustColumn : function(level) {
-        $('.level').each(function(){
-            let anyLevel = parseInt($(this).data('level'));
-            if (anyLevel > level) $(this).remove();
-        });
+    togglemode : function(from, to) {
+        if (this.mode === from) this.setmode(to);
+        else this.setmode(from);
+    },
+
+    valfn : function(param) {
+        if (param) this.val(param);
+        else return this.val();
+    },
+
+    txtfn : function(param) {
+        if (param) this.text(param);
+        else return this.text();
+    },
+
+    swapfn: function(fname, store, params) {
+        var target = this;
+        store = common[fname].call(this);
+        params.forEach(function(value) {
+            var param = value;
+            if (value != store) {
+                common[fname].call(target, param);
+            }
+        })
     },
 
     addDraggable : function() {
@@ -65,11 +83,9 @@ common = {
     },
 
     validateFiles : function(input) {
-        if (
-            input !== '' &&
-            input.length <= 40 &&
-            input.match(/^[A-Za-z0-9_\-.()?!&\[\]]*$/)
-        )
+        if (input !== ''
+        &&  input.length <= 40
+        &&  input.match(/^[A-Za-z0-9_\-.()?!&\[\]]*$/))
         { return true; }
         else
         { return false;}
@@ -88,4 +104,25 @@ common = {
         if (callback) callback();
     },
 
-}
+    swapAttAryParams : function(before, after, callback) {
+        if (this instanceof Array) {
+            this.forEach(function(value) {
+                common.swapAttParams.call(value, before.shift(), after.shift());
+            });
+            if (callback) callback();
+        }
+    },
+
+    ukey : function() {
+        var key = "", i, random;
+        for (i = 0; i < 32; i++) {
+            random = Math.random() * 16 | 0;
+            if (i == 8 || i == 12 || i == 16 || i == 20) {
+                key += "-"
+            }
+            key += (i == 12 ? 4 : (i == 16 ? (random & 3 | 8) : random)).toString(16);
+        }
+        return key;
+    },
+
+    }

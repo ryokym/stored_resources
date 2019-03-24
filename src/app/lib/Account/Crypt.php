@@ -3,8 +3,8 @@ namespace Account;
 
 class Crypt extends Filter {
 
-    public function __construct($RequestDTO, $pathset) {
-        parent::__construct($RequestDTO, $pathset);
+    public function __construct($request, $pathset) {
+        parent::__construct($request, $pathset);
     }
 
     /**

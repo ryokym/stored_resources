@@ -14,3 +14,8 @@
         #{$property}: lighten($coloring, 5%);
     }
 }
+
+%title {
+    font-family: $titleFontFamily;
+    color: $titleFontColor;
+}

@@ -4,76 +4,137 @@
 
 @import 'login.base';
 
-#title {
+* {
+    font-family: $fontfamily;
+}
+.title h1 {
+    @extend %title;
     font-size: $titleFontSize;
 }
-#menu {
+
+.menu {
     @include flex(flex-end, center);
-    @extend %tagArea;
+    height: 40%;
     width: 100vw;
-    height: 4vh;
-    background-color: white;
-    #menu_wrapper {
+    height: $menuHeight;
+    background-color: $colorLight;
+    .menu_wrapper {
         @include flex();
-        @include toLeft(5vw);
-        flex-direction: horizontal;
+        margin-right: 2vw;
         span {
-            color: $signInfoColor;
+            color: $colorDark;
             margin: 0 1rem;
-            font-family: $signSwitchFont;
-            font-size: $signFontSize;
+            font-size: $menuFontSize;
         }
         #switcher {
             @extend %unselectable;
-            font-size: $signFontSize;
-            font-family: $signSwitchFont;
+            font-size: $menuFontSize;
             cursor: pointer;
         }
     }
 }
 
-#container {
+.container {
     @include flex();
     height: 90vh;
     clear: both;
-    #wrapper {
-        width: 50vw;
-        height: 50vh;
-        #title {
-            @include toLeft($titleToLeft);
-            @include toTop($titleToTop);
-            @include flex(center, flex-end);
-            height: 30%;
-            width: 100%;
+}
+
+input {
+    width: 60%;
+    height: 1rem;
+    max-height: 1rem;
+    min-height: 1rem;
+    margin: 1vh;
+    border: none;
+    border-radius: 10px;
+    color: $colorDark;
+    &:focus {
+        outline: none;
+    }
+}
+
+.wrapper {
+    @include flex();
+    flex-direction: column;
+    width: 35vw;
+    height: 50vh;
+    div {
+        @include flex();
+        flex-direction: column;
+        height: 10vh;
+        color: black;
+        width: 100%;
+    }
+    div:last-of-type {
+        @extend %button;
+        height: 8vh;
+        input {
+            color: $colorLight;
         }
-        #form {
-            @include flex();
-            flex-direction: column;
-            height: 70%;
-            width: 100%;
-            #text {
-                @extend %tagArea;
-                flex-direction: column;
-                width: 50%;
-                height: 50%;
-                input {
-                    @extend %tagInput;
-                    color: $inputTxtColor;
-                    padding-left: 1em;
-                }
-            }
-            #submit {
-                @extend %tagArea;
-                width: 40%;
-                height: 50%;
-                input {
-                    @extend %tagInput;
-                    @include toTop($tagSubmitToTop);
-                    color: $baseFontColor;
-                    cursor: pointer;
-                    width: 100%;
-                    text-align: center;
-                }
+    }
+    div:not(:last-of-type) input {
+        padding-left: 1rem;
+    }
+}
+
+.modal {
+    width: $modalWidth;
+    background-color: $colorLight;
+    border-radius: 2%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    display: none;
+    img {
+        height: $closeIconSize;
+        margin: 5px;
+        cursor: pointer;
+    }
+    div {
+        @include flex();
+        flex-direction: column;
+        color: black;
+        width: 100%;
+        span {
+            color: $colorBlue;
+            height: 3vh;
+        }
+    }
+    >div:first-of-type {
+        height: 1.5rem;
+        justify-content: end;
+        align-items: flex-end;
+    }
+    >div:last-of-type {
+        @extend %button;
+        margin: 2vh 0 4vh 0;
+        input {
+            color: $colorLight;
+            background-color: $colorGreen;
+        }
+    }
+    >div:not(:last-of-type) input {
+        border: 1px solid SlateGray;
+        padding-left: 1rem;
+    }
+    .modal_key, .modal_info {
+        padding: 2%;
+    }
+    .modal_key {
+        div {
+            margin-top: 0.6rem;
+        }
+    }
+    .modal_info {
+        width: auto;
+        div {
+            align-items: start;
+            ol {
+                color: $colorGray;
+                font-size: 0.8rem;
+                line-height: 1rem;
+                margin: 0.2rem 0;
             }
         }
     }

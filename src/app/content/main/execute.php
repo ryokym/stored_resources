@@ -1,29 +1,28 @@
 <?php
 require_once(__DIR__.'/include/initialize.php');
-use S3\RequestDTO;
+use S3\Request;
 use S3\Formatter;
 use S3\Action;
-use Common\Validator;
 
-$RequestDTO = new RequestDTO();
+$request = new Request();
 
 try {
     if (filter_input(INPUT_POST, 'isUpload')) {
         $requestData = json_decode(filter_input(INPUT_POST, 'requestData'), true);
         $RequestDTO->setProparties($requestData['requestData']);
         if ($uploadedFile = Formatter::getFiles('file')) {
-            $RequestDTO->setFileName($uploadedFile['name']);
-            $RequestDTO->setTmpFileName($uploadedFile['tmp_name']);
+            $request->setFileName($uploadedFile['name']);
+            $request->setTmpFileName($uploadedFile['tmp_name']);
         }
     } else {
         $requestData = filter_input(INPUT_POST, 'requestData', FILTER_DEFAULT,FILTER_REQUIRE_ARRAY);
-        $RequestDTO->setProparties($requestData);
+        $request->setProparties($requestData);
     }
 
-    if ($RequestDTO->getActionType() === 'logout') Action::logout();
+    if ($request->getActionType() === 'logout') Action::logout();
 
-    $action = new Action($bucketname, $s3Object, $RequestDTO);
-    $action->execute($RequestDTO->getActionType());
+    $action = new Action($bucketname, $S3Client, $request);
+    $action->execute($request->getActionType());
 } catch(\Exception $e) {
     echo $e->getMessage();
 }

@@ -1,6 +1,8 @@
 <?php
 require_once(__DIR__.'/include/initialize.php');
 require_once(__DIR__.'/layout/base.header.php');
+
+use Common\Common;
 ?>
 <div class="container">
     <div id="column">
@@ -12,7 +14,7 @@ require_once(__DIR__.'/layout/base.header.php');
             <div class="row createNewDirRow">
                 <input class="textbox" type="text"/>
             </div><?php
-            foreach (\Common::getDefaultRows($bucketname) as $row): ?>
+            foreach (Common::getDefaultRows($bucketname) as $row): ?>
                 <div class="row">
                     <p class="row_item"><?= $row ?></p>
                 </div><?php

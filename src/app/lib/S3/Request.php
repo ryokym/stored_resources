@@ -1,7 +1,11 @@
 <?php
+/**
+* Data Transfer Object with HTTP request parameters
+*/
+
 namespace S3;
 
-class RequestDTO {
+class Request {
     private $actionType;
     private $dirname     = null;
     private $name        = null;

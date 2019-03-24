@@ -1,6 +1,7 @@
 <?php
+namespace Common;
 
-class Common {
+class Common extends Constants {
 
     public static function setSession($key, $param) {
         $_SESSION[$key] = $param;

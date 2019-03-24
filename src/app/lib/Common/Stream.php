@@ -1,6 +1,7 @@
 <?php
+namespace Common;
 
-class Stream extends SplFileObject {
+class Stream extends \SplFileObject {
 
     public function readAsJson($contents) {
         if (is_array($result = json_decode($contents, true))) {
@@ -21,5 +22,5 @@ class Stream extends SplFileObject {
         parent::ftruncate(0);
         parent::rewind();
     }
-    
+
 }

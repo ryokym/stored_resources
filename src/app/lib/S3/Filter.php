@@ -1,18 +1,23 @@
 <?php
 namespace S3;
 
-class Filter extends Init {
+class Filter extends \Common\Common {
 
-    public function __construct($bucketname, $s3Object) {
-        parent::__construct($bucketname, $s3Object);
+    use \BucketChecker;
+    use \TokenChecker;
+
+    private $S3Client = NULL;
+
+    public function getFilteredS3Instance() {
+        return $this->S3Client;
     }
     /**
     * Action Upload
     */
     public static function isValidFile($file) {
-        if ($file['size'] > \Constants::MIN_FILE_SIZE
-        && strlen($file['name']) <= \Constants::MAX_LENGTH
-        && preg_match(\Constants::EXCLUDED_PATTERN, $file['name']) === 1)
+        if ($file['size'] > self::MIN_FILE_SIZE
+        && strlen($file['name']) <= self::MAX_LENGTH
+        && preg_match(self::EXCLUDED_PATTERN, $file['name']) === 1)
         {
             return true;
         } else {
@@ -24,7 +29,7 @@ class Filter extends Init {
     * Action Change
     */
     protected function isTolerableLineCount($count) {
-        if ($count === \Constants::LIMIT_LINE) {
+        if ($count === self::LIMIT_LINE) {
             throw new \Exception('{"result":"ERROR. It can not be displayed because it exceeds '.$count.' rows with the maximum number of lines"}');
         } else {
             return true;
@@ -32,7 +37,27 @@ class Filter extends Init {
     }
 
     protected function getDisOpenFileException() {
-        // throw new \Exception('{"result":"ERROR. No such file or directory"}');
+        throw new \Exception('{"result":"ERROR. No such file or directory"}');
+    }
+
+    public function isAuthenticatesToken($tokenfpath, $token) {
+        $contents = $this->getTokenList($tokenfpath);
+        $iscomeup = $this->lookupToken($contents, $token);
+
+        if ($iscomeup) return true;
+        else return false;
+    }
+
+    public function isAvailableBucket($s3Options, $bucketname) {
+        if (!$bucketname) return false;
+
+        $S3Client = $this->getS3Client($s3Options);
+        $this->S3Client = $S3Client;
+
+        $isAvailable = $this->checkBucket($bucketname, $S3Client);
+
+        if ($isAvailable) return true;
+        else return false;
     }
 
 }

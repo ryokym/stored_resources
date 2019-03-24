@@ -1,73 +1,95 @@
 /**
 * account js
 *
-* account obujects
+* object literal
 -------------------------------------------------------*/
 
 window.account = {}
-
 account = {
-    userName   : '',
-    password   : '',
-    bucket     : '',
+    sendtxt    : '',
+    signtxt    : '',
+    duration   : 400,
     forward    : '/',
     toAjax     : 'login/execute.php',
     successMsg : 'Account creation succeeded',
-}
-
-common.mode   = 'signIn';
-common.toAjax = common.basePath + account.toAjax;
-
-/* jQuery objects
--------------------------------------------------------*/
-
-const submitBtn   = $('#submit input');
-const switch_txt  = $('.switch_txt');
-const switch_bk   = $('.switch_bk');
-const inputBucket = $('input[name="bucket"]');
-const toggleSign  = function() {
-    if (common.ismode('signIn')) {
-        submitBtn.val('Enter');
-        switch_txt.text('SIGN UP');
-        inputBucket.hide();
-    } else {
-        submitBtn.val('Create Account');
-        switch_txt.text('SIGN IN');
-        inputBucket.show();
+    openmodal  : function() {
+        common.setmode('verify');
+        $wrapper.hide().promise().done(function() {
+            $modal.fadeIn(account.duration).css({'display': 'flex'});
+            $menu.slideUp(account.duration);
+            $ukey.text(common.ukey());
+        })
     }
 }
-/* methods
+
+/* jQuery object
 -------------------------------------------------------*/
 
+const $menu      = $('.menu');
+const $wrapper   = $('.wrapper');
+const $modal     = $('.modal');
+const $ukey      = $('#ukey');
+const $close     = $('#close');
+const $send      = $('#send input');
+const $switchtxt = $('.switch_txt');
+const $switchbk  = $('.switch_bk');
+const $tagName   = $('input[name ="userName"]');
+const $tagPass   = $('input[name ="password"]');
+const $tagBucket = $('input[name ="bucket"]');
+const $tagVal    = $('input[name ="bucketval"]');
+
+/* initialize
+-------------------------------------------------------*/
+
+common.mode   = 'enter';
+common.toAjax = common.basePath + account.toAjax;
+
+/*-----------------------------------------------------*/
+
 common.document.on('click', '#switcher', function() {
-    common.swapAttParams.call($('.switch_bk'),'sign_up_bk', 'sign_in_bk', (function() {
-        (common.ismode('signIn'))? common.setmode('signUp'): common.setmode('signIn');
-    }));
-    common.swapAttParams.call($('.switch_txt'),'sign_up_txt', 'sign_in_txt', toggleSign);
+    common.swapAttAryParams.call([$switchbk, $switchtxt],
+        ['sign_up_bk', 'sign_up_txt'],
+        ['sign_in_bk', 'sign_in_txt'],
+        function() {
+            common.togglemode('enter', 'create');
+            common.swapfn.call($send, 'valfn', account.sendtxt, ['enter', 'create']);
+            common.swapfn.call($switchtxt, 'txtfn', account.signtxt, ['SIGN IN', 'SIGN UP']);
+        }
+    )
 });
 
-submitBtn.click(function() {
-    account.userName = $('input[name ="userName"]').val();
-    account.password = $('input[name ="password"]').val();
-    account.bucket   = $('input[name ="bucket"]').val();
+$close.click(function() {
+    $menu.slideDown(account.duration);
+    $modal.fadeOut(account.duration).promise().done(function() {
+        $wrapper.show();
+        common.setmode('create');
+    });
+});
 
+$send.click(function() {
     const afterSignAction = function(response) {
         if (response === 'enter') {
             location.href = account.forward;
-        } else if (response === 'create') {
+        }
+        else if (response === 'create') {
+            account.openmodal();
+        }
+        else if (response === 'verify') {
             alert(account.successMsg);
             location.href = account.forward;
-        } else {
+        }
+        else {
             alert(response);
         }
     }
-
     common.postRequest({
         requestData : {
             actionType : common.mode,
-            userName   : account.userName,
-            password   : account.password,
-            bucket     : account.bucket,
+            userName   : $tagName.val(),
+            password   : $tagPass.val(),
+            bucket     : $tagBucket.val(),
+            bucketkey  : $ukey.text(),
+            bucketval  : $tagVal.val(),
         }
     }, afterSignAction);
 });

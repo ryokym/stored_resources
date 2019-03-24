@@ -2,23 +2,17 @@
 
 define('S3_CLASSES', [
     '/app/lib/S3/' => [
-        'RequestDTO',
+        'Request',
         'Filter',
         'Formatter',
         'Action',
     ]
 ]);
 
-define('S3_INIT_CLASS', [
-    '/app/lib/S3/' => [
-        'Init',
-    ]
-]);
-
 define('ACCOUNT_CLASSES', [
     '/app/lib/Account/' => [
         'Init',
-        'RequestDTO',
+        'Request',
         'Filter',
         'Action',
         'Crypt',
@@ -30,5 +24,7 @@ define('COMMON_CLASSES', [
         'Common',
         'Constants',
         'Stream',
+        'BucketChecker',
+        'TokenChecker',
     ]
 ]);

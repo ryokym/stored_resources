@@ -11,7 +11,7 @@ require_once(DOC_ROOT.'/app/config/autoloaderSetting.php');
 require_once(DOC_ROOT.'/app/config/s3ClientSetting.php');
 require_once(__DIR__.'/functions.inc.php');
 
-autoloader(COMMON_CLASSES, ACCOUNT_CLASSES, S3_INIT_CLASS);
+autoloader(COMMON_CLASSES, ACCOUNT_CLASSES);
 
 try {
     new Account\Init($pathset);

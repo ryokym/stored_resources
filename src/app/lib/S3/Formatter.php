@@ -3,17 +3,19 @@ namespace S3;
 
 class Formatter extends Filter {
 
-    protected $RequestDTO;
+    protected $bucketname;
+    protected $request;
+
 
     const _S3Protcol = S3_PROTOCOL;
 
-    public function __construct($bucketname, $s3Object, $RequestDTO) {
-        $this->RequestDTO = $RequestDTO;
-        parent::__construct($bucketname, $s3Object);
+    public function __construct($bucketname, $request) {
+        $this->bucketname = $bucketname;
+        $this->request = $request;
     }
 
     protected function getPathName() {
-        $pathName = $this->RequestDTO->getDirname().'/'.$this->RequestDTO->getName();
+        $pathName = $this->request->getDirname().'/'.$this->request->getName();
         return $pathName;
     }
 
@@ -34,7 +36,7 @@ class Formatter extends Filter {
     }
 
     protected function isRootDir() {
-        if (empty($this->RequestDTO->getDirname())){
+        if (empty($this->request->getDirname())){
             return true;
         }
     }

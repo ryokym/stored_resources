@@ -1,18 +1,17 @@
 /**
 * main js
 *
-* main objects
+* object leteral
 -------------------------------------------------------*/
 
 window.main = {}
-
 main = {
     name        : '',
     dirname     : '',
     level       : '',
     workdir     : '',
     stateWidth  : '',
-    isPreview   : false,
+    isview      : false,
     rootdir     : 1,
     leftgap     : 42,
     toAjax      : 'main/execute.php',
@@ -34,25 +33,33 @@ main = {
         var params = $.extend({}, preset, actionType);
         return params;
     },
+    adjustColumn : function() {
+        $('.level').each(function(){
+            let anyLevel = parseInt($(this).data('level'));
+            if (anyLevel > main.level) $(this).remove();
+        });
+    },
 }
+
+/* jQuery object
+-------------------------------------------------------*/
+
+const $preview    = $('#preview');
+const $upload     = $('#upload_area');
+const $uploadDrop = $('#upload_drop_area');
+const $remove     = $('#remove_area');
+const $removeDrop = $('#remove_drop_area');
+const $column     = $('#column');
+const $display    = $('#display');
+const $row        = $('.row:last').clone();
+const $level      = $('.level').clone();
+
+/* initialize
+-------------------------------------------------------*/
 
 common.mode   = 'upload';
 common.toAjax = common.basePath + main.toAjax;
-
-/* jQuery objects
--------------------------------------------------------*/
-
-const previewArea    = $('#preview');
-const uploadArea     = $('#upload_area');
-const uploadDropArea = $('#upload_drop_area');
-const removeArea     = $('#remove_area');
-const removeDropArea = $('#remove_drop_area');
-const columnArea     = $('#column');
-const displayArea    = $('#display');
-const rowClone       = $('.row:last').clone();
-const template       = $('.level').clone();
-
-template.find('.row:has(.row_item)').remove();
+$level.find('.row:has(.row_item)').remove();
 
 /* change
 -------------------------------------------------------*/
@@ -71,32 +78,32 @@ common.document.on('click', '.row:has(.row_item)', function() {
     const afterChangeAction = function(response) {
         const data = JSON.parse(response);
         if (data.isFile === false) {
-            const templateClone = template.clone();
+            const $levelClone = $level.clone();
             const newDirname = (main.level === main.rootdir)
                 ? main.name
                 : main.dirname + '/' + main.name;
-            main.isPreview = false;
-            common.adjustColumn(main.level);
-            templateClone.data('level', ++main.level);
-            templateClone.data('dir', newDirname);
+            main.isview = false;
+            main.adjustColumn();
+            $levelClone.data('level', ++main.level);
+            $levelClone.data('dir', newDirname);
             var elm = '';
             data.result.forEach(function(value) {
                 elm += '<div class="row"><p class="row_item">' + value + '</p></div>';
             });
-            columnArea.append(templateClone);
-            templateClone.show().append(elm);
+            $column.append($levelClone);
+            $levelClone.show().append(elm);
             $('.prettyprint').empty();
 
-            if (common.ismode('upload')) uploadArea.show();
-            if (common.ismode('remove')) common.swapAttParams.call(templateClone.find('.open'), 'enable', 'disable');
+            if (common.ismode('upload')) $upload.show();
+            if (common.ismode('remove')) common.swapAttParams.call($levelClone.find('.open'), 'enable', 'disable');
 
         } else {
-            main.isPreview = true;
-            if (common.ismode('upload')) previewArea.show();
-            previewArea.empty();
-            uploadArea.hide();
-            previewArea.append('<code class="prettyprint">' + data.result +'</code>');
-            common.adjustColumn(main.level);
+            main.isview = true;
+            if (common.ismode('upload')) $preview.show();
+            $preview.empty();
+            $upload.hide();
+            $preview.append('<code class="prettyprint">' + data.result +'</code>');
+            main.adjustColumn();
         }
     }
     actionDataSet = main.getElementData('change');
@@ -111,37 +118,38 @@ $('#remove').on('click', function() {
     const open = $('.open');
     const row = $('.row');
     const rowItem = $('.row_item');
-    common.swapAttParams.call(row, 'upload', 'remove');
-    common.swapAttParams.call(open,'disable','enable');
+    common.swapAttAryParams.call([row, open],
+        ['upload', 'enable' ],
+        ['remove', 'disable'],
+    );
     $('.close:visible').trigger('click');
-    if (common.ismode('upload')) {
-        common.setmode('remove');
-        previewArea.hide();
-        uploadArea.hide();
-        removeArea.css({display: 'flex'});
+    common.togglemode('upload', 'remove');
+    if (common.ismode('remove')) {
+        $preview.hide();
+        $upload.hide();
+        $remove.css({display: 'flex'});
         common.addDraggable.call(rowItem);
     } else {
-        common.setmode('upload');
-        removeArea.hide();
-        if (main.isPreview) $('#preview').show();
-        else uploadArea.show();
+        $remove.hide();
+        if (main.isview) $preview.show();
+        else $upload.show();
         $('.row_item').draggable({ disabled: true });
     }
 
-    removeDropArea.droppable({
+    $removeDrop.droppable({
         accept: '.row_item',
-        over: function() { removeDropArea.addClass('removeMouseOver') },
-        out : function() { removeDropArea.removeClass('removeMouseOver') },
+        over: function() { $removeDrop.addClass('removeMouseOver') },
+        out : function() { $removeDrop.removeClass('removeMouseOver') },
         drop: function(e, data) {
             main.setElementData(data.draggable);
             main.name = data.helper.context.textContent;
-            removeDropArea.removeClass('removeMouseOver');
+            $removeDrop.removeClass('removeMouseOver');
             if (confirm(main.dirname + '/' + main.name + 'を削除しますか?') === false) {
                 return false;
             } else {
                 data.draggable.parent().remove();
                 const afterRemoveAction = function() {
-                    common.adjustColumn(main.level);
+                    main.adjustColumn();
                 }
                 const removeActionDataSet = main.getElementData('remove');
                 common.postRequest(removeActionDataSet, afterRemoveAction);
@@ -154,31 +162,33 @@ $('#remove').on('click', function() {
 -------------------------------------------------------*/
 
 $('#expand').on('click', function() {
-    if (common.ismode('expand')) {
-        common.setmode('upload');
-        columnArea.show();
-        displayArea.css({
-            'margin-left':  0,
-            'right'      : main.stateWidth - main.leftgap,
-        });
-        displayArea.animate({'right':0});
-        columnArea.animate({'right':0});
-    } else {
-        common.setmode('expand');
-        main.stateWidth = columnArea.outerWidth();
-        var maxWidth = $('.container').innerWidth();
-        columnArea.animate({
-            'right':main.stateWidth,
-        });
-        displayArea.animate({'right':main.stateWidth - main.leftgap}, {
-            complete: function() {
-                displayArea.css({
-                    'margin-left': main.leftgap,
-                    'right'      : 0,
-                });
-                columnArea.hide();
-            }
-        })
+    if (main.isview && !common.ismode('remove')) {
+        common.togglemode('expand', 'upload');
+        if (common.ismode('upload')) {
+            $column.show();
+            $display.css({
+                'margin-left':  0,
+                'right'      : main.stateWidth - main.leftgap,
+            });
+            $display.animate({'right':0});
+            $column.animate({'right':0});
+        }
+        if (common.ismode('expand')){
+            main.stateWidth = $column.outerWidth();
+            var maxWidth = $('.container').innerWidth();
+            $column.animate({
+                'right':main.stateWidth,
+            });
+            $display.animate({'right':main.stateWidth - main.leftgap}, {
+                complete: function() {
+                    $display.css({
+                        'margin-left': main.leftgap,
+                        'right'      : 0,
+                    });
+                    $column.hide();
+                }
+            })
+        }
     }
 });
 
@@ -210,7 +220,7 @@ common.document.on('click', '.open, .enable', function() {
         });
         if (common.validateFiles(main.name)) {
             const createDirBtnArea = main.workdir.find('.row').first();
-            const clone = rowClone.clone();
+            const clone = $row.clone();
             afterMakedirAction = function() {
                 const createNewDirRow = main.workdir.find('.createNewDirRow');
                 common.setmode('upload');
@@ -245,18 +255,18 @@ common.document.on('click', '.open, .enable', function() {
 /* upload
 -------------------------------------------------------*/
 
-uploadDropArea.on('dragover', function(e) {
+$uploadDrop.on('dragover', function(e) {
     e.stopPropagation();
     e.preventDefault();
     $(this).addClass('uploadMouseOver');
 });
-uploadDropArea.on('dragleave', function(e) {
+$uploadDrop.on('dragleave', function(e) {
     e.stopPropagation();
     e.preventDefault();
     $(this).removeClass('uploadMouseOver');
 });
 
-common.document.on('drop', uploadDropArea, function(_e) {
+common.document.on('drop', $uploadDrop, function(_e) {
     if (common.ismode('upload')) {
         _e.preventDefault();
         $(this).removeClass('uploadMouseOver');
@@ -269,7 +279,7 @@ common.document.on('drop', uploadDropArea, function(_e) {
 });
 
 function fileUpload(f) {
-    const clone = rowClone.clone();
+    const clone = $row.clone();
     const formData = new FormData();
     const toUploadDir = $('.level').eq(-1);
     main.dirname = toUploadDir.data('dir');
@@ -286,7 +296,7 @@ function fileUpload(f) {
         } else {
             alert(response);
         }
-        uploadDropArea.removeClass('uploadMouseOver');
+        $uploadDrop.removeClass('uploadMouseOver');
     }
     common.postRequest(formData, afterUploadAction, true);
 }

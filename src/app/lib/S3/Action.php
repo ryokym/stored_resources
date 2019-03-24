@@ -3,8 +3,11 @@ namespace S3;
 
 class Action extends Formatter {
 
-    public function __construct($bucketname, $s3Object, $RequestDTO) {
-        parent::__construct($bucketname, $s3Object, $RequestDTO);
+    private $S3Client;
+
+    public function __construct($bucketname, $S3Client, $request) {
+        $this->S3Client = $S3Client;
+        parent::__construct($bucketname, $request);
     }
 
     public function execute($actionType) {
@@ -13,8 +16,8 @@ class Action extends Formatter {
 
     public function change() {
         if (!parent::isRootDir()) {
-            $path = parent::prependDS($this->RequestDTO->getDirname());
-            $this->RequestDTO->setDirName($path);
+            $path = parent::prependDS($this->request->getDirname());
+            $this->request->setDirName($path);
         }
         $s3Path = parent::getS3PathName();
         $response = [];
@@ -32,13 +35,13 @@ class Action extends Formatter {
     }
 
     public function remove() {
-        $prefix = (parent::isRootDir())? $this->RequestDTO->getName(): parent::getPathName();
-        $results = $this->s3Object->listObjects([
+        $prefix = (parent::isRootDir())? $this->request->getName(): parent::getPathName();
+        $results = $this->S3Client->listObjects([
             'Bucket' => $this->bucketname,
             'Prefix' => $prefix
         ]);
         foreach ($results['Contents'] as $result) {
-            $this->s3Object->deleteObject([
+            $this->S3Client->deleteObject([
                 'Bucket' => $this->bucketname,
                 'Key' => $result['Key']
             ]);
@@ -46,26 +49,26 @@ class Action extends Formatter {
     }
 
     public function makedir() {
-        $key = (parent::isRootDir())? $this->RequestDTO->getName(): parent::getPathName();
+        $key = (parent::isRootDir())? $this->request->getName(): parent::getPathName();
         // 最後に/付けないとファイルになる
         $pathName = parent::appendDS($key);
         // streamWrapperではBucketは作れる(mkdir()で)がDirectoryは作れない
         // mkdir(S3_PROTOCOL.$currentDirName.$newDirName);
-        $this->s3Object->putObject([
+        $this->S3Client->putObject([
             'Bucket' => $this->bucketname,
             'Key'    => $pathName,
         ]);
     }
 
     public function upload() {
-        $dirName = parent::appendDS($this->RequestDTO->getDirname());
-        $pathName = $dirName.$this->RequestDTO->getFileName();
-        $this->s3Object->putObject(array(
+        $dirName = parent::appendDS($this->request->getDirname());
+        $pathName = $dirName.$this->request->getFileName();
+        $this->S3Client->putObject(array(
             'Bucket' => $this->bucketname,
             'Key'    => $pathName,
-            'Body'   => fopen($this->RequestDTO->getTmpFileName(), 'r')
+            'Body'   => fopen($this->request->getTmpFileName(), 'r')
         ));
-        echo $this->RequestDTO->getFileName();
+        echo $this->request->getFileName();
     }
 
     public static function logout() {

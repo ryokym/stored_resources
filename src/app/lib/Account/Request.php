@@ -1,11 +1,17 @@
 <?php
+/**
+* Data Transfer Object with HTTP request parameters
+*/
+
 namespace Account;
 
-class RequestDTO {
+class Request {
     private $actionType;
     private $userName;
     private $password;
     private $bucket;
+    private $bucketkey = NULL;
+    private $bucketval = NULL;
 
     public function getActionType() {
         return $this->actionType;
@@ -37,6 +43,22 @@ class RequestDTO {
 
     public function setBucket($bucket) {
         $this->bucket = $bucket;
+    }
+
+    public function getBucketkey() {
+        return $this->bucketkey;
+    }
+
+    public function setBucketkey($bucketkey) {
+        $this->bucketkey = $bucketkey;
+    }
+
+    public function getBucketval() {
+        return $this->bucketval;
+    }
+
+    public function setBucketval($bucketval) {
+        $this->bucketval = $bucketval;
     }
 
     public function setProparties($proparties) {

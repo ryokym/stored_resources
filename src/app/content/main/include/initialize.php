@@ -7,26 +7,27 @@ require_once($_SERVER["DOCUMENT_ROOT"].'/app/common/initialize.inc.php');
 autoloader(S3_CLASSES);
 
 use Aws\S3\S3Client;
-use S3\Init;
+use Common\Common;
+use \S3\Filter;
 
+$filter = new Filter();
+
+/* Check Auto login */
 $token = [
-    'ses'  => (\Common::getSession('token'))?? NULL,
+    'ses'  => (Common::getSession('token'))?? NULL,
     'path' => ($pathset['token'])?? NULL,
 ];
 
-$stream = new \Stream($token['path']);
-if (!Account\Filter::lookupToken($stream, $token['ses'])) header('Location:/index.php?=signin');
+$isAutologin = $filter->isAuthenticatesToken($token['path'], $token['ses']);
 
-$s3Object = Init::getS3Object(S3_SET_OPTIONS);
+if (!$isAutologin) header('Location:/index.php?=signin');
 
-try {
-    $bucketname = \Common::getSession('bucket')?? NULL;
-    Init::checkAvailableBucket($s3Object, $bucketname);
-} catch(Exception $e) {
-    // echo $e->getMessage();
-    // die;
-    header('Location/index.php?=signin');
-    // TODO sessionに例外メッセージを格納してログイン画面へリダイレクト。バケット名を変更するよう促すポップアップ表示
-}
+/* Bucket status check */
+$bucketname = Common::getSession('bucket');
+$isAvailableBucket = $filter->isAvailableBucket(S3_SET_OPTIONS, $bucketname);
 
-$s3Object->registerStreamWrapper();
+if (!$isAvailableBucket) header('Location:/index.php?=signin');
+
+$S3Client = $filter->getFilteredS3Instance();
+
+$S3Client->registerStreamWrapper();
