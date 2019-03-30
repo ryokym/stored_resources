@@ -1,15 +1,17 @@
 <?php
 namespace Common;
 
-class Stream extends \SplFileObject {
-
-    public function readAsJson($contents) {
+class Stream extends \SplFileObject
+{
+    public function readAsJson($contents)
+    {
         if (is_array($result = json_decode($contents, true))) {
             return $result;
         }
     }
 
-    public function foverwrite($contents, $format = NULL) {
+    public function foverwrite($contents, $format = null)
+    {
         if ($format === 'json') {
             $contents = json_encode($contents);
         }
@@ -18,9 +20,9 @@ class Stream extends \SplFileObject {
         parent::fwrite($contents, $size);
     }
 
-    private function _fclear() {
+    private function _fclear()
+    {
         parent::ftruncate(0);
         parent::rewind();
     }
-
 }

@@ -3,8 +3,8 @@ namespace Account;
 
 use Aws\Exception\AwsException;
 
-class Filter extends Init {
-
+class Filter extends Init
+{
     use \BucketChecker;
     use \TokenChecker;
 
@@ -12,13 +12,17 @@ class Filter extends Init {
     protected $error = '';
     public $account;
 
-    public function __construct($request, $pathset) {
+    public function __construct($request, $pathset)
+    {
         parent::__construct($pathset);
         $this->request = $request;
     }
 
-    private function setError($error) {
-        if (empty($this->error)) $this->error = $error;
+    private function setError($error)
+    {
+        if (empty($this->error)) {
+            $this->error = $error;
+        }
     }
 
     /**
@@ -28,9 +32,12 @@ class Filter extends Init {
     * @param  boolean  $onlyUsername  = When the lookup target is only the username
     * @return boolean  Were there or not
     */
-    public function lookupAccount(array $accountList, $requireVerify = true, $onlyUsername = false) {
+    public function lookupAccount(array $accountList, $requireVerify = true, $onlyUsername = false)
+    {
         $inputname = $this->request->getUserName();
-        if (!$onlyUsername) $inputpass = $this->request->getPassword();
+        if (!$onlyUsername) {
+            $inputpass = $this->request->getPassword();
+        }
         foreach ($accountList as $account) {
             // case : only username
             if ($onlyUsername) {
@@ -50,7 +57,8 @@ class Filter extends Init {
         return false;
     }
 
-    public function checkRegistedName($accountList) {
+    public function checkRegistedName($accountList)
+    {
         $isfind = $this->lookupAccount($accountList, false, true);
         if ($isfind) {
             $this->setError('input user name is already in use');
@@ -61,7 +69,8 @@ class Filter extends Init {
     * Check if all input values ​​are filled
     * @return boolean
     */
-    public function isfillAll() {
+    public function isfillAll()
+    {
         $props = $this->request->getPropaties();
         foreach ($props as $prop) {
             if ($prop === '') {
@@ -71,13 +80,14 @@ class Filter extends Init {
         return true;
     }
 
-    protected function isVerifyTags($S3Client) {
+    protected function isVerifyTags($S3Client)
+    {
         $result = [];
         try {
             $result = $S3Client->getBucketTagging([
                 'Bucket' => $this->request->getBucket(),
             ]);
-        } catch(AwsException $e) {
+        } catch (AwsException $e) {
         }
         if (!empty($result["TagSet"])) {
             foreach ($result["TagSet"] as $tagset) {
@@ -90,10 +100,13 @@ class Filter extends Init {
         $this->setError('Access the S3 bucket and set the value');
     }
 
-    protected function isAvailableBucket($bucket, $S3Client) {
+    protected function isAvailableBucket($bucket, $S3Client)
+    {
         $result = $this->checkBucket($bucket, $S3Client);
-        if ($result) return true;
-        else $this->setError('bucket name is invalid');
+        if ($result) {
+            return true;
+        } else {
+            $this->setError('bucket name is invalid');
+        }
     }
-
 }

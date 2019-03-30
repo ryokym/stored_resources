@@ -1,12 +1,13 @@
 <?php
 namespace S3;
 
-class Init extends Filter {
+class Init extends Filter
+{
+    public static $S3Client = null;
+    public static $bucketname = null;
 
-    public static $S3Client = NULL;
-    public static $bucketname = NULL;
-
-    public function save() {
+    public function save()
+    {
         self::$S3Client = $this->filteredS3Client;
         self::$bucketname = $this->filteredBucket;
     }

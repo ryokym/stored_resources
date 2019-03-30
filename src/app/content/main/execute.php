@@ -15,14 +15,16 @@ try {
             $request->setTmpFileName($uploadedFile['tmp_name']);
         }
     } else {
-        $requestData = filter_input(INPUT_POST, 'requestData', FILTER_DEFAULT,FILTER_REQUIRE_ARRAY);
+        $requestData = filter_input(INPUT_POST, 'requestData', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
         $request->setProparties($requestData);
     }
 
-    if ($request->getActionType() === 'logout') Action::logout();
+    if ($request->getActionType() === 'logout') {
+        Action::logout();
+    }
 
     $action = new Action($request);
     $action->execute($request->getActionType());
-} catch(\Exception $e) {
+} catch (\Exception $e) {
     echo $e->getMessage();
 }

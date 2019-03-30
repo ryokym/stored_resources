@@ -15,6 +15,6 @@ autoloader(COMMON_CLASSES, ACCOUNT_CLASSES);
 
 try {
     new Account\Init($pathset);
-} catch(\Exception $e) {
+} catch (\Exception $e) {
     die($e->getMessage());
 }

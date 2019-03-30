@@ -1,17 +1,20 @@
 <?php
 namespace S3;
 
-class Action extends Formatter {
-
-    public function __construct($request) {
+class Action extends Formatter
+{
+    public function __construct($request)
+    {
         parent::__construct($request);
     }
 
-    public function execute($actionType) {
+    public function execute($actionType)
+    {
         return $this->$actionType();
     }
 
-    public function change() {
+    public function change()
+    {
         if (!parent::isRootDir()) {
             $path = parent::prependDS($this->request->getDirname());
             $this->request->setDirName($path);
@@ -31,7 +34,8 @@ class Action extends Formatter {
         echo $response;
     }
 
-    public function remove() {
+    public function remove()
+    {
         $prefix = (parent::isRootDir())? $this->request->getName(): parent::getPathName();
         $results = self::$S3Client->listObjects([
             'Bucket' => self::$bucketname,
@@ -45,7 +49,8 @@ class Action extends Formatter {
         }
     }
 
-    public function makedir() {
+    public function makedir()
+    {
         $key = (parent::isRootDir())? $this->request->getName(): parent::getPathName();
         // 最後に/付けないとファイルになる
         $pathName = parent::appendDS($key);
@@ -57,7 +62,8 @@ class Action extends Formatter {
         ]);
     }
 
-    public function upload() {
+    public function upload()
+    {
         $dirName = parent::appendDS($this->request->getDirname());
         $pathName = $dirName.$this->request->getFileName();
         self::$S3Client->putObject(array(
@@ -68,7 +74,8 @@ class Action extends Formatter {
         echo $this->request->getFileName();
     }
 
-    public static function logout() {
+    public static function logout()
+    {
         session_destroy();
     }
 }

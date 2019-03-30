@@ -3,18 +3,20 @@ namespace Account;
 
 use Common\Stream;
 
-class Action extends Crypt {
-
-    public function __construct(Request $request, array $pathset) {
+class Action extends Crypt
+{
+    public function __construct(Request $request, array $pathset)
+    {
         parent::__construct($request, $pathset);
     }
 
-    public function execute($actionType) {
+    public function execute($actionType)
+    {
         return $this->$actionType();
     }
 
-    public function enter() {
-
+    public function enter()
+    {
         $issucceed = false;
         $stream = new Stream(parent::getPathsetUser(), 'r+');
         $contents = $stream->fread($stream->getSize());
@@ -44,14 +46,16 @@ class Action extends Crypt {
                 $this->account['bucket'],
                 ENC_METHOD,
                 $this->request->getPassword(),
-                $this->account['iv']));
-                echo $this->request->getActionType();
+                $this->account['iv']
+            ));
+            echo $this->request->getActionType();
         } else {
             echo 'Error! username or password is invalid';
         }
     }
 
-    public function create() {
+    public function create()
+    {
         $issucceed = false;
         $stream = new Stream(parent::getPathsetUser(), 'r+');
         $contents = $stream->fread($stream->getSize());
@@ -60,7 +64,8 @@ class Action extends Crypt {
         echo ($errormsg = $this->error)? $errormsg: $this->request->getActionType();
     }
 
-    public function verify() {
+    public function verify()
+    {
         $issucceed = false;
         if (parent::isfillAll()) {
             $stream = new Stream(parent::getPathsetUser(), 'r+');
@@ -94,9 +99,9 @@ class Action extends Crypt {
         echo ($errormsg = $this->error)? $errormsg: $this->request->getActionType();
     }
 
-    public static function logout() {
+    public static function logout()
+    {
         session_destroy();
         header('Location:/app/content/login/');
     }
-
 }

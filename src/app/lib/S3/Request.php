@@ -5,7 +5,8 @@
 
 namespace S3;
 
-class Request {
+class Request
+{
     private $actionType;
     private $dirname     = null;
     private $name        = null;
@@ -14,55 +15,68 @@ class Request {
     private $tmpFileName = null;
     private $s3Object    = null;
 
-    public function getActionType() {
+    public function getActionType()
+    {
         return $this->actionType;
     }
 
-    public function setActionType($actionType) {
+    public function setActionType($actionType)
+    {
         $this->actionType = $actionType;
     }
 
-    public function getDirname() {
+    public function getDirname()
+    {
         return $this->dirname;
     }
 
-    public function setDirName($dirname) {
+    public function setDirName($dirname)
+    {
         $this->dirname = $dirname;
     }
 
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
     }
 
-    public function getFileName() {
+    public function getFileName()
+    {
         return $this->fileName;
     }
 
-    public function setFileName($fileName) {
+    public function setFileName($fileName)
+    {
         $this->fileName = $fileName;
     }
 
-    public function getTmpFileName() {
+    public function getTmpFileName()
+    {
         return $this->tmpFileName;
     }
 
-    public function setTmpFileName($tmpFileName) {
+    public function setTmpFileName($tmpFileName)
+    {
         $this->tmpFileName = $tmpFileName;
     }
 
-    public function getS3Object() {
+    public function getS3Object()
+    {
         return $this->S3Object;
     }
 
-    public function setS3Object($s3obj) {
+    public function setS3Object($s3obj)
+    {
         $this->S3Object = $s3obj;
     }
 
-    public function setProparties($proparties) {
+    public function setProparties($proparties)
+    {
         foreach ($proparties as $propaty => $param) {
             $this->$propaty = $param;
         }

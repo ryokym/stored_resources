@@ -3,6 +3,7 @@ require_once(__DIR__.'/include/initialize.php');
 require_once(__DIR__.'/layout/base.header.php');
 
 use Common\Common;
+
 ?>
 <div class="container">
     <div id="column">

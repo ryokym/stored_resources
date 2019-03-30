@@ -5,12 +5,12 @@ use Account\Action;
 
 $request = new Request();
 
-$requestData = filter_input(INPUT_POST, 'requestData', FILTER_DEFAULT,FILTER_REQUIRE_ARRAY);
+$requestData = filter_input(INPUT_POST, 'requestData', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
 $request->setProparties($requestData);
 
 try {
     $action = new Action($request, $pathset);
     $action->execute($request->getActionType());
-} catch(\Exception $e) {
+} catch (\Exception $e) {
     echo $e->getMessage();
 }
