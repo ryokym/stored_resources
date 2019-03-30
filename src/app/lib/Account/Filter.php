@@ -48,7 +48,7 @@ class Filter extends Init
             // case : username and password
             else {
                 if ($account['user'] === $inputname
-                && ($requireVerify)? password_verify($inputpass, $account['pass']): $inputpass === $account['pass']) {
+                && ($requireVerify) ? password_verify($inputpass, $account['pass']) : $inputpass === $account['pass']) {
                     $this->account = $account;
                     return true;
                 }

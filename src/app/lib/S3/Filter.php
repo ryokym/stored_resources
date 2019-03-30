@@ -44,7 +44,7 @@ class Filter extends \Common\Common
     {
         $contents = $this->getTokenList($tokenfpath);
         $iscomeup = $this->lookupToken($contents, $token);
-        return ($iscomeup)? true: false;
+        return ($iscomeup) ? true : false;
     }
 
     public function isAvailableBucket($s3Options, $bucketname)

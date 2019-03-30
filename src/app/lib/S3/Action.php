@@ -36,7 +36,7 @@ class Action extends Formatter
 
     public function remove()
     {
-        $prefix = (parent::isRootDir())? $this->request->getName(): parent::getPathName();
+        $prefix = (parent::isRootDir()) ? $this->request->getName() : parent::getPathName();
         $results = self::$S3Client->listObjects([
             'Bucket' => self::$bucketname,
             'Prefix' => $prefix
@@ -51,7 +51,7 @@ class Action extends Formatter
 
     public function makedir()
     {
-        $key = (parent::isRootDir())? $this->request->getName(): parent::getPathName();
+        $key = (parent::isRootDir()) ? $this->request->getName() : parent::getPathName();
         // 最後に/付けないとファイルになる
         $pathName = parent::appendDS($key);
         // streamWrapperではBucketは作れる(mkdir()で)がDirectoryは作れない
@@ -66,11 +66,11 @@ class Action extends Formatter
     {
         $dirName = parent::appendDS($this->request->getDirname());
         $pathName = $dirName.$this->request->getFileName();
-        self::$S3Client->putObject(array(
+        self::$S3Client->putObject([
             'Bucket' => self::$bucketname,
             'Key'    => $pathName,
             'Body'   => fopen($this->request->getTmpFileName(), 'r')
-        ));
+        ]);
         echo $this->request->getFileName();
     }
 

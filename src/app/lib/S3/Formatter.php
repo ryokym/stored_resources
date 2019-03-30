@@ -4,8 +4,7 @@ namespace S3;
 class Formatter extends Init
 {
     protected $request;
-
-    const _S3Protcol = S3_PROTOCOL;
+    public const _S3Protcol = S3_PROTOCOL;
 
     public function __construct($request)
     {

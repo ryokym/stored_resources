@@ -6,7 +6,6 @@ require_once($_SERVER["DOCUMENT_ROOT"].'/app/common/initialize.inc.php');
 
 autoloader(S3_CLASSES);
 
-use Aws\S3\S3Client;
 use Common\Common;
 use \S3\Init;
 

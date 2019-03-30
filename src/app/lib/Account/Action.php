@@ -61,7 +61,7 @@ class Action extends Crypt
         $contents = $stream->fread($stream->getSize());
         $list = $stream->readAsJson($contents);
         parent::checkRegistedName($list);
-        echo ($errormsg = $this->error)? $errormsg: $this->request->getActionType();
+        echo ($errormsg = $this->error) ? $errormsg : $this->request->getActionType();
     }
 
     public function verify()
@@ -96,7 +96,7 @@ class Action extends Crypt
                 }
             }
         }
-        echo ($errormsg = $this->error)? $errormsg: $this->request->getActionType();
+        echo ($errormsg = $this->error) ? $errormsg : $this->request->getActionType();
     }
 
     public static function logout()
