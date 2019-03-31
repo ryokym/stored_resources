@@ -1,11 +1,18 @@
 <?php
 namespace S3;
+use Adapter\S3BucketConnection;
 
 class Action extends Formatter
 {
-    public function __construct($request)
+    private $S3Client;
+    private $bucketname;
+
+    public function __construct($request, $S3options, $bucketname)
     {
         parent::__construct($request);
+        $data = S3BucketConnection::getS3ConnectionData($S3options, $bucketname);
+        $this->S3Client = $data['S3Client'];
+        $this->bucketname = $data['bucketname'];
     }
 
     public function execute($actionType)
@@ -19,7 +26,7 @@ class Action extends Formatter
             $path = parent::prependDS($this->request->getDirname());
             $this->request->setDirName($path);
         }
-        $s3Path = parent::getS3PathName();
+        $s3Path = parent::getS3PathName($this->bucketname);
         $response = [];
         if (is_dir($s3Path)) {
             $response['isFile'] = false;
@@ -37,13 +44,13 @@ class Action extends Formatter
     public function remove()
     {
         $prefix = (parent::isRootDir()) ? $this->request->getName() : parent::getPathName();
-        $results = self::$S3Client->listObjects([
-            'Bucket' => self::$bucketname,
+        $results = $this->S3Client->listObjects([
+            'Bucket' => $this->bucketname,
             'Prefix' => $prefix
         ]);
         foreach ($results['Contents'] as $result) {
-            self::$S3Client->deleteObject([
-                'Bucket' => self::$bucketname,
+            $this->S3Client->deleteObject([
+                'Bucket' => $this->bucketname,
                 'Key' => $result['Key']
             ]);
         }
@@ -56,8 +63,8 @@ class Action extends Formatter
         $pathName = parent::appendDS($key);
         // streamWrapperではBucketは作れる(mkdir()で)がDirectoryは作れない
         // mkdir(S3_PROTOCOL.$currentDirName.$newDirName);
-        self::$S3Client->putObject([
-            'Bucket' => self::$bucketname,
+        $this->S3Client->putObject([
+            'Bucket' => $this->bucketname,
             'Key'    => $pathName,
         ]);
     }
@@ -66,8 +73,8 @@ class Action extends Formatter
     {
         $dirName = parent::appendDS($this->request->getDirname());
         $pathName = $dirName.$this->request->getFileName();
-        self::$S3Client->putObject([
-            'Bucket' => self::$bucketname,
+        $this->S3Client->putObject([
+            'Bucket' => $this->bucketname,
             'Key'    => $pathName,
             'Body'   => fopen($this->request->getTmpFileName(), 'r')
         ]);
@@ -78,4 +85,5 @@ class Action extends Formatter
     {
         session_destroy();
     }
+    
 }

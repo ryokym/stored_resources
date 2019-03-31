@@ -4,12 +4,11 @@
 */
 require_once($_SERVER["DOCUMENT_ROOT"].'/app/common/initialize.inc.php');
 
-autoloader(S3_CLASSES);
+autoloader(S3_CLASSES, ADAPTER_CLASS);
 
 use Common\Common;
-use \S3\Init;
-
-$Init = new Init();
+use Adapter\S3BucketConnection;
+use \S3\Filter;
 
 /* Check Auto login */
 $token = [
@@ -17,7 +16,7 @@ $token = [
     'path' => ($pathset['token'])?? null,
 ];
 
-$isAutologin = $Init->isAuthenticatesToken($token['path'], $token['ses']);
+$isAutologin = Filter::isAuthenticatesToken($token['path'], $token['ses']);
 
 if (!$isAutologin) {
     header('Location:/index.php?=signin');
@@ -26,12 +25,12 @@ if (!$isAutologin) {
 
 /* Bucket status check */
 $bucketname = Common::getSession('bucket');
-$isAvailableBucket = $Init->isAvailableBucket(S3_SET_OPTIONS, $bucketname);
-
-if (!$isAvailableBucket) {
-    header('Location:/index.php?=signin');
-}
-
-$Init->save();
-
-$Init::$S3Client->registerStreamWrapper();
+// $isAvailableBucket = $Init->isAvailableBucket(S3_SET_OPTIONS, $bucketname);
+//
+// if (!$isAvailableBucket) {
+//     header('Location:/index.php?=signin');
+// }
+//
+// $Init->save();
+$S3ConnectionData = S3BucketConnection::getS3ConnectionData(S3_SET_OPTIONS, $bucketname);
+$S3ConnectionData['S3Client']->registerStreamWrapper();

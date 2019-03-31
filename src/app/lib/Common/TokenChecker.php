@@ -9,7 +9,7 @@ trait TokenChecker
     * @param  string  $token
     * @return boolean
     */
-    protected function lookupToken($contents, $token)
+    protected static function lookupToken($contents, $token)
     {
         if (strpos($contents, $token) === false) {
             return false;
@@ -17,7 +17,7 @@ trait TokenChecker
         return true;
     }
 
-    protected function getTokenList($tokenfpath)
+    protected static function getTokenList($tokenfpath)
     {
         $stream = new Stream($tokenfpath);
         $contents = $stream->fread($stream->getSize());

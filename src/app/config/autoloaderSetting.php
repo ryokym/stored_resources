@@ -2,11 +2,16 @@
 
 define('S3_CLASSES', [
     '/app/lib/S3/' => [
-        'Init',
         'Filter',
         'Formatter',
         'Action',
         'Request',
+    ]
+]);
+
+define('ADAPTER_CLASS', [
+    '/app/lib/Adapter/' => [
+        'S3BucketConnection',
     ]
 ]);
 

@@ -1,10 +1,11 @@
 <?php
 namespace S3;
 
-class Formatter extends Init
+use \Common\Common;
+
+class Formatter extends Filter
 {
     protected $request;
-    public const _S3Protcol = S3_PROTOCOL;
 
     public function __construct($request)
     {
@@ -17,10 +18,10 @@ class Formatter extends Init
         return $pathName;
     }
 
-    protected function getS3PathName()
+    protected function getS3PathName($bucketname)
     {
         $pathName = $this->getPathName();
-        return self::_S3Protcol.self::$bucketname.$pathName;
+        return Common::S3_PROTOCOL.$bucketname.$pathName;
     }
 
     protected function prependDS($str)
@@ -53,7 +54,7 @@ class Formatter extends Init
         }
     }
 
-    private function _getLines($fName)
+    private function getLinesGenerator($fName)
     {
         while (($line = fgets($fName)) !== false) {
             yield $line;
@@ -65,7 +66,7 @@ class Formatter extends Init
         $response = '';
         $lineCnt = 0;
         try {
-            foreach ($this->_getLines($fName) as $line) {
+            foreach ($this->getLinesGenerator($fName) as $line) {
                 if (parent::isTolerableLineCount($lineCnt)) {
                     $response .= $line;
                     $lineCnt++;
@@ -83,5 +84,12 @@ class Formatter extends Init
         if (parent::isValidFile($file)) {
             return $file;
         }
+    }
+
+    public static function getRootdirItems($bucketname)
+    {
+        $rows[] = scandir(Common::S3_PROTOCOL.$bucketname);
+        $rows = array_values($rows[0]);
+        return $rows;
     }
 }

@@ -69,9 +69,16 @@ class Filter extends Init
     * Check if all input values ​​are filled
     * @return boolean
     */
-    public function isfillAll()
+    public function isfillAll($required = [])
     {
-        $props = $this->request->getPropaties();
+        $props = [];
+
+        if (!empty($required)) {
+            $props = $this->request->getValues($required);
+        } else {
+            $props = $this->request->All();
+        }
+
         foreach ($props as $prop) {
             if ($prop === '') {
                 $this->setError('Please fill in all the input fields');
@@ -108,5 +115,9 @@ class Filter extends Init
         } else {
             $this->setError('bucket name is invalid');
         }
+    }
+
+    protected function invalidEntered() {
+        $this->setError('username or password is invalid');
     }
 }

@@ -18,8 +18,8 @@
             <div class="wrapper">
                 <div class="title"><h1><?= APP_NAME ?></h1></div>
                 <div>
-                    <input type="text" name="userName" placeholder="UserName?">
-                    <input type="password" name="password" placeholder="Password?">
+                    <input type="text" name="username" placeholder="yourname?">
+                    <input type="password" name="password" placeholder="password?">
                 </div>
                 <div id="send">
                     <input class="sign_in_bk switch_bk" type="text" value="Enter" readonly>

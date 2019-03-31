@@ -1,7 +1,7 @@
 <?php
 namespace Account;
 
-class Init extends \Common\Common
+class Init
 {
     private $pathsetUser;
     private $pathsetToken;

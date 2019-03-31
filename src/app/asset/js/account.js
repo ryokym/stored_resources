@@ -33,7 +33,7 @@ const $close     = $('#close');
 const $send      = $('#send input');
 const $switchtxt = $('.switch_txt');
 const $switchbk  = $('.switch_bk');
-const $tagName   = $('input[name ="userName"]');
+const $tagName   = $('input[name ="username"]');
 const $tagPass   = $('input[name ="password"]');
 const $tagBucket = $('input[name ="bucket"]');
 const $tagVal    = $('input[name ="bucketval"]');
@@ -85,7 +85,7 @@ $send.click(function() {
     common.postRequest({
         requestData : {
             actionType : common.mode,
-            userName   : $tagName.val(),
+            username   : $tagName.val(),
             password   : $tagPass.val(),
             bucket     : $tagBucket.val(),
             bucketkey  : $ukey.text(),

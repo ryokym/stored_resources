@@ -8,7 +8,7 @@ namespace Account;
 class Request
 {
     private $actionType;
-    private $userName;
+    private $username;
     private $password;
     private $bucket;
     private $bucketkey = null;
@@ -24,14 +24,14 @@ class Request
         $this->actionType = $actionType;
     }
 
-    public function getUserName()
+    public function getUsername()
     {
-        return $this->userName;
+        return $this->username;
     }
 
-    public function setUserName($userName)
+    public function setUsername($username)
     {
-        $this->userName = $userName;
+        $this->username = $username;
     }
 
     public function getPassword()
@@ -82,10 +82,10 @@ class Request
     }
 
     /**
-    * Get all the values ​​set in the property
+    * retrieving all input data
     * @return array
     */
-    public function getPropaties()
+    public function All()
     {
         $results = [];
         $props = array_keys(get_class_vars(get_class($this)));
@@ -94,4 +94,22 @@ class Request
         }
         return $results;
     }
+
+    /**
+    * retrieving properties that specified names of array
+    *
+    */
+    public function getValues(array $propnames) {
+        if (!empty($propnames)) {
+            $getter = 'get';
+            $values = [];
+            foreach ($propnames as $propname) {
+                $values[] = $this->{$getter.ucfirst($propname)}();
+            }
+            return $values;
+        } else {
+            return $this->getPropaties();
+        }
+    }
+
 }
