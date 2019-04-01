@@ -4,11 +4,9 @@
 */
 require_once($_SERVER["DOCUMENT_ROOT"].'/app/common/initialize.inc.php');
 
-autoloader(S3_CLASSES, ADAPTER_CLASS);
-
 use Common\Common;
-use Adapter\S3BucketConnection;
-use \S3\Filter;
+use Adapter\S3Adapter;
+use S3\Filter;
 
 /* Check Auto login */
 $token = [
@@ -32,5 +30,5 @@ $bucketname = Common::getSession('bucket');
 // }
 //
 // $Init->save();
-$S3ConnectionData = S3BucketConnection::getS3ConnectionData(S3_SET_OPTIONS, $bucketname);
+$S3ConnectionData = S3Adapter::getS3AdaptionData(S3_SET_OPTIONS, $bucketname);
 $S3ConnectionData['S3Client']->registerStreamWrapper();

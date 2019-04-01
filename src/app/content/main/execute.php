@@ -1,6 +1,5 @@
 <?php
 require_once(__DIR__.'/include/initialize.php');
-use Common\Common;
 use S3\Request;
 use S3\Formatter;
 use S3\Action;

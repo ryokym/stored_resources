@@ -9,12 +9,12 @@ require_once(DOC_ROOT.'/app/config/credentialSetting.php');
 require_once(DOC_ROOT.'/app/config/applicationSetting.php');
 require_once(DOC_ROOT.'/app/config/autoloaderSetting.php');
 require_once(DOC_ROOT.'/app/config/s3ClientSetting.php');
-require_once(__DIR__.'/functions.inc.php');
+require_once(DOC_ROOT.'/app/lib/autoload.php');
 
-autoloader(COMMON_CLASSES, ACCOUNT_CLASSES);
+use Account\Init;
 
 try {
-    new Account\Init($pathset);
+    new Init($pathset);
 } catch (\Exception $e) {
     die($e->getMessage());
 }

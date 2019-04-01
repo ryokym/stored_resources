@@ -1,6 +1,7 @@
 <?php
 namespace S3;
-use Adapter\S3BucketConnection;
+
+use Adapter\S3Adapter;
 
 class Action extends Formatter
 {
@@ -10,7 +11,7 @@ class Action extends Formatter
     public function __construct($request, $S3options, $bucketname)
     {
         parent::__construct($request);
-        $data = S3BucketConnection::getS3ConnectionData($S3options, $bucketname);
+        $data = S3Adapter::getS3AdaptionData($S3options, $bucketname);
         $this->S3Client = $data['S3Client'];
         $this->bucketname = $data['bucketname'];
     }
@@ -85,5 +86,4 @@ class Action extends Formatter
     {
         session_destroy();
     }
-    
 }

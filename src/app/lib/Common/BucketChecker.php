@@ -1,4 +1,6 @@
 <?php
+namespace Common;
+
 use \Aws\S3\S3Client;
 use Aws\Exception\UnresolvedApiException;
 
@@ -10,7 +12,7 @@ trait BucketChecker
             if ($isTerminate) {
                 die('system error occurred. Could not find a valid bucket. please confirm "S3ClientSetting"');
             } else {
-            return false;
+                return false;
             }
         } else {
             return true;

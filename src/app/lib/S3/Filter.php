@@ -5,7 +5,7 @@ use \Common\Common;
 
 class Filter
 {
-    use \TokenChecker;
+    use \Common\TokenChecker;
 
     protected $filteredS3Client = null;
     protected $filteredBucket = null;
@@ -65,5 +65,4 @@ class Filter
     //
     //     }
     // }
-
 }

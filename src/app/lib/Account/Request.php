@@ -99,7 +99,8 @@ class Request
     * retrieving properties that specified names of array
     *
     */
-    public function getValues(array $propnames) {
+    public function getValues(array $propnames)
+    {
         if (!empty($propnames)) {
             $getter = 'get';
             $values = [];
@@ -111,5 +112,4 @@ class Request
             return $this->getPropaties();
         }
     }
-
 }

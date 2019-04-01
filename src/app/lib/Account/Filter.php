@@ -5,8 +5,8 @@ use Aws\Exception\AwsException;
 
 class Filter extends Init
 {
-    use \BucketChecker;
-    use \TokenChecker;
+    use \Common\BucketChecker;
+    use \Common\TokenChecker;
 
     protected $request;
     protected $error = '';
@@ -117,7 +117,8 @@ class Filter extends Init
         }
     }
 
-    protected function invalidEntered() {
+    protected function invalidEntered()
+    {
         $this->setError('username or password is invalid');
     }
 }

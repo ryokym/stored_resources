@@ -38,5 +38,4 @@ class Constants
 
     // Name of file to be excluded
     public const EXCLUDED_PATTERN = '/^[A-Za-z0-9_\-.()?!&\[\]]*$/';
-
 }

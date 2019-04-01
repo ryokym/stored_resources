@@ -11,7 +11,7 @@ define('S3_CLASSES', [
 
 define('ADAPTER_CLASS', [
     '/app/lib/Adapter/' => [
-        'S3BucketConnection',
+        'S3Adapter',
     ]
 ]);
 

@@ -12,5 +12,4 @@ class Common extends Constants
     {
         return $_SESSION[$key];
     }
-
 }
