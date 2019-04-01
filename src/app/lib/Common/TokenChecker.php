@@ -1,8 +1,6 @@
 <?php
 namespace Common;
 
-use Common\Stream;
-
 trait TokenChecker
 {
     /**
