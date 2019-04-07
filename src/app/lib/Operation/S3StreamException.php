@@ -34,5 +34,4 @@ class S3StreamException
     {
         throw new \Exception('{"result":"ERROR. '.$objname.' is No such file or directory"}');
     }
-
 }

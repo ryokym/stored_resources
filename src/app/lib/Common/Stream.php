@@ -25,5 +25,4 @@ class Stream extends \SplFileObject
         parent::ftruncate(0);
         parent::rewind();
     }
-
 }

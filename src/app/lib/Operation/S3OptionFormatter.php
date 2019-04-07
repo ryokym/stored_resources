@@ -43,6 +43,4 @@ class S3OptionFormatter extends S3StreamException
             return true;
         }
     }
-
-
 }

@@ -4,7 +4,6 @@ namespace Common;
 use Aws\S3\S3Client;
 use Aws\Exception\AwsException;
 
-
 trait BucketChecker
 {
     /*
@@ -20,7 +19,7 @@ trait BucketChecker
             $S3Client->HeadBucket([
                 'Bucket' =>$bucketname
             ]);
-        } catch(AwsException $e) {
+        } catch (AwsException $e) {
             if ($isTerminate) {
                 die('system error occurred. Could not find a valid bucket. please confirm "S3ClientSetting"');
             } else {
@@ -28,7 +27,5 @@ trait BucketChecker
             }
         }
         return true;
-
     }
-
 }

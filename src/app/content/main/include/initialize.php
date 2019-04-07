@@ -6,10 +6,7 @@ require_once($_SERVER["DOCUMENT_ROOT"].'/app/common/initialize.inc.php');
 
 use Common\Common;
 use Common\TokenChecker;
-use Common\BucketChecker;
 use Adapter\S3Adapter;
-use Operation\S3Stream;
-
 
 /* Check Auto login */
 $token = [
