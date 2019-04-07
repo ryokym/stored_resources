@@ -128,7 +128,7 @@ class AccountAction extends UserDataCrypto
     ------------------------------------------------------------------------------*/
     public static function logout()
     {
-        $_SESSION = array();
+        $_SESSION = [];
         session_destroy();
         header('Location:/app/content/login/');
     }

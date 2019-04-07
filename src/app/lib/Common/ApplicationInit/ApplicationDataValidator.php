@@ -61,5 +61,4 @@ class ApplicationDataValidator extends ApplicationDataException
             parent::unwritableFileException();
         }
     }
-
 }

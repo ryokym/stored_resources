@@ -17,5 +17,4 @@ class ApplicationDataException
     {
         throw new \Exception('system error occurred. one of the UserDataFiles is unwritable. please confirm "ApplicationSetting"');
     }
-
 }

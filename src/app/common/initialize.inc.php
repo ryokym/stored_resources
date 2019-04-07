@@ -17,6 +17,6 @@ $validator = new ApplicationDataValidator();
 
 try {
     $validator->checkApplicationStatus(Common::STATUS);
-} catch(\Exception $e) {
+} catch (\Exception $e) {
     die($e->getMessage());
 }

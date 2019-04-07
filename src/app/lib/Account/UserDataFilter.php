@@ -140,7 +140,7 @@ class UserDataFilter
 
     protected function isContainDot($bucket)
     {
-        return (strpos($bucket, '.') === false)? false: $this->setError('name contain "." can not be registered');
+        return (strpos($bucket, '.') === false) ? false : $this->setError('name contain "." can not be registered');
     }
 
     /**
