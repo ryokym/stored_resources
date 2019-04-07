@@ -3,7 +3,7 @@ namespace Account;
 
 use Aws\Exception\AwsException;
 
-class Filter extends Init
+class UserDataFilter extends FileLocationInit
 {
     use \Common\BucketChecker;
     use \Common\TokenChecker;
@@ -18,6 +18,10 @@ class Filter extends Init
         $this->request = $request;
     }
 
+    /**
+    * This class property $error is immutable
+    * @return void
+    */
     private function setError($error)
     {
         if (empty($this->error)) {
@@ -57,7 +61,12 @@ class Filter extends Init
         return false;
     }
 
-    public function checkRegistedName($accountList)
+    /**
+    * It verifies whether the entered username is already in use
+    * @param array The argument $accountList is inherited to the internal method
+    * @return void
+    */
+    public function checkRegistedName(array $accountList)
     {
         $isfind = $this->lookupAccount($accountList, false, true);
         if ($isfind) {
@@ -87,6 +96,12 @@ class Filter extends Init
         return true;
     }
 
+    /**
+    * Verify that the correct value is set to the "Tags" property of S3
+    * For security reasons, when registering a user, the user has to access Amazon S3 once using his account.
+    * @param object Aws\S3\S3Client
+    * @return boolean
+    */
     protected function isVerifyTags($S3Client)
     {
         $result = [];
@@ -105,8 +120,15 @@ class Filter extends Init
             }
         }
         $this->setError('Access the S3 bucket and set the value');
+        return false;
     }
 
+    /**
+    * Bucket Existence Confirmation
+    * @param string $bucket
+    * @param object Aws\S3\S3Client Instance
+    * @return boolean
+    */
     protected function isAvailableBucket($bucket, $S3Client)
     {
         $result = $this->checkBucket($bucket, $S3Client);
@@ -114,9 +136,19 @@ class Filter extends Init
             return true;
         } else {
             $this->setError('bucket name is invalid');
+            return false;
         }
     }
 
+    protected function isContainDot($bucket)
+    {
+        return (strpos($bucket, '.') === false)? false: $this->setError('name contain "." can not be registered');
+    }
+
+    /**
+    * Set an error if there is an error in the user input value
+    * @return void
+    */
     protected function invalidEntered()
     {
         $this->setError('username or password is invalid');

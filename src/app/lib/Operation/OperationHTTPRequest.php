@@ -3,17 +3,16 @@
 * Data Transfer Object with HTTP request parameters
 */
 
-namespace S3;
+namespace Operation;
 
-class Request
+class OperationHTTPRequest
 {
     private $actionType;
-    private $dirname     = null;
-    private $name        = null;
-    private $level       = null;
-    private $fileName    = null;
-    private $tmpFileName = null;
-    private $s3Object    = null;
+    private $dirname  = null;
+    private $name     = null;
+    private $level    = null;
+    private $filename = null;
+    private $s3Object = null;
 
     public function getActionType()
     {
@@ -45,24 +44,14 @@ class Request
         $this->name = $name;
     }
 
-    public function getFileName()
+    public function getFilename()
     {
-        return $this->fileName;
+        return $this->filename;
     }
 
-    public function setFileName($fileName)
+    public function setFilename($filename)
     {
-        $this->fileName = $fileName;
-    }
-
-    public function getTmpFileName()
-    {
-        return $this->tmpFileName;
-    }
-
-    public function setTmpFileName($tmpFileName)
-    {
-        $this->tmpFileName = $tmpFileName;
+        $this->filename = $filename;
     }
 
     public function getS3Object()

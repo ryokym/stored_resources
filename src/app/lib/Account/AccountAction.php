@@ -4,9 +4,9 @@ namespace Account;
 use Common\Stream;
 use Common\Common;
 
-class Action extends Crypt
+class AccountAction extends UserDataCrypto
 {
-    public function __construct(Request $request, array $pathset)
+    public function __construct(AccountRequest $request, array $pathset)
     {
         parent::__construct($request, $pathset);
     }
@@ -16,6 +16,8 @@ class Action extends Crypt
         return $this->$actionType();
     }
 
+    /* sign in
+    ------------------------------------------------------------------------------*/
     public function enter()
     {
         if (parent::isfillAll(['username', 'password'])) {
@@ -57,6 +59,8 @@ class Action extends Crypt
         }
     }
 
+    /* sign up (open dialog)
+    ------------------------------------------------------------------------------*/
     public function create()
     {
         if (parent::isfillAll(['username', 'password'])) {
@@ -68,6 +72,8 @@ class Action extends Crypt
         echo ($errormsg = $this->error) ? $errormsg : $this->request->getActionType();
     }
 
+    /* sign up (account registration)
+    ------------------------------------------------------------------------------*/
     public function verify()
     {
         $issucceed = false;
@@ -78,7 +84,9 @@ class Action extends Crypt
             $inputs  = $this->request->All();
             $S3Client = parent::getS3Client(S3_SET_OPTIONS);
             if (parent::isAvailableBucket($inputs['bucket'], $S3Client)
-            &&  parent::isVerifyTags($S3Client)) {
+            && !parent::isContainDot($inputs['bucket'])
+            &&  parent::isVerifyTags($S3Client)
+            ) {
                 $newData = [
                     'user'  => $inputs['username'],
                     'pass'  => password_hash($inputs['password'], PASSWORD_DEFAULT),
@@ -97,12 +105,20 @@ class Action extends Crypt
                 if ($issucceed) {
                     Common::setSession('token', $newToken);
                     Common::setSession('bucket', $this->request->getBucket());
+                    $S3Client->putBucketAccelerateConfiguration([
+                        'AccelerateConfiguration' => [
+                            'Status' => ALC_SETTING,
+                        ],
+                        'Bucket' => $this->request->getBucket(),
+                    ]);
                 }
             }
         }
         echo ($errormsg = $this->error) ? $errormsg : $this->request->getActionType();
     }
 
+    /* logout
+    ------------------------------------------------------------------------------*/
     public static function logout()
     {
         session_destroy();

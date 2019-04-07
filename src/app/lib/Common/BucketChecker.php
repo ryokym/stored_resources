@@ -1,33 +1,34 @@
 <?php
 namespace Common;
 
-use \Aws\S3\S3Client;
-use Aws\Exception\UnresolvedApiException;
+use Aws\S3\S3Client;
+use Aws\Exception\AwsException;
+
 
 trait BucketChecker
 {
-    private function checkBucket($bucketname, $S3Client, $isTerminate = false)
+    /*
+    * This operation is useful to determine if a bucket exists and you have permission to access it.
+    * @param string $bucketname
+    * @param object $S3Client Aws\S3\S3Client
+    * @param boolean
+    * @return boolean
+    */
+    private function checkBucket(S3Client $S3Client, string $bucketname, $isTerminate = false)
     {
-        if (!$S3Client->doesBucketExist($bucketname)) {
+        try {
+            $S3Client->HeadBucket([
+                'Bucket' =>$bucketname
+            ]);
+        } catch(AwsException $e) {
             if ($isTerminate) {
                 die('system error occurred. Could not find a valid bucket. please confirm "S3ClientSetting"');
             } else {
                 return false;
             }
-        } else {
-            return true;
         }
+        return true;
+
     }
 
-    protected function getS3Client($s3Options)
-    {
-        try {
-            $S3Client = new S3Client($s3Options);
-            return $S3Client;
-        } catch (\InvalidArgumentException $e) {
-            die('system error occurred.<br/>'.$e->getMessage().'<br/>please confirm "S3ClientSetting"');
-        } catch (UnresolvedApiException $e) {
-            die('system error occurred.<br/>'.$e->getMessage().'<br/>please confirm "S3ClientSetting"');
-        }
-    }
 }

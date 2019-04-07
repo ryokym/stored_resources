@@ -1,7 +1,7 @@
 <?php
 namespace Account;
 
-class Crypt extends Filter
+class UserDataCrypto extends UserDataFilter
 {
     public function __construct($request, $pathset)
     {

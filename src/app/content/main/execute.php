@@ -1,28 +1,29 @@
 <?php
 require_once(__DIR__.'/include/initialize.php');
-use S3\Request;
-use S3\Formatter;
-use S3\Action;
 
-$request = new Request();
+use Common\Common;
+use Adapter\S3Adapter;
+use Account\AccountAction;
+use Operation\S3StreamAction;
+use Operation\OperationHTTPRequest;
+
+$request = new OperationHTTPRequest();
 
 if (filter_input(INPUT_POST, 'isUpload')) {
-    $requestData = json_decode(filter_input(INPUT_POST, 'requestData'), true);
-    $request->setProparties($requestData['requestData']);
-    if ($uploadedFile = Formatter::getFiles('file')) {
-        $request->setFileName($uploadedFile['name']);
-        $request->setTmpFileName($uploadedFile['tmp_name']);
-    }
+    $data = json_decode(filter_input(INPUT_POST, 'requestData'), true);
+    $request->setProparties($data['requestData']);
+    $request->setFilename('file');
 } else {
-    $requestData = filter_input(INPUT_POST, 'requestData', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
-    $request->setProparties($requestData);
+    $data = filter_input(INPUT_POST, 'requestData', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
+    $request->setProparties($data);
 }
 
 if ($request->getActionType() === 'logout') {
-    Action::logout();
+    AccountAction::logout();
 }
 
-$action = new Action($request, S3_SET_OPTIONS, $bucketname);
+$S3Client = S3Adapter::getS3Client(S3_SET_OPTIONS);
+$action = new S3StreamAction($request, $S3Client, Common::getSession('bucket'));
 
 try {
     $action->execute($request->getActionType());

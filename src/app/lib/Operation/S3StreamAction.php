@@ -1,19 +1,22 @@
 <?php
-namespace S3;
+namespace Operation;
 
-use Adapter\S3Adapter;
+use Common\Stream;
+use Common\Common;
+use Operation\S3Stream;
 
-class Action extends Formatter
+class S3StreamAction extends S3OptionFormatter
 {
     private $S3Client;
     private $bucketname;
+    private $stream;
 
-    public function __construct($request, $S3options, $bucketname)
+    public function __construct($request, $S3Client, $bucketname)
     {
         parent::__construct($request);
-        $data = S3Adapter::getS3AdaptionData($S3options, $bucketname);
-        $this->S3Client = $data['S3Client'];
-        $this->bucketname = $data['bucketname'];
+        $this->S3Client = $S3Client;
+        $this->bucketname = $bucketname;
+        S3Stream::S3StreamStart($S3Client);
     }
 
     public function execute($actionType)
@@ -30,13 +33,18 @@ class Action extends Formatter
         $s3Path = parent::getS3PathName($this->bucketname);
         $response = [];
         if (is_dir($s3Path)) {
-            $response['isFile'] = false;
-            $response['result'] = scandir($s3Path);
-            $response['result'] = array_values($response['result']);
+            $response = [
+                'isFile' => false,
+                'result' => scandir($s3Path),
+            ];
         } else {
-            $response['isFile'] = true;
-            $file = parent::getOpenFileOnlyRead($s3Path);
-            $response['result'] = parent::getLines($file);
+            $stream = new S3Stream($s3Path, 'r');
+            $file = $stream->fread([$this, 'requestObjectNotfound']);
+            $result = $stream->getLines($file, Common::LIMIT_LINE, [$this, 'getResponseLimitedLine']);
+            $response = [
+                'isFile' => true,
+                'result' => $result,
+            ];
         }
         $response = json_encode($response);
         echo $response;
@@ -73,17 +81,15 @@ class Action extends Formatter
     public function upload()
     {
         $dirName = parent::appendDS($this->request->getDirname());
-        $pathName = $dirName.$this->request->getFileName();
+        $uploaded = S3Stream::getUploadedFile($this->request->getFilename(), [$this, 'checkUploadedfileformat']);
+        $filename = $uploaded['name'];
+        $pathName = $dirName.$filename;
         $this->S3Client->putObject([
             'Bucket' => $this->bucketname,
             'Key'    => $pathName,
-            'Body'   => fopen($this->request->getTmpFileName(), 'r')
+            'Body'   => fopen($uploaded['tmp_name'], 'r')
         ]);
-        echo $this->request->getFileName();
+        echo $filename;
     }
 
-    public static function logout()
-    {
-        session_destroy();
-    }
 }

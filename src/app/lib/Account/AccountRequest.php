@@ -5,7 +5,7 @@
 
 namespace Account;
 
-class Request
+class AccountRequest
 {
     private $actionType;
     private $username;

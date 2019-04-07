@@ -11,10 +11,10 @@ require_once(DOC_ROOT.'/app/config/autoloaderSetting.php');
 require_once(DOC_ROOT.'/app/config/s3ClientSetting.php');
 require_once(DOC_ROOT.'/app/lib/autoload.php');
 
-use Account\Init;
-
-try {
-    new Init($pathset);
-} catch (\Exception $e) {
-    die($e->getMessage());
-}
+// use Account\FileLocationInit;
+//
+// try {
+//     new FileLocationInit($pathset);
+// } catch (\Exception $e) {
+//     die($e->getMessage());
+// }

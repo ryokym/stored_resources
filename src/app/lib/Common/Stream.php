@@ -15,14 +15,15 @@ class Stream extends \SplFileObject
         if ($format === 'json') {
             $contents = json_encode($contents);
         }
-        $this->_fclear();
+        $this->fclear();
         $size = strlen($contents);
         parent::fwrite($contents, $size);
     }
 
-    private function _fclear()
+    private function fclear()
     {
         parent::ftruncate(0);
         parent::rewind();
     }
+
 }

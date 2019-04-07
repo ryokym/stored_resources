@@ -1,7 +1,7 @@
 <?php
 namespace Account;
 
-class Init
+class FileLocationInit
 {
     private $pathsetUser;
     private $pathsetToken;

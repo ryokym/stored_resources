@@ -2,7 +2,8 @@
 require_once(__DIR__.'/include/initialize.php');
 require_once(__DIR__.'/layout/base.header.php');
 
-use S3\Formatter;
+use Operation\S3Stream;
+use Common\Common;
 
 ?>
 <div class="container">
@@ -15,7 +16,7 @@ use S3\Formatter;
             <div class="row createNewDirRow">
                 <input class="textbox" type="text"/>
             </div><?php
-            foreach (Formatter::getRootdirItems($bucketname) as $row): ?>
+            foreach (S3Stream::getRootdirItems($S3Client, Common::getSession('bucket')) as $row): ?>
                 <div class="row">
                     <p class="row_item"><?= $row ?></p>
                 </div><?php

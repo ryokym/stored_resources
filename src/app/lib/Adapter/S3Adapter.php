@@ -1,29 +1,33 @@
 <?php
 namespace Adapter;
 
-class S3Adapter
+use Common\BucketChecker;
+use \InvalidArgumentException;
+use Aws\Exception\UnresolvedApiException;
+
+use Aws\S3\S3Client;
+
+class S3Adapter extends S3Client
 {
-    use \Common\BucketChecker;
 
     private static $S3Client;
-    private static $bucketname;
 
-    private function __construct($s3Options, $bucketname)
+    public static function getS3Client($s3Options)
     {
-        self::$S3Client = $this->getS3Client($s3Options);
-        self::$bucketname = ($this->checkBucket($bucketname, self::$S3Client)) ? $bucketname : null;
-    }
-
-    public static function getS3AdaptionData($s3Options, $bucketname)
-    {
-        $data = [];
         if (!isset(self::$S3Client)) {
-            new self($s3Options, $bucketname);
+            try {
+                $instance =  new parent($s3Options);
+            } catch(InvalidArgumentException $e) {
+            } catch(UnresolvedApiException $e) {
+            } finally {
+                if (isset($e)) {
+                    die('system error occurred.<br/>'.$e->getMessage().'<br/>please confirm "S3ClientSetting"');
+                }
+            }
+            self::$S3Client = $instance;
         }
-        $data = [
-            'S3Client' => self::$S3Client,
-            'bucketname' => self::$bucketname,
-        ];
-        return $data;
+
+        return self::$S3Client;
     }
+
 }

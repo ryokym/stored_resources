@@ -1,6 +1,8 @@
 <?php
 namespace Common;
 
+use Common\Stream;
+
 trait TokenChecker
 {
     /**
@@ -22,5 +24,18 @@ trait TokenChecker
         $stream = new Stream($tokenfpath);
         $contents = $stream->fread($stream->getSize());
         return $contents;
+    }
+
+    /**
+    * Search for tokens from $ tokenfpath and return the result
+    * @param string $tokenfpath
+    * @param string $token
+    * @return boolean
+    */
+    public static function isAuthenticatesToken($tokenfpath, $token)
+    {
+        $contents = self::getTokenList($tokenfpath);
+        $iscomeup = self::lookupToken($contents, $token);
+        return ($iscomeup) ? true : false;
     }
 }
