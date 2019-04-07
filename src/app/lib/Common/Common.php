@@ -10,6 +10,11 @@ class Common extends Constants
 
     public static function getSession($key)
     {
-        return $_SESSION[$key];
+        return ($_SESSION[$key])?? null;
+    }
+
+    public static function initSession($key)
+    {
+        unset($_SESSION[$key]);
     }
 }

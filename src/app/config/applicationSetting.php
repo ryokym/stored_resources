@@ -27,3 +27,12 @@ define('ALC_ON', 'Enabled');
 define('ALC_OFF', 'Suspended');
 // Accelerater Setting
 define('ALC_SETTING', ALC_ON);
+
+/* ApplicationSettingStatus
+--------------------------------------------*/
+// SESSION key for status
+define('STATUS', 'status');
+// status available
+define('OK', 1);
+// status not available
+define('NG', 0);

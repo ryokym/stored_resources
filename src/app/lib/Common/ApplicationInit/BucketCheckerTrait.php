@@ -1,10 +1,10 @@
 <?php
-namespace Common;
+namespace Common\ApplicationInit;
 
 use Aws\S3\S3Client;
 use Aws\Exception\AwsException;
 
-trait BucketChecker
+trait BucketCheckerTrait
 {
     /*
     * This operation is useful to determine if a bucket exists and you have permission to access it.
@@ -13,7 +13,7 @@ trait BucketChecker
     * @param boolean
     * @return boolean
     */
-    private function checkBucket(S3Client $S3Client, string $bucketname, $isTerminate = false)
+    public function checkBucket(S3Client $S3Client, string $bucketname, $isTerminate = false)
     {
         try {
             $S3Client->HeadBucket([

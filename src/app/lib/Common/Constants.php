@@ -8,6 +8,14 @@ class Constants
     * ACCOUNT            *
     *********************/
 
+    /* UserData FilePath
+    -------------------------------------------------*/
+    // ResistedAccountlist
+    public const UD_FILE = UD_FILE;
+
+    // ResistedTokenlist
+    public const TL_FILE = TL_FILE;
+
     /* TOKEN String length
     -------------------------------------------------*/
     // MIN
@@ -15,6 +23,17 @@ class Constants
 
     // MAX
     public const TOKEN_MAX_LENGTH = 32;
+
+    /* Application Setting Status
+    --------------------------------------------*/
+    // SESSION key for status
+    public const STATUS = 'status';
+
+    // Application available
+    public const OK = OK;
+
+    // Application not available
+    public const NG = NG;
 
     /*********************
     * S3                 *

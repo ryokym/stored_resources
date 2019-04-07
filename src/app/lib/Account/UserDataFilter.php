@@ -3,18 +3,16 @@ namespace Account;
 
 use Aws\Exception\AwsException;
 
-class UserDataFilter extends FileLocationInit
+class UserDataFilter
 {
-    use \Common\BucketChecker;
-    use \Common\TokenChecker;
+    use \Common\ApplicationInit\BucketCheckerTrait;
 
     protected $request;
     protected $error = '';
     public $account;
 
-    public function __construct($request, $pathset)
+    public function __construct($request)
     {
-        parent::__construct($pathset);
         $this->request = $request;
     }
 
@@ -129,9 +127,9 @@ class UserDataFilter extends FileLocationInit
     * @param object Aws\S3\S3Client Instance
     * @return boolean
     */
-    protected function isAvailableBucket($bucket, $S3Client)
+    protected function isAvailableBucket($S3Client, $bucket)
     {
-        $result = $this->checkBucket($bucket, $S3Client);
+        $result = $this->checkBucket($S3Client, $bucket);
         if ($result) {
             return true;
         } else {

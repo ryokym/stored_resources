@@ -3,9 +3,9 @@ namespace Account;
 
 class UserDataCrypto extends UserDataFilter
 {
-    public function __construct($request, $pathset)
+    public function __construct($request)
     {
-        parent::__construct($request, $pathset);
+        parent::__construct($request);
     }
 
     /**

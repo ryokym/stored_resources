@@ -3,12 +3,19 @@ namespace Account;
 
 use Common\Stream;
 use Common\Common;
+use Adapter\S3Adapter;
+
+use Common\ApplicationInit\ApplicationDataValidator;
 
 class AccountAction extends UserDataCrypto
 {
-    public function __construct(AccountRequest $request, array $pathset)
+    private $validator;
+
+    public function __construct(AccountRequest $request, ApplicationDataValidator $validator)
     {
-        parent::__construct($request, $pathset);
+        parent::__construct($request);
+        $this->validator = $validator;
+        $this->validator->checkApplicationStatus(Common::STATUS, true);
     }
 
     public function execute($actionType)
@@ -22,7 +29,7 @@ class AccountAction extends UserDataCrypto
     {
         if (parent::isfillAll(['username', 'password'])) {
             $issucceed = false;
-            $stream = new Stream(parent::getPathsetUser(), 'r+');
+            $stream = new Stream(Common::UD_FILE, 'r+');
             $contents = $stream->fread($stream->getSize());
             $iscomeup = parent::lookupAccount($stream->readAsJson($contents));
             if ($iscomeup) {
@@ -32,9 +39,9 @@ class AccountAction extends UserDataCrypto
 
                 /*  Rewrite old tokens into new ones */
                 $oldToken = $this->account['token'];
-                $stream = new Stream(parent::getPathsetToken(), 'r+');
+                $stream = new Stream(Common::TL_FILE, 'r+');
                 $contents = $stream->fread($stream->getSize());
-                $iscomeup = parent::lookupToken($contents, $oldToken);
+                $iscomeup = $this->validator->lookupToken($contents, $oldToken);
                 if ($iscomeup) {
                     $newContents = str_replace($oldToken, $newToken, $contents);
                     $stream->foverwrite($newContents);
@@ -64,7 +71,7 @@ class AccountAction extends UserDataCrypto
     public function create()
     {
         if (parent::isfillAll(['username', 'password'])) {
-            $stream = new Stream(parent::getPathsetUser(), 'r+');
+            $stream = new Stream(Common::UD_FILE, 'r+');
             $contents = $stream->fread($stream->getSize());
             $list = $stream->readAsJson($contents);
             parent::checkRegistedName($list);
@@ -78,12 +85,12 @@ class AccountAction extends UserDataCrypto
     {
         $issucceed = false;
         if (parent::isfillAll()) {
-            $stream = new Stream(parent::getPathsetUser(), 'r+');
+            $stream = new Stream(Common::UD_FILE, 'r+');
             $contents = $stream->fread($stream->getSize());
             $list = $stream->readAsJson($contents);
             $inputs  = $this->request->All();
-            $S3Client = parent::getS3Client(S3_SET_OPTIONS);
-            if (parent::isAvailableBucket($inputs['bucket'], $S3Client)
+            $S3Client = S3Adapter::getS3Client(S3_SET_OPTIONS);
+            if (parent::isAvailableBucket($S3Client, $inputs['bucket'])
             && !parent::isContainDot($inputs['bucket'])
             &&  parent::isVerifyTags($S3Client)
             ) {
@@ -97,7 +104,7 @@ class AccountAction extends UserDataCrypto
                 $list[] = $newData;
                 $stream->foverwrite($list, 'json');
 
-                $stream = new Stream(parent::getPathsetToken(), 'r+');
+                $stream = new Stream(Common::TL_FILE, 'r+');
                 $contents = $stream->fread($stream->getSize());
                 $stream->fwrite($newToken.',');
                 $issucceed = true;
@@ -121,6 +128,7 @@ class AccountAction extends UserDataCrypto
     ------------------------------------------------------------------------------*/
     public static function logout()
     {
+        $_SESSION = array();
         session_destroy();
         header('Location:/app/content/login/');
     }

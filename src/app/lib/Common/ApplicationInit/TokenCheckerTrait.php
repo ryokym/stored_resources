@@ -1,7 +1,9 @@
 <?php
-namespace Common;
+namespace Common\ApplicationInit;
 
-trait TokenChecker
+use Common\Stream;
+
+trait TokenCheckerTrait
 {
     /**
     * lookup TokenList and check if there is a token in it
@@ -9,7 +11,7 @@ trait TokenChecker
     * @param  string  $token
     * @return boolean
     */
-    protected static function lookupToken($contents, $token)
+    public function lookupToken($contents, $token)
     {
         if (strpos($contents, $token) === false) {
             return false;
@@ -17,7 +19,7 @@ trait TokenChecker
         return true;
     }
 
-    protected static function getTokenList($tokenfpath)
+    private function getTokenList($tokenfpath)
     {
         $stream = new Stream($tokenfpath);
         $contents = $stream->fread($stream->getSize());
@@ -30,7 +32,7 @@ trait TokenChecker
     * @param string $token
     * @return boolean
     */
-    public static function isAuthenticatesToken($tokenfpath, $token)
+    public function isAuthenticatesToken($tokenfpath, $token)
     {
         $contents = self::getTokenList($tokenfpath);
         $iscomeup = self::lookupToken($contents, $token);
