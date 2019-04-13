@@ -1,9 +1,7 @@
 <?php
 namespace Operation;
 
-use Common\Stream;
 use Common\Common;
-use Operation\S3Stream;
 
 class S3StreamAction extends S3OptionFormatter
 {
@@ -91,5 +89,4 @@ class S3StreamAction extends S3OptionFormatter
         ]);
         echo $filename;
     }
-
 }

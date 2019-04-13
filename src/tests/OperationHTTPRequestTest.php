@@ -4,7 +4,6 @@ use Operation\OperationHTTPRequest;
 
 class OperationHTTPRequestTest extends \PHPUnit\Framework\TestCase
 {
-
     public function testGetActionType()
     {
         $operation = new OperationHTTPRequest();
@@ -24,7 +23,7 @@ class OperationHTTPRequestTest extends \PHPUnit\Framework\TestCase
         $operation = new OperationHTTPRequest();
         $operation->setProparties($requests);
         $reflection = new \ReflectionClass($operation);
-        foreach($results as $propname => $param) {
+        foreach ($results as $propname => $param) {
             $property = $reflection->getProperty($propname);
             $property->setAccessible(true);
             $test[$propname] = $property->getValue($operation);
