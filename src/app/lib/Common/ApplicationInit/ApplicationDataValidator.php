@@ -24,7 +24,7 @@ class ApplicationDataValidator extends ApplicationDataException
             $status = self::fetchApplicationStatus($key);
         }
 
-        if ($status !== OK) {
+        if ($status !== Common::OK) {
             $files = [Common::UD_FILE, Common::TL_FILE];
             foreach ($files as $file) {
                 self::validateFileLocation($file);

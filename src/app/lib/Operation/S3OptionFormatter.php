@@ -1,7 +1,7 @@
 <?php
 namespace Operation;
 
-use \Common\Common;
+use Common\Common;
 
 class S3OptionFormatter extends S3StreamException
 {

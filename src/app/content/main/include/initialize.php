@@ -2,7 +2,7 @@
 /**
 * Main
 */
-require_once($_SERVER["DOCUMENT_ROOT"].'/app/common/initialize.inc.php');
+require_once($_SERVER["DOCUMENT_ROOT"].'/app/include/initialize.inc.php');
 
 use Common\Common;
 use Adapter\S3Adapter;

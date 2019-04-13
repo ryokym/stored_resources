@@ -24,25 +24,29 @@ class Constants
     // MAX
     public const TOKEN_MAX_LENGTH = 32;
 
-    /* Application Setting Status
+    /* Application Status Check
     --------------------------------------------*/
     // SESSION key for status
-    public const STATUS = 'status';
+    public const STATUS = STATUS;
 
     // Application available
-    public const OK = OK;
+    public const OK = 1;
 
     // Application not available
-    public const NG = NG;
+    public const NG = 0;
 
     /*********************
     * S3                 *
     *********************/
 
+    /* S3 Transfer Acceleration Switch
+    -------------------------------------------------*/
+    public const ACLR_SETTING = ACLR_SETTING;
+
     /* S3\Action/ Change
     -------------------------------------------------*/
     // MAX LINE
-    public const LIMIT_LINE = 5000;
+    public const MAX_READ_LINE = MAX_READ_LINE;
 
     public const S3_PROTOCOL = S3_PROTOCOL;
 
@@ -52,7 +56,7 @@ class Constants
     public const MIN_FILE_SIZE = 0;
 
     // Maximum number of characters in uploaded file
-    public const MAX_LENGTH = 40;
+    public const MAX_FNAME_LENGTH = MAX_FNAME_LENGTH;
 
     // Name of file to be excluded
     public const EXCLUDED_PATTERN = '/^[A-Za-z0-9_\-.()?!&\[\]]*$/';

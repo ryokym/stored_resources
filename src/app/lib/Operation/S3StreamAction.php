@@ -40,7 +40,7 @@ class S3StreamAction extends S3OptionFormatter
         } else {
             $stream = new S3Stream($s3Path, 'r');
             $file = $stream->fread([$this, 'requestObjectNotfound']);
-            $result = $stream->getLines($file, Common::LIMIT_LINE, [$this, 'getResponseLimitedLine']);
+            $result = $stream->getLines($file, Common::MAX_READ_LINE, [$this, 'getResponseLimitedLine']);
             $response = [
                 'isFile' => true,
                 'result' => $result,

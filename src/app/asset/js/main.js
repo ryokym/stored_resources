@@ -21,17 +21,16 @@ main = {
         this.level   = parseInt(this.workdir.data('level'));
         if (callback) callback(obj);
     },
-    getElementData : function(actionType) {
-        let preset = {
+    getElementData : function() {
+        let response = {
             requestData : {
                 name       : this.name,
                 dirname    : this.dirname,
                 level      : this.level,
-                actionType : actionType
+                actionType : common.mode,
             }
         }
-        var params = $.extend({}, preset, actionType);
-        return params;
+        return response;
     },
     adjustColumn : function() {
         $('.level').each(function(){
@@ -57,7 +56,7 @@ const $level      = $('.level').clone();
 /* initialize
 -------------------------------------------------------*/
 
-common.mode   = 'upload';
+common.mode   = 'change';
 common.toAjax = common.basePath + main.toAjax;
 $level.find('.row:has(.row_item)').remove();
 
@@ -65,17 +64,18 @@ $level.find('.row:has(.row_item)').remove();
 -------------------------------------------------------*/
 
 common.document.on('click', '.row:has(.row_item)', function() {
+    common.clickDisable.call($('.row:has(.row_item)'), 'start');
     main.setElementData($(this), function(elm) {
         main.name = elm.find('.row_item').text();
     });
     if (common.ismode('makedir')) {
-        common.setmode('upload');
+        common.setmode('change');
         $('.close:visible').trigger('click');
     }
     main.workdir.find('.' + common.mode).removeClass(common.mode);
     $(this).addClass(common.mode);
 
-    const afterChangeAction = function(response) {
+    const afterProcess = function(response) {
         const data = JSON.parse(response);
         if (data.isFile === false) {
             const $levelClone = $level.clone();
@@ -94,21 +94,24 @@ common.document.on('click', '.row:has(.row_item)', function() {
             $levelClone.show().append(elm);
             $('.prettyprint').empty();
 
-            if (common.ismode('upload')) $upload.show();
+            if (common.ismode('change')) $upload.show();
             if (common.ismode('remove')) common.swapAttParams.call($levelClone.find('.open'), 'enable', 'disable');
 
         } else {
             main.isview = true;
-            if (common.ismode('upload')) $preview.show();
+            if (common.ismode('change')) $preview.show();
             $preview.empty();
             $upload.hide();
             $preview.append('<code class="prettyprint">' + data.result +'</code>');
             main.adjustColumn();
         }
     }
-    actionDataSet = main.getElementData('change');
-    common.postRequest(actionDataSet,afterChangeAction)
-    .done(function() { PR.prettyPrint() });
+    const dataSet = main.getElementData();
+    common.postRequest(dataSet,afterProcess)
+    .done(function() {
+        PR.prettyPrint();
+        common.clickDisable('end');
+    });
 });
 
 /* remove
@@ -119,11 +122,11 @@ $('#remove').on('click', function() {
     const row = $('.row');
     const rowItem = $('.row_item');
     common.swapAttAryParams.call([row, open],
-        ['upload', 'enable' ],
+        ['change', 'enable' ],
         ['remove', 'disable'],
     );
     $('.close:visible').trigger('click');
-    common.togglemode('upload', 'remove');
+    common.togglemode('change', 'remove');
     if (common.ismode('remove')) {
         $preview.hide();
         $upload.hide();
@@ -148,11 +151,11 @@ $('#remove').on('click', function() {
                 return false;
             } else {
                 data.draggable.parent().remove();
-                const afterRemoveAction = function() {
+                const afterProcess = function() {
                     main.adjustColumn();
                 }
-                const removeActionDataSet = main.getElementData('remove');
-                common.postRequest(removeActionDataSet, afterRemoveAction);
+                const dataSet = main.getElementData();
+                common.postRequest(dataSet, afterProcess);
             }
         }
     });
@@ -163,8 +166,8 @@ $('#remove').on('click', function() {
 
 $('#expand').on('click', function() {
     if (main.isview && !common.ismode('remove')) {
-        common.togglemode('expand', 'upload');
-        if (common.ismode('upload')) {
+        common.togglemode('expand', 'change');
+        if (common.ismode('change')) {
             $column.show();
             $display.css({
                 'margin-left':  0,
@@ -196,11 +199,11 @@ $('#expand').on('click', function() {
 -------------------------------------------------------*/
 
 $('#logout').on('click', function() {
-    const afterLogoutAction = function () {
+    const afterProcess = function () {
         location.href = '/index.php?logout';
     }
-    const logoutActionDataSet = main.getElementData('logout');
-    common.postRequest(logoutActionDataSet, afterLogoutAction);
+    const dataSet = main.getElementData();
+    common.postRequest(dataSet, afterProcess);
 });
 
 /* makedir
@@ -208,7 +211,7 @@ $('#logout').on('click', function() {
 
 common.document.on('click', '.close', function() {
     $('.createNewDirRow:visible').slideUp();
-    common.setmode('upload');
+    common.setmode('change');
     $(this).hide();
 });
 
@@ -221,18 +224,18 @@ common.document.on('click', '.open, .enable', function() {
         if (common.validateFiles(main.name)) {
             const createDirBtnArea = main.workdir.find('.row').first();
             const clone = $row.clone();
-            afterMakedirAction = function() {
+            afterProcess = function() {
                 const createNewDirRow = main.workdir.find('.createNewDirRow');
-                common.setmode('upload');
                 clone.find('.row_item').text(main.name);
                 main.workdir.append(clone);
                 clone.show();
                 textbox.val('');
                 createDirBtnArea.find('.close').hide();
                 createNewDirRow.slideUp();
+                common.setmode('change');
             }
-            const makedirActionDataSet = main.getElementData('makedir');
-            common.postRequest(makedirActionDataSet, afterMakedirAction);
+            const dataSet = main.getElementData();
+            common.postRequest(dataSet, afterProcess);
         } else {
             textbox.addClass('error');
         }
@@ -241,7 +244,6 @@ common.document.on('click', '.open, .enable', function() {
     else if (!common.ismode('remove')) {
         main.setElementData($(this));
         const createNewDirRow = main.workdir.find('.createNewDirRow');
-        common.setmode('makedir');
         $(this).next('.close').show();
         createNewDirRow.slideDown({
             start: function() {
@@ -249,6 +251,7 @@ common.document.on('click', '.open, .enable', function() {
                 $(this).find('.textbox').focus();
             }
         });
+        common.setmode('makedir');
     }
 });
 
@@ -267,7 +270,8 @@ $uploadDrop.on('dragleave', function(e) {
 });
 
 common.document.on('drop', $uploadDrop, function(_e) {
-    if (common.ismode('upload')) {
+    if (common.ismode('change')) {
+        common.setmode('upload');
         _e.preventDefault();
         $(this).removeClass('uploadMouseOver');
         const e = _e.originalEvent;
@@ -284,11 +288,11 @@ function fileUpload(f) {
     const toUploadDir = $('.level').eq(-1);
     main.dirname = toUploadDir.data('dir');
     formData.append('file', f);
-    let requestData = main.getElementData('upload');
+    let requestData = main.getElementData();
     requestData = JSON.stringify(requestData);
     formData.append('requestData', requestData);
     formData.append('isUpload', true);
-    const afterUploadAction = function(response) {
+    const afterProcess = function(response) {
         if (common.validateFiles(response)) {
             clone.find('.row_item').text(response);
             clone.show();
@@ -297,8 +301,9 @@ function fileUpload(f) {
             alert(response);
         }
         $uploadDrop.removeClass('uploadMouseOver');
+        common.setmode('change');
     }
-    common.postRequest(formData, afterUploadAction, true);
+    common.postRequest(formData, afterProcess, true);
 }
 
 /* keypress

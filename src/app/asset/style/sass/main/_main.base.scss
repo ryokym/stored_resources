@@ -20,7 +20,7 @@ $titleFontWidth   : 2.2vw;
 -------------------------------------------------------*/
 
 $columnsBorderColor       : rgb(81, 81, 81);
-$uploadColor              : rgb(137, 189, 255) !important;
+$changeColor              : rgb(137, 189, 255) !important;
 $removeColor              : rgb(255, 203, 137) !important;
 $removeAreaMouseOverColor : rgb(68, 44, 52);
 $removeAreaBorderColor    : gray;
@@ -34,8 +34,8 @@ $columnsRightBorder : 1px solid $columnsBorderColor;
 $removeAreaBorder   : 2px dashed $removeAreaBorderColor;
 
 
-.upload > .row_item {
-    color: $uploadColor;
+.change > .row_item {
+    color: $changeColor;
 }
 
 .remove > .row_item {

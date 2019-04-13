@@ -12,7 +12,7 @@ class S3StreamException
     public function checkUploadedfileformat($file)
     {
         if ($file['size'] <= Common::MIN_FILE_SIZE
-        || strlen($file['name']) > Common::MAX_LENGTH
+        || strlen($file['name']) > Common::MAX_FNAME_LENGTH
         || preg_match(Common::EXCLUDED_PATTERN, $file['name']) !== 1) {
             throw new \Exception('ERROR / Uploaded files can not be accepted');
         }

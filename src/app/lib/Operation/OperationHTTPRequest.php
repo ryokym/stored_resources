@@ -44,6 +44,16 @@ class OperationHTTPRequest
         $this->name = $name;
     }
 
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    public function setLevel($level)
+    {
+        $this->level = $level;
+    }
+
     public function getFilename()
     {
         return $this->filename;
@@ -68,6 +78,38 @@ class OperationHTTPRequest
     {
         foreach ($proparties as $propaty => $param) {
             $this->$propaty = $param;
+        }
+    }
+
+    /**
+    * retrieving all data
+    * @return array
+    */
+    public function All()
+    {
+        $results = [];
+        $props = array_keys(get_class_vars(get_class($this)));
+        foreach ($props as $prop) {
+            $results[$prop] = $this->$prop;
+        }
+        return $results;
+    }
+
+    /**
+    * retrieving properties that specified names of array
+    *
+    */
+    public function getValues(array $propnames)
+    {
+        if (!empty($propnames)) {
+            $getter = 'get';
+            $values = [];
+            foreach ($propnames as $propname) {
+                $values[] = $this->{$getter.ucfirst($propname)}();
+            }
+            return $values;
+        } else {
+            return $this->All();
         }
     }
 }

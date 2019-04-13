@@ -6,33 +6,27 @@ define('APP_NAME', 'STORED RESOURCES 3.x');
 
 /* PHP
 --------------------------------------------*/
-// DisplayErrorSetting
+// Display Error Setting
 ini_set('display_errors', 'ON');
 
-/* COOKIE
---------------------------------------------*/
-// Cookie expiration date
-// define();
-// Customize
-define('CUSTOM', 4);
-// One week in terms of seconds
-define('WEEKS', 60*60*24*7);
-define('COKIE_LIMIT', CUSTOM * WEEKS);
-
-/* AccelerateConfiguration
+/* S3 Transfer Acceleration Switch
 --------------------------------------------*/
 // Accelerater ON ( $0.04 per GB upload )
-define('ALC_ON', 'Enabled');
+define('ACLR_ON', 'Enabled');
 // Accelerater OFF
-define('ALC_OFF', 'Suspended');
+define('ACLR_OFF', 'Suspended');
 // Accelerater Setting
-define('ALC_SETTING', ALC_ON);
+define('ACLR_SETTING', ACLR_ON);
 
-/* ApplicationSettingStatus
+/* Application Status Check
 --------------------------------------------*/
 // SESSION key for status
 define('STATUS', 'status');
-// status available
-define('OK', 1);
-// status not available
-define('NG', 0);
+
+/* Maximum number of read lines of file contents
+--------------------------------------------*/
+define('MAX_READ_LINE', 5000);
+
+/* Maximum number of characters in uploaded file
+--------------------------------------------*/
+define('MAX_FNAME_LENGTH', 40);

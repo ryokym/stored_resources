@@ -11,7 +11,7 @@ class AccountAction extends UserDataCrypto
 {
     private $validator;
 
-    public function __construct(AccountRequest $request, ApplicationDataValidator $validator)
+    public function __construct(AccountHTTPRequest $request, ApplicationDataValidator $validator)
     {
         parent::__construct($request);
         $this->validator = $validator;
@@ -114,7 +114,7 @@ class AccountAction extends UserDataCrypto
                     Common::setSession('bucket', $this->request->getBucket());
                     $S3Client->putBucketAccelerateConfiguration([
                         'AccelerateConfiguration' => [
-                            'Status' => ALC_SETTING,
+                            'Status' => Common::ACLR_SETTING,
                         ],
                         'Bucket' => $this->request->getBucket(),
                     ]);

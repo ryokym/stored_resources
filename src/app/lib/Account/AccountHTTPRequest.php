@@ -5,7 +5,7 @@
 
 namespace Account;
 
-class AccountRequest
+class AccountHTTPRequest
 {
     private $actionType;
     private $username;
@@ -82,7 +82,7 @@ class AccountRequest
     }
 
     /**
-    * retrieving all input data
+    * retrieving all data
     * @return array
     */
     public function All()
@@ -109,7 +109,7 @@ class AccountRequest
             }
             return $values;
         } else {
-            return $this->getPropaties();
+            return $this->All();
         }
     }
 }

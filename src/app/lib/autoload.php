@@ -1,5 +1,5 @@
 <?php
-require(DOC_ROOT.'/app/lib/Common/Autoloader.php');
+require(__DIR__.'/Common/Autoloader.php');
 
 use Common\Autoloader;
 

@@ -62,22 +62,20 @@ common = {
     },
 
     postRequest : function(dataSet, successFn, isFormData) {
-        let defaults = {
+        var params = {
             url      : common.toAjax,
             type     : "POST",
-            async    : false,
+            async    : true,
             dataType : "text",
             data     : dataSet,
             success  : successFn,
         }
         if (isFormData) {
-            let defaultsAdd = {
+            let paramsAdd = {
                 contentType: false,
                 processData: false,
             }
-            var params = $.extend({}, defaults, defaultsAdd, dataSet, successFn);
-        } else {
-            var params = $.extend({}, defaults, dataSet, successFn);
+            params = $.extend({}, params, paramsAdd);
         }
         return $.ajax(params);
     },
@@ -124,5 +122,16 @@ common = {
         }
         return key;
     },
+
+    saved : $(),
+    clickDisable : function(status) {
+        if (status === 'start') {
+            common.saved = this;
+            this.css("pointer-events", "none");
+        }
+        else if (status === 'end') {
+            common.saved.css("pointer-events", "auto")
+        }
+    }
 
     }
