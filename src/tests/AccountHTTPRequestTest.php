@@ -8,12 +8,12 @@ class AccountHTTPRequestTest extends TestCase
 {
     protected $object;
     protected $testdata = [
-        'actionType'	=>	'enter',
-        'username'		=>	'testuser',
-        'password'		=>	'testpassword',
-        'bucket'		=>	null,
-        'bucketkey'		=>	null,
-        'bucketval'		=>	null,
+        'actionType'    =>  'enter',
+        'username'      =>  'testuser',
+        'password'      =>  'testpassword',
+        'bucket'        =>  null,
+        'bucketkey'     =>  null,
+        'bucketval'     =>  null,
     ];
 
     protected function setUp(): void
