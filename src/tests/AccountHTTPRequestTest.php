@@ -2,22 +2,23 @@
 require_once(__DIR__.'/../app/lib/autoload.php');
 
 use \PHPUnit\Framework\TestCase;
-use Operation\OperationHTTPRequest;
+use Account\AccountHTTPRequest;
 
-class OperationHTTPRequestTest extends TestCase
+class AccountHTTPRequestTest extends TestCase
 {
     protected $object;
     protected $testdata = [
-        'actionType'    =>  'change',
-        'dirname'       =>  'testdir',
-        'name'          =>  'testname',
-        'level'         =>  2,
-        'filename'      =>  null,
+        'actionType'	=>	'enter',
+        'username'		=>	'testuser',
+        'password'		=>	'testpassword',
+        'bucket'		=>	null,
+        'bucketkey'		=>	null,
+        'bucketval'		=>	null,
     ];
 
     protected function setUp(): void
     {
-        $this->object = new OperationHTTPRequest();
+        $this->object = new AccountHTTPRequest();
         $reflection = new \ReflectionClass($this->object);
         $props = $reflection->getProperties(ReflectionProperty::IS_PRIVATE);
         foreach ($props as $prop) {
@@ -38,7 +39,7 @@ class OperationHTTPRequestTest extends TestCase
     {
         $test = [];
 
-        $testobject = new OperationHTTPRequest();
+        $testobject = new AccountHTTPRequest();
         $testobject->setProperties($this->testdata);
         $reflection = new \ReflectionClass($testobject);
         $properties = $reflection->getProperties(ReflectionProperty::IS_PRIVATE);
@@ -60,15 +61,15 @@ class OperationHTTPRequestTest extends TestCase
 
         $testArgs = [
             'actionType',
-            'dirname',
-            'level',
+            'username',
+            'password',
         ];
         $test = $this->object->getValues($testArgs);
 
         foreach ($this->testdata as $propname => $param) {
             if ($propname === 'actionType'
-            ||	$propname === 'dirname'
-            ||	$propname === 'level') {
+            ||	$propname === 'username'
+            ||	$propname === 'password') {
                 $expected[] = $this->testdata[$propname];
             }
         }
