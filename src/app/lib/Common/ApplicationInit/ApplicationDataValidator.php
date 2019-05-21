@@ -1,12 +1,15 @@
 <?php
 namespace Common\ApplicationInit;
 
-use Common\Common;
+use \Common\Common;
 
 class ApplicationDataValidator extends ApplicationDataException
 {
     use BucketCheckerTrait;
     use TokenCheckerTrait;
+
+    private static $udfile = Common::UD_FILE;
+    private static $tlfile = Common::TL_FILE;
 
     /**
     * Assign parameter to SESSION[$key] when processing ends normally
@@ -25,7 +28,7 @@ class ApplicationDataValidator extends ApplicationDataException
         }
 
         if ($status !== Common::OK) {
-            $files = [Common::UD_FILE, Common::TL_FILE];
+            $files = [self::$udfile, self::$tlfile];
             foreach ($files as $file) {
                 self::validateFileLocation($file);
                 self::validateFileReadable($file);

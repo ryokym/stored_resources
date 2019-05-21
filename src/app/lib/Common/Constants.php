@@ -3,21 +3,16 @@ namespace Common;
 
 class Constants
 {
-
-    /*********************
-    * ACCOUNT            *
-    *********************/
-
-    /* UserData FilePath
-    -------------------------------------------------*/
-    // ResistedAccountlist
+    /* AccountData FilePath
+    ------------------------------------------*/
+    // Resisted Accountlist
     public const UD_FILE = UD_FILE;
 
-    // ResistedTokenlist
+    // Resisted Tokenlist
     public const TL_FILE = TL_FILE;
 
     /* TOKEN String length
-    -------------------------------------------------*/
+    ------------------------------------------*/
     // MIN
     public const TOKEN_MIN_LENGTH = 25;
 
@@ -25,7 +20,7 @@ class Constants
     public const TOKEN_MAX_LENGTH = 32;
 
     /* Application Status Check
-    --------------------------------------------*/
+    ------------------------------------------*/
     // SESSION key for status
     public const STATUS = STATUS;
 
@@ -35,23 +30,21 @@ class Constants
     // Application not available
     public const NG = 0;
 
-    /*********************
-    * S3                 *
-    *********************/
-
     /* S3 Transfer Acceleration Switch
-    -------------------------------------------------*/
+    ------------------------------------------*/
+    // ON or OFF
     public const ACLR_SETTING = ACLR_SETTING;
 
-    /* S3\Action/ Change
-    -------------------------------------------------*/
-    // MAX LINE
+    /* Operation
+    ------------------------------------------*/
+    // read line limit
     public const MAX_READ_LINE = MAX_READ_LINE;
 
+    // "s3://"
     public const S3_PROTOCOL = S3_PROTOCOL;
 
-    /* S3\Action/ Upload
-    -------------------------------------------------*/
+    /* File Upload
+    ------------------------------------------*/
     // Minimum number of size in uploaded file
     public const MIN_FILE_SIZE = 0;
 
