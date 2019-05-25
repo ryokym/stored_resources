@@ -7,6 +7,9 @@ hooks:
   BeforeInstall:
     - location: script/clean.sh
       runas: root
+  AfterInstall:
+    - location: script/destroy_session.sh
+      runas: root
 permissions:
   - object: /var/www/html/app/auth
     pattern: "**"
