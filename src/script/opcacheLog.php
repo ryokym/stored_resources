@@ -8,6 +8,6 @@ $message = 'opcacheの削除に';
 $success = '成功しました';
 $fail = '失敗しました';
 
-$status = (opcache_reset())? $success: $fail;
+$status = (opcache_reset()) ? $success : $fail;
 
 Common::opcacheClearLog($message.$status);

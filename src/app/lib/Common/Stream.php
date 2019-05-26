@@ -5,7 +5,8 @@ class Stream extends \SplFileObject
 {
     public $contents = '';
 
-    public function __destruct() {
+    public function __destruct()
+    {
         fclose($this);
     }
 
@@ -42,5 +43,4 @@ class Stream extends \SplFileObject
         $size = strlen($this->contents);
         parent::fwrite($this->contents, $size);
     }
-
 }

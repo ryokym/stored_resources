@@ -132,5 +132,4 @@ class AccountAction extends UserDataCrypto
         $_SESSION = [];
         session_destroy();
     }
-
 }
