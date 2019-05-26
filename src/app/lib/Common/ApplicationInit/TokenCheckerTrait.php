@@ -22,8 +22,8 @@ trait TokenCheckerTrait
     private function getTokenList($tokenfpath)
     {
         $stream = new Stream($tokenfpath);
-        $contents = $stream->fread($stream->getSize());
-        return $contents;
+        $stream->read();
+        return $stream->contents;
     }
 
     /**

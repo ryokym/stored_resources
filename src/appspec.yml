@@ -21,10 +21,3 @@ permissions:
     mode: 666
     type:
       - file
-  - object: /var/www/html/log
-    pattern: "**"
-    owner: root
-    group: root
-    mode: 666
-    type:
-      - file
