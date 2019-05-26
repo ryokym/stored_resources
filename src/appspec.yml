@@ -10,8 +10,18 @@ hooks:
   AfterInstall:
     - location: script/destroy_session.sh
       runas: root
+  ApplicationStart:
+    - location: script/opcacheLog.php
+      runas: root
 permissions:
   - object: /var/www/html/app/auth
+    pattern: "**"
+    owner: root
+    group: root
+    mode: 666
+    type:
+      - file
+  - object: /var/www/html/log
     pattern: "**"
     owner: root
     group: root

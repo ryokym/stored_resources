@@ -43,3 +43,11 @@ define('SES_DOMEIN', '');
 define('SES_SECURE', false);
 // PHP Default none ※prevent "document.cookie"
 define('SES_HTTP_ONLY', true);
+
+/* Debug
+--------------------------------------------*/
+define('DEBUG_LOG_PATH', $_SERVER['DOCUMENT_ROOT'].'/log/debug.log');
+
+/* OPCache
+--------------------------------------------*/
+define('OPCACHE_LOG_PATH', $_SERVER['DOCUMENT_ROOT'].'/log/opcacheHistory.log');
