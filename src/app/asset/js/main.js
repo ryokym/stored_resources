@@ -199,6 +199,7 @@ $('#expand').on('click', function() {
 -------------------------------------------------------*/
 
 $('#logout').on('click', function() {
+    common.setmode('logout');
     const afterProcess = function () {
         location.href = '/index.php?logout';
     }

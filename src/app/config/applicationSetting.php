@@ -30,3 +30,16 @@ define('MAX_READ_LINE', 5000);
 /* Maximum number of characters in uploaded file
 --------------------------------------------*/
 define('MAX_FNAME_LENGTH', 40);
+
+/* Session Settings
+--------------------------------------------*/
+// PHP Default 0
+define('SES_LIFE_TIME', 0);
+// PHP Default '/'
+define('SES_PATH', '/');
+// PHP Default ''
+define('SES_DOMEIN', '');
+// PHP Default false ※only https
+define('SES_SECURE', false);
+// PHP Default none ※prevent "document.cookie"
+define('SES_HTTP_ONLY', true);

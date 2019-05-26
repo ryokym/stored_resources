@@ -61,6 +61,7 @@ class AccountAction extends UserDataCrypto
                     $this->request->getPassword(),
                     $this->account['iv']
                 ));
+                session_regenerate_id(true);
             }
             echo ($errormsg = $this->error) ? $errormsg : $this->request->getActionType();
         }
@@ -130,6 +131,5 @@ class AccountAction extends UserDataCrypto
     {
         $_SESSION = [];
         session_destroy();
-        header('Location:/app/content/login/');
     }
 }

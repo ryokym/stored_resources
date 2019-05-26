@@ -15,7 +15,7 @@ $token = [
 $isAutologin = $validator->isAuthenticatesToken($token['path'], $token['ses']);
 
 if (!$isAutologin) {
-    header('Location:/index.php?=signin');
+    header('Location:/index.php?signin');
 }
 
 $S3Client = S3Adapter::getS3Client(S3_SET_OPTIONS);

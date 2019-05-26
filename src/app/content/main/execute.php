@@ -20,6 +20,7 @@ if (filter_input(INPUT_POST, 'isUpload')) {
 
 if ($request->getActionType() === 'logout') {
     AccountAction::logout();
+    exit;
 }
 
 $S3Client = S3Adapter::getS3Client(S3_SET_OPTIONS);
