@@ -11,7 +11,7 @@ hooks:
     - location: script/destroy_session.sh
       runas: root
   ApplicationStart:
-    - location: script/opcacheLog.php
+    - location: script/clean_opcache.sh
       runas: root
 permissions:
   - object: /var/www/html/app/auth
