@@ -10,7 +10,7 @@ hooks:
   AfterInstall:
     - location: script/destroy_session.sh
       runas: root
-  ApplicationStart:
+  ValidateService:
     - location: script/clean_opcache.sh
       runas: root
 permissions:
