@@ -50,4 +50,4 @@ define('DEBUG_LOG_PATH', $_SERVER['DOCUMENT_ROOT'].'/log/debug.log');
 
 /* OPCache
 --------------------------------------------*/
-define('OPCACHE_LOG_PATH', $_SERVER['DOCUMENT_ROOT'].'/log/opcacheHistory.log');
+define('OPCACHE_LOG_PATH', '/var/www/html/log/opcacheHistory.log');
