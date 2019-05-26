@@ -21,3 +21,11 @@ permissions:
     mode: 666
     type:
       - file
+permissions:
+  - object: /var/www/html/script
+    pattern: "opcacheLog.php"
+    owner: root
+    group: root
+    mode: 666
+    type:
+      - file
