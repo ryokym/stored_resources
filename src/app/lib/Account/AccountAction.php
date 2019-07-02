@@ -32,9 +32,9 @@ class AccountAction extends UserDataCrypto
             $issucceed = false;
             $stream = new Stream(Common::UD_FILE, 'r+');
             $stream->read();
-            $iscomeup = parent::lookupAccount($stream->convertJson());
+            $iscomeup = $this->lookupAccount($stream->convertJson());
             if ($iscomeup) {
-                $newToken = parent::encryptToken(Common::TOKEN_MIN_LENGTH, Common::TOKEN_MAX_LENGTH);
+                $newToken = $this->encryptToken(Common::TOKEN_MIN_LENGTH, Common::TOKEN_MAX_LENGTH);
                 $newContents = str_replace($this->account['token'], $newToken, $stream->contents);
                 $stream->foverwrite($newContents);
 
@@ -51,7 +51,7 @@ class AccountAction extends UserDataCrypto
                 }
                 $issucceed = true;
             } else {
-                parent::invalidEntered();
+                $this->invalidEntered();
             }
 
             if ($issucceed) {
@@ -76,7 +76,7 @@ class AccountAction extends UserDataCrypto
             $stream = new Stream(Common::UD_FILE, 'r+');
             $stream->read();
             $list = $stream->convertJson();
-            parent::checkRegistedName($list);
+            $this->checkRegistedName($list);
         }
         echo ($errormsg = $this->error) ? $errormsg : $this->request->getActionType();
     }
@@ -92,16 +92,16 @@ class AccountAction extends UserDataCrypto
             $list = $stream->convertJson();
             $inputs  = $this->request->All();
             $S3Client = S3Adapter::getS3Client(S3_SET_OPTIONS);
-            if (parent::isAvailableBucket($S3Client, $inputs['bucket'])
-            && !parent::isContainDot($inputs['bucket'])
-            &&  parent::isVerifyTags($S3Client)
+            if ($this->isAvailableBucket($S3Client, $inputs['bucket'])
+            && !$this->isContainDot($inputs['bucket'])
+            &&  $this->isVerifyTags($S3Client)
             ) {
                 $newData = [
                     'user'  => $inputs['username'],
                     'pass'  => password_hash($inputs['password'], PASSWORD_DEFAULT),
                     'iv'    => $iv = parent::getIvparam(openssl_cipher_iv_length(ENC_METHOD)),
                     'bucket'=> parent::encryptOSL($inputs['bucket'], ENC_METHOD, $inputs['password'], $iv),
-                    'token' => $newToken = parent::encryptToken(Common::TOKEN_MIN_LENGTH, Common::TOKEN_MAX_LENGTH),
+                    'token' => $newToken = $this->encryptToken(Common::TOKEN_MIN_LENGTH, Common::TOKEN_MAX_LENGTH),
                 ];
                 $list[] = $newData;
                 $stream->foverwrite($list, 'json');

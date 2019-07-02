@@ -64,6 +64,7 @@ $level.find('.row:has(.row_item)').remove();
 -------------------------------------------------------*/
 
 common.document.on('click', '.row:has(.row_item)', function() {
+    if (common.ismode('remove')) return false;
     common.clickDisable.call($('.row:has(.row_item)'), 'start');
     main.setElementData($(this), function(elm) {
         main.name = elm.find('.row_item').text();
@@ -84,8 +85,8 @@ common.document.on('click', '.row:has(.row_item)', function() {
                 : main.dirname + '/' + main.name;
             main.isview = false;
             main.adjustColumn();
-            $levelClone.data('level', ++main.level);
-            $levelClone.data('dir', newDirname);
+            $levelClone.attr('data-level', ++main.level)
+                       .attr('data-dir', newDirname);
             var elm = '';
             data.result.forEach(function(value) {
                 elm += '<div class="row"><p class="row_item">' + value + '</p></div>';
