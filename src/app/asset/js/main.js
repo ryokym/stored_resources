@@ -15,6 +15,7 @@ main = {
     rootdir     : 1,
     leftgap     : 42,
     toAjax      : 'main/execute.php',
+    codeStyle   : {'line-height':'2.6vh', 'font-family': 'ricty'},
     setElementData : function(obj, callback) {
         this.workdir = obj.parents('.level');
         this.dirname = this.workdir.data('dir');
@@ -44,6 +45,7 @@ main = {
 -------------------------------------------------------*/
 
 const $preview    = $('#preview');
+const $edit       = $('#edit');
 const $upload     = $('#upload_area');
 const $uploadDrop = $('#upload_drop_area');
 const $remove     = $('#remove_area');
@@ -308,6 +310,25 @@ function fileUpload(f) {
     common.postRequest(formData, afterProcess, true);
 }
 
+/* edit
+-------------------------------------------------------*/
+common.document.on('click', '#edit', function() {
+    if (main.isview === true) {
+        common.togglemode('change', 'edit');
+        const text = $preview.find('span').text();
+        const code = $('code');
+        const replace = $('<code contenteditable="true"></code>');
+        $.when(
+            code.replaceWith(replace)
+        ).done(function() {
+            replace.text(text)
+                   .css(main.codeStyle);
+        });
+    } else {
+        common.togglemode('change', 'edit');
+    }
+});
+
 /* keypress
 -------------------------------------------------------*/
 
@@ -318,3 +339,9 @@ common.document.on('keydown', 'input:visible', function(e) {
         if ($(this).hasClass('error')) $(this).removeClass('error');
     }
 });
+
+common.document.keydown(function(e) {
+    if (main.isview && e.keyCode === 69) {
+        $edit.trigger('click');
+    }
+})
