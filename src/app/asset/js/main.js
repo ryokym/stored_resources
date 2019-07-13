@@ -9,6 +9,7 @@ main = {
     name        : '',
     dirname     : '',
     level       : '',
+    add         : '',
     workdir     : '',
     stateWidth  : '',
     isview      : false,
@@ -16,10 +17,11 @@ main = {
     leftgap     : 42,
     toAjax      : 'main/execute.php',
     codeStyle   : {'line-height':'2.6vh', 'font-family': 'ricty'},
-    setElementData : function(obj, callback) {
+    setElementData : function(obj, callback, add) {
         this.workdir = obj.parents('.level');
         this.dirname = this.workdir.data('dir');
         this.level   = parseInt(this.workdir.data('level'));
+        if (add) this.add = add;
         if (callback) callback(obj);
     },
     getElementData : function() {
@@ -30,6 +32,9 @@ main = {
                 level      : this.level,
                 actionType : common.mode,
             }
+        }
+        if (this.add) {
+            response.requestData.add = this.add;
         }
         return response;
     },
@@ -314,6 +319,7 @@ function fileUpload(f) {
 -------------------------------------------------------*/
 common.document.on('click', '#edit', function() {
     if (main.isview === true) {
+        main.isview = false;
         common.togglemode('change', 'edit');
         const text = $preview.find('span').text();
         const code = $('code');
@@ -325,7 +331,18 @@ common.document.on('click', '#edit', function() {
                    .css(main.codeStyle);
         });
     } else {
-        common.togglemode('change', 'edit');
+        let edited = $('.level:last').find('.change > .row_item');
+        main.setElementData(edited, function(elm) {
+            main.name = elm.text();
+        },{content: 'hoge'});
+        // common.togglemode('change', 'edit');
+        // console.log(main.add);
+        var dataSet = main.getElementData();
+        // console.log(sample);
+        common.postRequest(dataSet, function(response){
+            console.log(response);
+        });
+
     }
 });
 

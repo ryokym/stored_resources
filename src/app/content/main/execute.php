@@ -15,7 +15,12 @@ if (filter_input(INPUT_POST, 'isUpload')) {
     $request->setFilename('file');
 } else {
     $data = filter_input(INPUT_POST, 'requestData', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
-    $request->setProparties($data);
+    if (isset($data['add'])) {
+        $added = $data['add'];
+        unset($data['add']);
+        $data = array_merge($data, $added);
+    }
+    $request->setProperties($data);
 }
 
 if ($request->getActionType() === 'logout') {

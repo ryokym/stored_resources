@@ -89,4 +89,9 @@ class S3StreamAction extends S3OptionFormatter
         ]);
         echo $filename;
     }
+
+    public function edit()
+    {
+        var_dump($this->request->All());
+    }
 }

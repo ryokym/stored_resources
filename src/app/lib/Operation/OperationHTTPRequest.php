@@ -12,7 +12,7 @@ class OperationHTTPRequest
     private $name     = null;
     private $level    = null;
     private $filename = null;
-    private $s3Object = null;
+    private $content  = null;
 
     public function getActionType()
     {
@@ -64,7 +64,17 @@ class OperationHTTPRequest
         $this->filename = $filename;
     }
 
-    public function getS3Object()
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    public function setContent($content)
+    {
+        $this->content = $content;
+    }
+
+    public function setProperties($properties)
     {
         return $this->S3Object;
     }
