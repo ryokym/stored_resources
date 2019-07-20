@@ -21,7 +21,6 @@ permissions:
     mode: 666
     type:
       - file
-permissions:
   - object: /var/www/html/log
     pattern: "opcacheHistory.log"
     owner: root
@@ -29,7 +28,6 @@ permissions:
     mode: 666
     type:
       - file
-permissions:
   - object: /var/www/html/script
     pattern: "opcacheLog.php"
     owner: root
