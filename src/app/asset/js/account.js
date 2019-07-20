@@ -6,18 +6,33 @@
 
 window.account = {}
 account = {
-    sendtxt    : '',
-    signtxt    : '',
     duration   : 400,
     forward    : '/',
     toAjax     : 'login/execute.php',
     successMsg : 'Account creation succeeded',
+    modeoptions: ['enter', 'create'],
+    signtxt    : ['SIGN IN', 'SIGN UP'],
+    btncolor   : ['sign_up_bk', 'sign_in_bk'],
+    switchtxt  : ['sign_up_txt', 'sign_in_txt'],
+    store : {
+        sendtxt : '',
+        signtxt : '',
+    },
+    inputnames : [
+        'username',
+        'password',
+        'bucket',
+        'bucketkey',
+        'bucketval',
+    ],
     openmodal  : function() {
         common.setmode('verify');
         $wrapper.hide().promise().done(function() {
             $modal.fadeIn(account.duration).css({'display': 'flex'});
             $menu.slideUp(account.duration);
-            $ukey.text(common.ukey());
+            const ukey = common.ukey()
+            $ukey.text(ukey)
+                 .next('input').val(ukey);
         })
     }
 }
@@ -32,11 +47,7 @@ const $ukey      = $('#ukey');
 const $close     = $('#close');
 const $send      = $('#send input');
 const $switchtxt = $('.switch_txt');
-const $switchbk  = $('.switch_bk');
-const $tagName   = $('input[name ="username"]');
-const $tagPass   = $('input[name ="password"]');
-const $tagBucket = $('input[name ="bucket"]');
-const $tagVal    = $('input[name ="bucketval"]');
+const $btncolor  = $('.btn_color');
 
 /* initialize
 -------------------------------------------------------*/
@@ -47,15 +58,11 @@ common.toAjax = common.basePath + account.toAjax;
 /*-----------------------------------------------------*/
 
 common.document.on('click', '#switcher', function() {
-    common.swapAttAryParams.call([$switchbk, $switchtxt],
-        ['sign_up_bk', 'sign_up_txt'],
-        ['sign_in_bk', 'sign_in_txt'],
-        function() {
-            common.togglemode('enter', 'create');
-            common.swapfn.call($send, 'valfn', account.sendtxt, ['enter', 'create']);
-            common.swapfn.call($switchtxt, 'txtfn', account.signtxt, ['SIGN IN', 'SIGN UP']);
-        }
-    )
+    common.rotateClass($btncolor, account.btncolor);
+    common.rotateClass($switchtxt, account.switchtxt);
+    common.rotate(common.mode, account.modeoptions, function(nextmode){common.setmode(nextmode)});
+    common.swapValue.call($send, 'val', account.store.sendtxt, account.modeoptions);
+    common.swapValue.call($switchtxt, 'text', account.store.signtxt, account.signtxt);
 });
 
 $close.click(function() {
@@ -67,7 +74,7 @@ $close.click(function() {
 });
 
 $send.click(function() {
-    const afterSignAction = function(response) {
+    const done = function(response) {
         if (response === 'enter') {
             location.href = account.forward;
         }
@@ -82,14 +89,8 @@ $send.click(function() {
             alert(response);
         }
     }
-    common.postRequest({
-        requestData : {
-            actionType : common.mode,
-            username   : $tagName.val(),
-            password   : $tagPass.val(),
-            bucket     : $tagBucket.val(),
-            bucketkey  : $ukey.text(),
-            bucketval  : $tagVal.val(),
-        }
-    }, afterSignAction);
+    const methods = { actionType : common.mode }
+    const values = common.getFormElmsValue(account.inputnames);
+    requestData = $.extend({}, methods, values);
+    common.postRequest({requestData}, done);
 });

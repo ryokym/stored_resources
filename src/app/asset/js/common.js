@@ -22,33 +22,43 @@ common = {
         this.mode = mode;
     },
 
-    ismode  : function(mode) {
+    ismode : function(mode) {
         if (this.mode === mode) return true;
         else return false;
     },
 
-    togglemode : function(from, to) {
-        if (this.mode === from) this.setmode(to);
-        else this.setmode(from);
+    getFormElmsValue : function(names) {
+        if (names instanceof Array) {
+            var values = {};
+            names.forEach(function(name) {
+                values[name] = document.form.elements[name].value;
+            });
+            return values;
+        }
     },
 
-    valfn : function(param) {
-        if (param) this.val(param);
-        else return this.val();
+    rotate : function(param, params, exec) {
+        if (params instanceof Array) {
+            const count = params.length;
+            if (params[count-1] === param ) {
+                exec(params[0]);
+            } else {
+                for (var i = 0; i < count; i++) {
+                    if (param === params[i]) {
+                        exec(params[++i]);
+                        break;
+                    }
+                }
+            }
+        }
     },
 
-    txtfn : function(param) {
-        if (param) this.text(param);
-        else return this.text();
-    },
-
-    swapfn: function(fname, store, params) {
-        var target = this;
-        store = common[fname].call(this);
+    swapValue : function(fname, store, params) {
+        var $this = this;
+        store = $this[fname]();
         params.forEach(function(value) {
-            var param = value;
             if (value != store) {
-                common[fname].call(target, param);
+                $this[fname](value);
             }
         })
     },
@@ -89,25 +99,21 @@ common = {
         { return false;}
     },
 
-    swapAttParams : function(before, after, callback) {
-        this.each(function() {
-            const elm = $(this);
-            if (elm.hasClass(before)) {
-                elm.addClass(after).removeClass(before);
+    rotateClass : function(elm, classes) {
+        if (classes instanceof Array) {
+            const count = classes.length;
+            if (elm.hasClass(classes[count-1])) {
+                elm.removeClass(classes[count-1]);
+                elm.addClass(classes[0]);
+            } else {
+                for (var i = 0; i < count; i++) {
+                    if (elm.hasClass(classes[i])) {
+                        elm.removeClass(classes[i]);
+                        elm.addClass(classes[++i]);
+                        break;
+                    }
+                }
             }
-            else if (elm.hasClass(after)) {
-                elm.addClass(before).removeClass(after);
-            }
-        });
-        if (callback) callback();
-    },
-
-    swapAttAryParams : function(before, after, callback) {
-        if (this instanceof Array) {
-            this.forEach(function(value) {
-                common.swapAttParams.call(value, before.shift(), after.shift());
-            });
-            if (callback) callback();
         }
     },
 

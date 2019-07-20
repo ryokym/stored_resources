@@ -103,7 +103,7 @@ common.document.on('click', '.row:has(.row_item)', function() {
             $('.prettyprint').empty();
 
             if (common.ismode('change')) $upload.show();
-            if (common.ismode('remove')) common.swapAttParams.call($levelClone.find('.open'), 'enable', 'disable');
+            if (common.ismode('remove')) common.rotateClass($levelClone.find('.open'), ['enable', 'disable']);
 
         } else {
             main.isview = true;
@@ -129,12 +129,11 @@ $('#remove').on('click', function() {
     const open = $('.open');
     const row = $('.row');
     const rowItem = $('.row_item');
-    common.swapAttAryParams.call([row, open],
-        ['change', 'enable' ],
-        ['remove', 'disable'],
-    );
+    common.rotate(common.mode, ['change', 'remove'], function(next){common.setmode(next)});
+    common.rotateClass($('.change, .remove'), ['change', 'remove']);
+    common.rotateClass(open, ['enable', 'disable']);
+    alert(common.mode);
     $('.close:visible').trigger('click');
-    common.togglemode('change', 'remove');
     if (common.ismode('remove')) {
         $preview.hide();
         $upload.hide();
