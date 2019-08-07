@@ -3,8 +3,7 @@ COPY ./src/composer.json /app
 RUN composer install --ignore-platform-reqs --no-scripts
 
 FROM centos:7
-RUN yum -y update
-RUN yum -y install epel-release
+RUN yum -y update && yum -y install epel-release
 RUN rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
 RUN yum -y --enablerepo=remi,remi-php72 install \
     httpd \
