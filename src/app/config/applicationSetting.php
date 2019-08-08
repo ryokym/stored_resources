@@ -2,12 +2,13 @@
 
 /* ApplicationName
 --------------------------------------------*/
-define('APP_NAME', 'STORED RESOURCES 3.x');
+define('APP_NAME', 'stored_resources');
 
 /* PHP
 --------------------------------------------*/
 // Display Error Setting
-ini_set('display_errors', 'ON');
+// either 'ON or OFF'
+ini_set('display_errors', 'OFF');
 
 /* S3 Transfer Acceleration Switch
 --------------------------------------------*/
@@ -16,7 +17,8 @@ define('ACLR_ON', 'Enabled');
 // Accelerater OFF
 define('ACLR_OFF', 'Suspended');
 // Accelerater Setting
-define('ACLR_SETTING', ACLR_ON);
+// either ACLR_ON or ACLR_OFF
+define('ACLR_SETTING', ACLR_OFF);
 
 /* Application Status Check
 --------------------------------------------*/
@@ -25,29 +27,12 @@ define('STATUS', 'status');
 
 /* Maximum number of read lines of file contents
 --------------------------------------------*/
-define('MAX_READ_LINE', 5000);
+define('DEFAULT_LINE_LIMIT', 5000);
+
+define('MAX_READ_LINE', DEFAULT_LINE_LIMIT);
 
 /* Maximum number of characters in uploaded file
 --------------------------------------------*/
-define('MAX_FNAME_LENGTH', 40);
+define('DEFAULT_FNAME_LIMIT', 40);
 
-/* Session Settings
---------------------------------------------*/
-// PHP Default 0
-define('SES_LIFE_TIME', 0);
-// PHP Default '/'
-define('SES_PATH', '/');
-// PHP Default ''
-define('SES_DOMEIN', '');
-// PHP Default false ※only https
-define('SES_SECURE', false);
-// PHP Default none ※prevent "document.cookie"
-define('SES_HTTP_ONLY', true);
-
-/* Debug
---------------------------------------------*/
-define('DEBUG_LOG_PATH', $_SERVER['DOCUMENT_ROOT'].'/log/debug.log');
-
-/* OPCache
---------------------------------------------*/
-define('OPCACHE_LOG_PATH', '/var/www/html/log/opcacheHistory.log');
+define('MAX_FNAME_LENGTH', DEFAULT_FNAME_LIMIT);
