@@ -1,3 +1,6 @@
+import $ from 'jquery';
+import common from './common.js';
+
 /**
 * account js
 *
@@ -5,7 +8,7 @@
 -------------------------------------------------------*/
 
 window.account = {}
-account = {
+export default account = {
     duration   : 400,
     forward    : '/',
     toAjax     : 'login/execute.php',
@@ -91,6 +94,6 @@ $send.click(function() {
     }
     const methods = { actionType : common.mode }
     const values = common.getFormElmsValue(account.inputnames);
-    requestData = $.extend({}, methods, values);
+    const requestData = $.extend({}, methods, values);
     common.postRequest({requestData}, done);
 });

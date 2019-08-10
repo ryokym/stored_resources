@@ -55,7 +55,6 @@
         </div>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="/app/asset/js/common.js"></script>
-        <script src="/app/asset/js/account.js"></script>
+        <script src="/app/asset/js/dist/account.js"></script>
     </body>
 </html>

@@ -1,5 +1,4 @@
-<script src="/app/asset/js/common.js"></script>
-<script src="/app/asset/js/main.js"></script>
+<script src="/app/asset/js/dist/main.js"></script>
 
 </body>
 </html>

@@ -1,3 +1,8 @@
+import $ from 'jquery';
+require('jui/widgets/draggable.js');
+require('jui/widgets/droppable.js');
+import common from './common.js';
+
 /**
 * main js
 *
@@ -152,7 +157,7 @@ $('#remove').on('click', function() {
         out : function() { $removeDrop.removeClass('removeMouseOver') },
         drop: function(e, data) {
             main.setElementData(data.draggable);
-            main.name = data.helper.context.textContent;
+            main.name = data.draggable[0].innerText;
             $removeDrop.removeClass('removeMouseOver');
             if (confirm(main.dirname + '/' + main.name + 'を削除しますか?') === false) {
                 return false;
@@ -232,7 +237,11 @@ common.document.on('click', '.open, .enable', function() {
         if (common.validateFiles(main.name)) {
             const createDirBtnArea = main.workdir.find('.row').first();
             const clone = $row.clone();
+<<<<<<< HEAD:src/app/asset/js/main.js
             afterProcess = function() {
+=======
+            const done = function() {
+>>>>>>> 508bb01... webpackの導入:src/app/asset/js/modules/main.js
                 const createNewDirRow = main.workdir.find('.createNewDirRow');
                 clone.find('.row_item').text(main.name);
                 main.workdir.append(clone);

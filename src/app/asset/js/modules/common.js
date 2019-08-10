@@ -1,3 +1,4 @@
+import $ from 'jquery';
 /**
 * common js
 */
@@ -8,7 +9,7 @@
 -------------------------------------------------------*/
 window.common = {}
 
-common = {
+export default common = {
     mode     : '',
     toAjax   : '',
     basePath : '/app/content/',
