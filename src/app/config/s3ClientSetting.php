@@ -7,14 +7,16 @@
  * However, please be careful about leakage of such information
  */
 
+define('REGION', 'your_region');
+
 /* When operating with docker. Or when not using ec2
  *-----------------------------------------------------*/
-define('ACCESS_KEY', 'Access key you got at AWS IAM');
-define('SECRET_KEY', 'Secret key you got at AWS IAM');
+define('ACCESS_KEY', 'your_access_key');
+define('SECRET_KEY', 'your_secret_key');
 //S3ClientSetting
 define('S3_SET_OPTIONS', [
     'version' => 'latest',
-    'region'  => 'ap-northeast-1',
+    'region'  => REGION,
     'credentials' => [
         'key' => ACCESS_KEY,
         'secret' => SECRET_KEY,
@@ -26,7 +28,7 @@ define('S3_SET_OPTIONS', [
 //S3ClientSetting
 // define('S3_SET_OPTIONS', [
 //     'version' => 'latest',
-//     'region'  => 'ap-northeast-1',
+//     'region'  => REGION,
 // ]);
 
 // S3 StreamWrapperProtocol
