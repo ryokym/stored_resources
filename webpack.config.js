@@ -15,5 +15,4 @@ module.exports = {
       'jui': 'jquery-ui/ui',
     }
   },
-  cache : true
 };
