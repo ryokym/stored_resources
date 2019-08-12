@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import common from './common.js';
+import common from './modules/common/common.js';
 
 /**
 * account js

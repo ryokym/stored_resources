@@ -3,8 +3,8 @@ const path = require('path');
 module.exports = {
   mode: 'development',
   entry: {
-      account : './src/app/asset/js/modules/account.js',
-      main : './src/app/asset/js/modules/main.js',
+      account : './src/app/asset/js/account.js',
+      main : './src/app/asset/js/main.js',
   },
   output: {
       filename: "[name].js",
@@ -15,4 +15,5 @@ module.exports = {
       'jui': 'jquery-ui/ui',
     }
   },
+  cache : true
 };
