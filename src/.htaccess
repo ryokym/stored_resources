@@ -11,6 +11,6 @@ RewriteRule . /app/content/main/ [L]
 deny from all
 </Files>
 
-<FilesMatch "^(tokenList\.txt|userDataList\.txt)">
+<FilesMatch "(\.txt)$">
 deny from all
 </FilesMatch>
