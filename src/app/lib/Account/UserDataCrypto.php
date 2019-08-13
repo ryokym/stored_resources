@@ -1,9 +1,11 @@
 <?php
-namespace Account;
+namespace App\Account;
+
+use App\DataTransferInterface;
 
 class UserDataCrypto extends UserDataFilter
 {
-    public function __construct($request)
+    public function __construct(DataTransferInterface $request)
     {
         parent::__construct($request);
     }

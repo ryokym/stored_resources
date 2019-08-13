@@ -1,11 +1,12 @@
 <?php
-namespace Account;
+namespace App\Account;
 
+use Aws\S3\S3ClientInterface;
 use Aws\Exception\AwsException;
 
 class UserDataFilter
 {
-    use \Common\ApplicationInit\BucketCheckerTrait;
+    use \App\Common\ApplicationInit\BucketCheckerTrait;
 
     protected $request;
     protected $error = '';
@@ -100,7 +101,7 @@ class UserDataFilter
     * @param object Aws\S3\S3Client
     * @return boolean
     */
-    protected function isVerifyTags($S3Client)
+    protected function isVerifyTags(S3ClientInterface $S3Client)
     {
         $result = [];
         try {
@@ -127,7 +128,7 @@ class UserDataFilter
     * @param object Aws\S3\S3Client Instance
     * @return boolean
     */
-    protected function isAvailableBucket($S3Client, $bucket)
+    protected function isAvailableBucket(S3ClientInterface $S3Client, $bucket)
     {
         $result = $this->checkBucket($S3Client, $bucket);
         if ($result) {

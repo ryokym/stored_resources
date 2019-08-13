@@ -2,10 +2,11 @@
 /**
 * Data Transfer Object with HTTP request parameters
 */
+namespace App\Operation;
 
-namespace Operation;
+use App\DataTransferInterface;
 
-class OperationHTTPRequest
+class OperationHTTPRequest implements DataTransferInterface
 {
     private $actionType;
     private $dirname  = null;
@@ -13,6 +14,7 @@ class OperationHTTPRequest
     private $level    = null;
     private $filename = null;
     private $content  = null;
+    private $cliped   = null;
 
     public function getActionType()
     {
@@ -74,20 +76,20 @@ class OperationHTTPRequest
         $this->content = $content;
     }
 
+    public function getCliped()
+    {
+        return $this->cliped;
+    }
+
+    public function setCliped($cliped)
+    {
+        $this->cliped = $cliped;
+    }
+
     public function setProperties($properties)
     {
-        return $this->S3Object;
-    }
-
-    public function setS3Object($s3obj)
-    {
-        $this->S3Object = $s3obj;
-    }
-
-    public function setProparties($proparties)
-    {
-        foreach ($proparties as $propaty => $param) {
-            $this->$propaty = $param;
+        foreach ($properties as $property => $param) {
+            $this->$property = $param;
         }
     }
 
@@ -107,7 +109,6 @@ class OperationHTTPRequest
 
     /**
     * retrieving properties that specified names of array
-    *
     */
     public function getValues(array $propnames)
     {

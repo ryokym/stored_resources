@@ -1,7 +1,7 @@
 <?php
-namespace Operation;
+namespace App\Operation;
 
-use Common\Common;
+use App\Common\Common;
 
 class S3StreamException
 {

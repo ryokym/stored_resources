@@ -1,7 +1,7 @@
 <?php
-namespace Common\ApplicationInit;
+namespace App\Common\ApplicationInit;
 
-use Common\Stream;
+use App\Common\Stream;
 
 trait TokenCheckerTrait
 {

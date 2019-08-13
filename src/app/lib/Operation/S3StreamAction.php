@@ -1,7 +1,9 @@
 <?php
-namespace Operation;
+namespace App\Operation;
 
-use Common\Common;
+use Aws\S3\S3ClientInterface;
+use App\Common\Common;
+use App\DataTransferInterface;
 
 class S3StreamAction extends S3OptionFormatter
 {
@@ -9,7 +11,7 @@ class S3StreamAction extends S3OptionFormatter
     private $bucketname;
     private $stream;
 
-    public function __construct($request, $S3Client, $bucketname)
+    public function __construct(DataTransferInterface $request, S3ClientInterface $S3Client, $bucketname)
     {
         parent::__construct($request);
         $this->S3Client = $S3Client;
@@ -66,10 +68,7 @@ class S3StreamAction extends S3OptionFormatter
     public function makedir()
     {
         $key = (parent::isRootDir()) ? $this->request->getName() : parent::getPathName();
-        // 最後に/付けないとファイルになる
         $pathName = parent::appendDS($key);
-        // streamWrapperではBucketは作れる(mkdir()で)がDirectoryは作れない
-        // mkdir(S3_PROTOCOL.$currentDirName.$newDirName);
         $this->S3Client->putObject([
             'Bucket' => $this->bucketname,
             'Key'    => $pathName,
@@ -92,6 +91,29 @@ class S3StreamAction extends S3OptionFormatter
 
     public function edit()
     {
-        var_dump($this->request->All());
+        if (!parent::isRootDir()) {
+            $path = parent::prependDS($this->request->getDirname());
+            $this->request->setDirName($path);
+        }
+        $s3Path = parent::getS3PathName($this->bucketname);
+        $stream = new S3Stream($s3Path, 'w');
+        $contents = $stream->fread([$this, 'requestObjectNotfound']);
+        fwrite($contents, $this->request->getContent());
+        echo $this->request->getContent();
+    }
+
+    public function move()
+    {
+        // var_dump($this->request->All());
+        if (!parent::isRootDir()) {
+            $path = parent::prependDS($this->request->getDirname());
+            $this->request->setDirName($path);
+        }
+        $clipedname = $this->request->getCliped();
+        $filename = pathinfo($clipedname)['basename'];
+        $moveto = $this->getS3PathName($this->bucketname).$this->prependDS($filename);
+        $movefrom = $this->getS3PathName($this->bucketname, $clipedname);
+        rename($movefrom, $moveto);
+        echo $filename;
     }
 }

@@ -1,7 +1,7 @@
 <?php
-namespace Common\ApplicationInit;
+namespace App\Common\ApplicationInit;
 
-use \Common\Common;
+use App\Common\Common;
 
 class ApplicationDataValidator extends ApplicationDataException
 {

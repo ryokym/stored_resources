@@ -1,5 +1,5 @@
 <?php
-namespace Common\ApplicationInit;
+namespace App\Common\ApplicationInit;
 
 class ApplicationDataException
 {

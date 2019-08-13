@@ -1,14 +1,9 @@
 <?php
-namespace Common;
+namespace App\Common;
 
 class Stream extends \SplFileObject
 {
     public $contents = '';
-
-    public function __destruct()
-    {
-        fclose($this);
-    }
 
     public function read()
     {

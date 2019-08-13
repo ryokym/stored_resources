@@ -2,10 +2,11 @@
 /**
 * Data Transfer Object with HTTP request parameters
 */
+namespace App\Account;
 
-namespace Account;
+use App\DataTransferInterface;
 
-class AccountHTTPRequest
+class AccountHTTPRequest implements DataTransferInterface
 {
     private $actionType;
     private $username;
@@ -74,10 +75,10 @@ class AccountHTTPRequest
         $this->bucketval = $bucketval;
     }
 
-    public function setProparties($proparties)
+    public function setProperties(array $properties)
     {
-        foreach ($proparties as $propaty => $param) {
-            $this->$propaty = $param;
+        foreach ($properties as $property => $param) {
+            $this->$property = $param;
         }
     }
 

@@ -1,7 +1,8 @@
 <?php
-namespace Operation;
+namespace App\Operation;
 
-use Common\Common;
+use App\Common\Common;
+use Aws\S3\S3ClientInterface;
 
 class S3Stream
 {
@@ -15,7 +16,7 @@ class S3Stream
         $this->mode = $mode;
     }
 
-    public static function S3StreamStart($S3Client)
+    public static function S3StreamStart(S3ClientInterface $S3Client)
     {
         self::$S3Client = $S3Client;
         $S3Client->registerStreamWrapper();
@@ -31,7 +32,7 @@ class S3Stream
     * @param string $path
     * @param string $mode e.g. 'r' 'w'
     * @param callable function
-    * @return fileStream
+    * @return S3StreamWrapper
     */
     private function openfile($path, $mode, callable $error)
     {
@@ -49,7 +50,7 @@ class S3Stream
     * @param string $bucketname
     * @return array object list
     */
-    public static function getRootdirItems($S3Client, $bucketname)
+    public static function getRootdirItems(S3ClientInterface $S3Client, $bucketname)
     {
         $S3Client->registerStreamWrapper();
         $rows[] = scandir(Common::S3_PROTOCOL.$bucketname);

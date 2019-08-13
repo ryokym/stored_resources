@@ -1,7 +1,7 @@
 <?php
-namespace Common\ApplicationInit;
+namespace App\Common\ApplicationInit;
 
-use Aws\S3\S3Client;
+use Aws\S3\S3ClientInterface;
 use Aws\Exception\AwsException;
 
 trait BucketCheckerTrait
@@ -13,7 +13,7 @@ trait BucketCheckerTrait
     * @param boolean
     * @return boolean
     */
-    public function checkBucket(S3Client $S3Client, string $bucketname, $isTerminate = false)
+    public function checkBucket(S3ClientInterface $S3Client, string $bucketname, $isTerminate = false)
     {
         try {
             $S3Client->HeadBucket([

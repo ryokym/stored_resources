@@ -1,5 +1,5 @@
 <?php
-namespace Common;
+namespace App\Common;
 
 class Common extends Constants
 {

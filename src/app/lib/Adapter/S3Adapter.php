@@ -1,16 +1,16 @@
 <?php
-namespace Adapter;
+namespace App\Adapter;
 
 use \InvalidArgumentException;
 use Aws\Exception\UnresolvedApiException;
-
+use Aws\S3\S3ClientInterface;
 use Aws\S3\S3Client;
 
-class S3Adapter extends S3Client
+class S3Adapter extends S3Client implements S3ClientInterface
 {
     private static $S3Client;
 
-    public static function getS3Client($s3Options)
+    public static function getS3Client(array $s3Options)
     {
         if (!isset(self::$S3Client)) {
             try {

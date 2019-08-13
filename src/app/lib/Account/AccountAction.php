@@ -1,21 +1,29 @@
 <?php
-namespace Account;
+namespace App\Account;
 
-use Common\Stream;
-use Common\Common;
-use Adapter\S3Adapter;
-
-use Common\ApplicationInit\ApplicationDataValidator;
+use App\DataTransferInterface;
+use App\Common\Stream;
+use App\Common\Common;
+use App\Adapter\S3Adapter;
+use App\Common\ApplicationInit\ApplicationDataValidator;
 
 class AccountAction extends UserDataCrypto
 {
     private $validator;
 
-    public function __construct(AccountHTTPRequest $request, ApplicationDataValidator $validator)
+    public function __construct(DataTransferInterface $request, ApplicationDataValidator $validator)
     {
         parent::__construct($request);
         $this->validator = $validator;
         $this->validator->checkApplicationStatus(Common::STATUS, true);
+    }
+
+    /**
+    * Destroy file handling. fclose as it were.
+    */
+    public function __destruct()
+    {
+        $stream = null;
     }
 
     public function execute($actionType)
@@ -27,7 +35,6 @@ class AccountAction extends UserDataCrypto
     ------------------------------------------------------------------------------*/
     public function enter()
     {
-        Common::exlog('test');
         if (parent::isfillAll(['username', 'password'])) {
             $issucceed = false;
             $stream = new Stream(Common::UD_FILE, 'r+');

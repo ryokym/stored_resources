@@ -1,13 +1,14 @@
 <?php
-namespace Operation;
+namespace App\Operation;
 
-use Common\Common;
+use App\Common\Common;
+use App\DataTransferInterface;
 
 class S3OptionFormatter extends S3StreamException
 {
     protected $request;
 
-    public function __construct($request)
+    public function __construct(DataTransferInterface $request)
     {
         $this->request = $request;
     }
@@ -18,9 +19,13 @@ class S3OptionFormatter extends S3StreamException
         return $pathName;
     }
 
-    protected function getS3PathName($bucketname)
+    protected function getS3PathName($bucketname, $specified = null)
     {
-        $pathName = $this->getPathName();
+        if (!$specified) {
+            $pathName = $this->getPathName();
+        } else {
+            $pathName = $this->prependDS($specified);
+        }
         return Common::S3_PROTOCOL.$bucketname.$pathName;
     }
 
