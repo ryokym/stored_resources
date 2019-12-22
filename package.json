@@ -1,0 +1,19 @@
+{
+  "name": "stored_resources",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "dependencies": {
+    "jquery": "^3.4.1",
+    "jquery-ui": "^1.12.1",
+    "webpack": "^4.41.4",
+    "webpack-cli": "^3.3.10"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
