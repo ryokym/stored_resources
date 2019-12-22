@@ -34,29 +34,34 @@ class AccountAction extends UserDataCrypto
     /* sign in
     ------------------------------------------------------------------------------*/
     public function enter()
-    {
+    { 
         if (parent::isfillAll(['username', 'password'])) {
+            $isContentFill = false;
             $issucceed = false;
             $stream = new Stream(Common::UD_FILE, 'r+');
-            $stream->read();
-            $iscomeup = $this->lookupAccount($stream->convertJson());
-            if ($iscomeup) {
-                $newToken = $this->encryptToken(Common::TOKEN_MIN_LENGTH, Common::TOKEN_MAX_LENGTH);
-                $newContents = str_replace($this->account['token'], $newToken, $stream->contents);
-                $stream->foverwrite($newContents);
-
-                /*  Rewrite old tokens into new ones */
-                $oldToken = $this->account['token'];
-                $stream = new Stream(Common::TL_FILE, 'r+');
-                $stream->read();
-                $iscomeup = $this->validator->lookupToken($stream->contents, $oldToken);
+            $isContentFill = $stream->read();
+            if ($isContentFill) {
+                $iscomeup = $this->lookupAccount($stream->convertJson());
                 if ($iscomeup) {
-                    $newContents = str_replace($oldToken, $newToken, $stream->contents);
+                    $newToken = $this->encryptToken(Common::TOKEN_MIN_LENGTH, Common::TOKEN_MAX_LENGTH);
+                    $newContents = str_replace($this->account['token'], $newToken, $stream->contents);
                     $stream->foverwrite($newContents);
+
+                    /*  Rewrite old tokens into new ones */
+                    $oldToken = $this->account['token'];
+                    $stream = new Stream(Common::TL_FILE, 'r+');
+                    $stream->read();
+                    $iscomeup = $this->validator->lookupToken($stream->contents, $oldToken);
+                    if ($iscomeup) {
+                        $newContents = str_replace($oldToken, $newToken, $stream->contents);
+                        $stream->foverwrite($newContents);
+                    } else {
+                        $stream->fwrite($newToken.',');
+                    }
+                    $issucceed = true;
                 } else {
-                    $stream->fwrite($newToken.',');
+                    $this->invalidEntered();
                 }
-                $issucceed = true;
             } else {
                 $this->invalidEntered();
             }
@@ -81,9 +86,12 @@ class AccountAction extends UserDataCrypto
     {
         if (parent::isfillAll(['username', 'password'])) {
             $stream = new Stream(Common::UD_FILE, 'r+');
-            $stream->read();
-            $list = $stream->convertJson();
-            $this->checkRegistedName($list);
+            $isContentFill = false;
+            $isContentFill = $stream->read();
+            if ($isContentFill) {
+                $list = $stream->convertJson();
+                $this->checkRegistedName($list);
+            }
         }
         echo ($errormsg = $this->error) ? $errormsg : $this->request->getActionType();
     }

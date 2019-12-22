@@ -6,8 +6,14 @@ class Stream extends \SplFileObject
     public $contents = '';
 
     public function read()
-    {
-        $this->contents =  $this->fread($this->getSize());
+    { 
+        $size = $this->getSize();
+        if ($size) {
+            $this->contents =  $this->fread($size);
+        } else {
+            return false;
+        }
+        
     }
 
     public function add($str)
