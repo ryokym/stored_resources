@@ -10,6 +10,7 @@ class Stream extends \SplFileObject
         $size = $this->getSize();
         if ($size) {
             $this->contents =  $this->fread($size);
+            return true;
         } else {
             return false;
         }
