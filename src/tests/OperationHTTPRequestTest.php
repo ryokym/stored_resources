@@ -2,7 +2,7 @@
 require_once(__DIR__.'/../app/lib/autoload.php');
 
 use \PHPUnit\Framework\TestCase;
-use Operation\OperationHTTPRequest;
+use App\Operation\OperationHTTPRequest;
 
 class OperationHTTPRequestTest extends TestCase
 {
@@ -13,6 +13,8 @@ class OperationHTTPRequestTest extends TestCase
         'name'          =>  'testname',
         'level'         =>  2,
         'filename'      =>  null,
+        'content'       =>  null,
+        'cliped'        =>  null,
     ];
 
     protected function setUp(): void

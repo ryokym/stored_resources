@@ -2,7 +2,7 @@
 require_once(__DIR__.'/../app/lib/autoload.php');
 
 use \PHPUnit\Framework\TestCase;
-use Account\AccountHTTPRequest;
+use App\Account\AccountHTTPRequest;
 
 class AccountHTTPRequestTest extends TestCase
 {
