@@ -1,5 +1,6 @@
 {
-    "require": {
-        "aws/aws-sdk-php": "^3.82"
-    }
+  "require": {
+    "aws/aws-sdk-php": "^3.82",
+    "phpunit/phpunit": "8.5.0"
+  }
 }
