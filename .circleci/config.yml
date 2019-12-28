@@ -1,0 +1,21 @@
+version: 2
+jobs:
+  deploy:
+    docker:
+      - image: circleci/php:7.2.9
+    steps:
+      - checkout
+
+      - add_ssh_keys:
+          fingerprints:
+            - ${FPRINT}
+
+      - run:
+          command: |
+            ssh -o "StrictHostKeyChecking no" ${SSH_USER}@${SSH_HOST} ${DEPLOYER}
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - deploy
