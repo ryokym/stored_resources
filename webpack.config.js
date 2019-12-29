@@ -65,8 +65,5 @@ module.exports = {
       jui: "jquery-ui/ui"
     }
   },
-<<<<<<< HEAD
-=======
   cache: true
->>>>>>> 34e0d3e3... jsとsassのbundle結果をmodel別にoutput
 };

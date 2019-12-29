@@ -1,0 +1,64 @@
+/**
+* login css
+*/
+
+@import "../common";
+
+/* size
+-------------------------------------------------------*/
+
+$titleFontSize: 1.6rem;
+$menuFontSize: 0.9rem;
+$menuHeight: 4vh;
+$modalWidth: 35vw;
+$closeIconSize: 3vh;
+
+/* color
+-------------------------------------------------------*/
+
+$colorBlue: rgb(21, 98, 142);
+$colorRed: rgb(142, 21, 21);
+$colorGreen: rgb(21, 142, 59);
+$colorDark: rgb(63, 63, 63);
+$colorLight: rgb(246, 246, 246);
+$colorGray: rgb(135, 135, 135);
+
+/* font
+-------------------------------------------------------*/
+
+$fontfamily: "Lato", "Lucida Grande", "Lucida Sans Unicode", Tahoma, Sans-Serif;
+
+/* module
+-------------------------------------------------------*/
+
+%button {
+  width: 70%;
+  > input {
+    text-align: center;
+    color: $colorLight;
+    cursor: pointer;
+  }
+}
+
+%unselectable {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.sign_up_bk {
+  @include hoverLingten("background-color", $colorRed);
+}
+
+.sign_in_bk {
+  @include hoverLingten("background-color", $colorBlue);
+}
+
+#switcher.sign_up_txt {
+  @include hoverLingten("color", $colorRed);
+}
+
+#switcher.sign_in_txt {
+  @include hoverLingten("color", $colorBlue);
+}

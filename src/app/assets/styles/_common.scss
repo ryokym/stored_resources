@@ -1,0 +1,22 @@
+/**
+* common css
+*/
+
+@import "common.variable";
+@import "common.mixin";
+
+html {
+  font-size: $baseFontSize;
+  font-family: $baseFontFamily;
+  color: $baseFontColor;
+  width: 100vw;
+  body {
+    background-color: $backgroundColor;
+    width: 100vw;
+  }
+}
+
+@font-face {
+  font-family: "ricty";
+  src: url("/app/assets/font/ricty.woff") format("woff");
+}
