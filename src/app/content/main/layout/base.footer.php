@@ -1,3 +1,3 @@
-<script src="/app/asset/js/dist/main.js"></script>
+<script src="/app/assets/dist/js/main.js"></script>
 </body>
 </html>

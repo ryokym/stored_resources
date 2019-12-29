@@ -5,8 +5,8 @@
     <head>
         <meta charset="utf-8"/>
         <meta name="robots" content="none"/>
-        <link rel="stylesheet" href="/app/asset/style/css/login.min.css"/>
-        <link rel="stylesheet" href="/app/asset/style/css/reset.css"/>
+        <link rel="stylesheet" href="/app/assets/dist/css/account.css"/>
+        <link rel="stylesheet" href="/app/assets/dist/css/reset.css"/>
     </head>
     <body>
         <div class="menu">
@@ -55,6 +55,6 @@
         </div>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="/app/asset/js/dist/account.js"></script>
+        <script src="/app/assets/dist/js/account.js"></script>
     </body>
 </html>
