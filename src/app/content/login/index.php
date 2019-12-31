@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="modal">
-                    <div><img id="close" src="/app/asset/img/close.svg"/></div>
+                    <div><img id="close" src="/app/assets/img/close.svg"/></div>
                     <div class="modal_key">
                         <span>Generated Key</span>
                         <div id="ukey"></div>
