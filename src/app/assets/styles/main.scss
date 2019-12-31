@@ -2,7 +2,7 @@
 * main css
 */
 
-@import "main.base";
+@import "modules/main/_main.base";
 
 #title {
   @extend %title;

@@ -9,13 +9,13 @@ const froms = {
     main: assets + "js/main.js"
   },
   css: {
-    account: assets + "styles/account/account.scss",
-    main: assets + "styles/main/main.scss"
+    account: assets + "styles/account.scss",
+    main: assets + "styles/main.scss"
   }
 };
 
 module.exports = {
-  mode: "development",
+  mode: "production",
   entry: {
     account: froms.js.account,
     main: froms.js.main,
