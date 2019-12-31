@@ -8,5 +8,6 @@
   echo "package-lock.json"
   echo "package.json"
   echo "webpack.config.js"
+  echo "postcss.config.js"
 } > .git/info/sparse-checkout
 git read-tree -m -u HEAD

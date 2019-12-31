@@ -12,3 +12,7 @@ wget mysite/app/lib/OpcacheReset.php -q -O
 bash path to required.sh
 
 composer install --ignore-platform-reqs --no-scripts
+
+npm install
+
+npm run build
