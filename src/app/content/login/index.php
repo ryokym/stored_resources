@@ -6,7 +6,6 @@
         <meta charset="utf-8"/>
         <meta name="robots" content="none"/>
         <link rel="stylesheet" href="/app/assets/dist/css/account.css"/>
-        <link rel="stylesheet" href="/app/assets/dist/css/reset.css"/>
     </head>
     <body>
         <div class="menu">

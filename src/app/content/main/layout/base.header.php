@@ -5,7 +5,6 @@
         <meta charset="utf-8"/>
         <meta name="robots" content="none"/>
         <title></title>
-        <link rel="stylesheet" href="/app/assets/dist/css/reset.css"/>
         <link rel="stylesheet" href="/app/assets/dist/css/main.css"/>
         
         <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sunburst"></script>
