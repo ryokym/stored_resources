@@ -40,9 +40,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new FixStyleOnlyEntriesPlugin({
-      extensions: ["scss", "css"]
-    }),
+    new FixStyleOnlyEntriesPlugin(),
     new MiniCssExtractPlugin({
       filename: "css/[name]"
     })
