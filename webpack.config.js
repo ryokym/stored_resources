@@ -26,14 +26,6 @@ module.exports = {
     filename: "js/[name].js",
     path: dist
   },
-  plugins: [
-    new FixStyleOnlyEntriesPlugin({
-      extensions: ["scss", "css"]
-    }),
-    new MiniCssExtractPlugin({
-      filename: "css/[name]"
-    })
-  ],
   module: {
     rules: [
       {
