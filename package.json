@@ -16,6 +16,7 @@
     "reset-css": "^5.0.1",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.1.2",
+    "web-animations-js": "^2.3.2",
     "webpack": "^4.41.4",
     "webpack-cli": "^3.3.10",
     "webpack-fix-style-only-entries": "^0.4.0"
