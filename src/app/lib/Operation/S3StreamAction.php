@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Operation;
 
 use Aws\S3\S3ClientInterface;
@@ -35,7 +36,7 @@ class S3StreamAction extends S3OptionFormatter
         if (is_dir($s3Path)) {
             $response = [
                 'isFile' => false,
-                'result' => scandir($s3Path),
+                'result' => scandir($s3Path)
             ];
         } else {
             $stream = new S3Stream($s3Path, 'r');
@@ -48,6 +49,7 @@ class S3StreamAction extends S3OptionFormatter
         }
         $response = json_encode($response);
         echo $response;
+        exit;
     }
 
     public function remove()
@@ -63,6 +65,7 @@ class S3StreamAction extends S3OptionFormatter
                 'Key' => $result['Key']
             ]);
         }
+        exit;
     }
 
     public function makedir()
@@ -73,6 +76,7 @@ class S3StreamAction extends S3OptionFormatter
             'Bucket' => $this->bucketname,
             'Key'    => $pathName,
         ]);
+        exit;
     }
 
     public function upload()
@@ -80,7 +84,7 @@ class S3StreamAction extends S3OptionFormatter
         $dirName = parent::appendDS($this->request->getDirname());
         $uploaded = S3Stream::getUploadedFile($this->request->getFilename(), [$this, 'checkUploadedfileformat']);
         $filename = $uploaded['name'];
-        $pathName = $dirName.$filename;
+        $pathName = $dirName . $filename;
         $this->S3Client->putObject([
             'Bucket' => $this->bucketname,
             'Key'    => $pathName,
@@ -111,7 +115,7 @@ class S3StreamAction extends S3OptionFormatter
         }
         $clipedname = $this->request->getCliped();
         $filename = pathinfo($clipedname)['basename'];
-        $moveto = $this->getS3PathName($this->bucketname).$this->prependDS($filename);
+        $moveto = $this->getS3PathName($this->bucketname) . $this->prependDS($filename);
         $movefrom = $this->getS3PathName($this->bucketname, $clipedname);
         rename($movefrom, $moveto);
         echo $filename;
