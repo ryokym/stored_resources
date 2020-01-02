@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Operation;
 
 use App\Common\Common;
@@ -28,12 +29,12 @@ class S3Stream
     }
 
     /**
-    * Calls the function $error if the specified $path is evaluated as false by the PHP built-in method "file_exists"
-    * @param string $path
-    * @param string $mode e.g. 'r' 'w'
-    * @param callable function
-    * @return S3StreamWrapper
-    */
+     * Calls the function $error if the specified $path is evaluated as false by the PHP built-in method "file_exists"
+     * @param string $path
+     * @param string $mode e.g. 'r' 'w'
+     * @param callable function
+     * @return S3StreamWrapper
+     */
     private function openfile($path, $mode, callable $error)
     {
         if (file_exists($path)) {
@@ -45,15 +46,15 @@ class S3Stream
     }
 
     /**
-    * get object list of root directory
-    * @param Aws\S3\S3Client $S3Client
-    * @param string $bucketname
-    * @return array object list
-    */
+     * get object list of root directory
+     * @param Aws\S3\S3Client $S3Client
+     * @param string $bucketname
+     * @return array object list
+     */
     public static function getRootdirItems(S3ClientInterface $S3Client, $bucketname)
     {
         $S3Client->registerStreamWrapper();
-        $rows[] = scandir(Common::S3_PROTOCOL.$bucketname);
+        $rows[] = scandir(Common::S3_PROTOCOL . $bucketname);
         $rows = array_values($rows[0]);
         return $rows;
     }
@@ -66,13 +67,13 @@ class S3Stream
     }
 
     /**
-    * Return contents of file as string type
-    * Pass the validation method to the callback function and call that if the maximum number of characters allowed is exceeded
-    * @param streamFile $file
-    * @param int $limit
-    * @param callable function
-    * @return sanitized string $response
-    */
+     * Return contents of file as string type
+     * Pass the validation method to the callback function and call that if the maximum number of characters allowed is exceeded
+     * @param streamFile $file
+     * @param int $limit
+     * @param callable function
+     * @return sanitized string $response
+     */
     public static function getLines($file, $limit, callable $error)
     {
         $response = '';
@@ -92,15 +93,25 @@ class S3Stream
     }
 
     /**
-    * Validate file correctness with callback function $ check
-    * @param string $name
-    * @param callable function
-    * @return array uploadedFile
-    */
+     * Validate file correctness with callback function $ check
+     * @param string $name
+     * @param callable function
+     * @return array uploadedFile
+     */
     public static function getUploadedFile($name, callable $check)
     {
         $files = $_FILES[$name];
         call_user_func($check, $files);
         return $files;
+    }
+
+    /**
+     * Whether the upload file exists.
+     * @param string $name
+     * @return boolean
+     */
+    public static function isExistUploadedFile($name)
+    {
+        return (isset($_FILES[$name])) ? true : false;
     }
 }
