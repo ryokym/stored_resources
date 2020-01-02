@@ -1,11 +1,11 @@
 <?php
 require_once __DIR__ . '/include/initialize.php';
 
-use Common\Common;
-use Adapter\S3Adapter;
-use Account\AccountAction;
-use Operation\S3StreamAction;
-use Operation\OperationHTTPRequest;
+use App\Common\Common;
+use App\Adapter\S3Adapter;
+use App\Account\AccountAction;
+use App\Operation\S3StreamAction;
+use App\Operation\OperationHTTPRequest;
 
 $request = new OperationHTTPRequest();
 
