@@ -13,6 +13,6 @@ bash path to required.sh
 
 composer install --ignore-platform-reqs --no-scripts
 
-npm install
+npm ci
 
 npm run build
