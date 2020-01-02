@@ -1,5 +1,6 @@
 import $ from "jquery";
 import common from "../common/common.js";
+import { fetch as fetchPolyfill } from "whatwg-fetch";
 
 /* makedir
 -------------------------------------------------------*/
@@ -32,7 +33,17 @@ export const open = function() {
           common.setmode("change");
         },
         dataSet = main.getElementData();
-      common.postRequest(dataSet, done);
+
+      const requests = new FormData();
+      requests.append("requests", JSON.stringify(dataSet));
+      fetchPolyfill(common.toAjax, {
+        method: "POST",
+        body: requests
+      }).then(function(response) {
+        if (response.ok) {
+          done();
+        }
+      });
     } else {
       textbox.addClass("error");
     }

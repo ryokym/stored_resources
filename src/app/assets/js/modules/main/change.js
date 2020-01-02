@@ -1,5 +1,6 @@
 import $ from "jquery";
 import common from "../common/common.js";
+import { fetch as fetchPolyfill } from "whatwg-fetch";
 
 /* change
 -------------------------------------------------------*/
@@ -50,11 +51,21 @@ export default function() {
       $("#upload_area").hide();
       $preview.append('<code class="prettyprint">' + data.result + "</code>");
       main.adjust();
+      PR.prettyPrint();
     }
   };
   const dataSet = main.getElementData();
-  common.postRequest(dataSet, done).done(function() {
-    PR.prettyPrint();
-    common.clickDisable("end");
+  const requests = new FormData();
+  requests.append("requests", JSON.stringify(dataSet));
+  fetchPolyfill(common.toAjax, {
+    method: "POST",
+    body: requests
+  }).then(function(response) {
+    if (response.ok) {
+      response.text().then(data => {
+        done(data);
+      });
+    }
   });
+  common.clickDisable("end");
 }
