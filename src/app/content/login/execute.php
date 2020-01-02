@@ -1,8 +1,9 @@
 <?php
-require_once(__DIR__.'/include/initialize.php');
-use Account\AccountHTTPRequest;
-use Account\AccountAction;
-use Common\ApplicationInit\ApplicationDataValidator;
+require_once(__DIR__ . '/include/initialize.php');
+
+use App\Account\AccountHTTPRequest;
+use App\Account\AccountAction;
+use App\Common\ApplicationInit\ApplicationDataValidator;
 
 $request = new AccountHTTPRequest();
 $validator = new ApplicationDataValidator();
