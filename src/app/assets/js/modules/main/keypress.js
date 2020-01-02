@@ -1,5 +1,6 @@
 import $ from "jquery";
 import common from "../common/common.js";
+import { fetch as fetchPolyfill } from "whatwg-fetch";
 
 /* keypress
 -------------------------------------------------------*/
@@ -52,18 +53,32 @@ document.onkeydown = function(e) {
           main.name = elm.find(".row_item").text();
         },
         { cliped: main.cliped }
+
+        // ここ
       );
-      const dataSet = main.getElementData(),
-        done = function(response) {
-          const add = $(
-            '<div class="row"><p class="row_item">' + response + "</p></div>"
-          );
-          main.movefrom.parent(".row").remove();
-          $(".level:last").append(add);
-          main.movefrom = "";
-          main.cliped = "";
-        };
-      common.postRequest(dataSet, done);
+
+      const done = function(response) {
+        const add = $(
+          '<div class="row"><p class="row_item">' + response + "</p></div>"
+        );
+        main.movefrom.parent(".row").remove();
+        $(".level:last").append(add);
+        main.movefrom = "";
+        main.cliped = "";
+      };
+      const dataSet = main.getElementData();
+      const requests = new FormData();
+      requests.append("requests", JSON.stringify(dataSet));
+      fetchPolyfill(common.toAjax, {
+        method: "POST",
+        body: requests
+      }).then(function(response) {
+        if (response.ok) {
+          response.text().then(data => {
+            done(data);
+          });
+        }
+      });
       common.setmode("change");
     }
   }

@@ -1,5 +1,6 @@
 import $ from "jquery";
 import common from "../common/common.js";
+import { fetch as fetchPolyfill } from "whatwg-fetch";
 
 /* upload
 -------------------------------------------------------*/
@@ -18,16 +19,14 @@ const upload = {
   },
 
   fileUpload: function(f) {
-    const clone = $(".row:last").clone(),
-      formData = new FormData(),
-      toUploadDir = $(".level").eq(-1);
-
+    const clone = $(".row:last").clone();
+    const requests = new FormData();
+    const toUploadDir = $(".level").eq(-1);
     main.dirname = toUploadDir.data("dir");
-    formData.append("file", f);
-    let requestData = main.getElementData();
-    requestData = JSON.stringify(requestData);
-    formData.append("requestData", requestData);
-    formData.append("isUpload", true);
+    const dataSet = main.getElementData();
+
+    requests.append("requests", JSON.stringify(dataSet));
+    requests.append("uploaded", f);
     const done = function(response) {
       if (common.validateFiles(response)) {
         clone.find(".row_item").text(response);
@@ -39,7 +38,17 @@ const upload = {
       upload.undecorate();
       common.setmode("change");
     };
-    common.postRequest(formData, done, true);
+
+    fetchPolyfill(common.toAjax, {
+      method: "POST",
+      body: requests
+    }).then(function(response) {
+      if (response.ok) {
+        response.text().then(data => {
+          done(data);
+        });
+      }
+    });
   }
 };
 

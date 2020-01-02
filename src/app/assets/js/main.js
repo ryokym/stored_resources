@@ -19,11 +19,11 @@ main = {
   rootdir: 1,
   toAjax: "main/execute.php",
   codeStyle: { "line-height": "2.6vh", "font-family": "ricty" },
-  setElementData: function(obj, callback, add) {
+  setElementData: function(obj, callback, opt) {
     this.workdir = obj.parents(".level");
     this.dirname = this.workdir.data("dir");
     this.level = parseInt(this.workdir.data("level"));
-    if (add) this.add = add;
+    if (opt) this.opt = opt;
     if (callback) callback(obj);
   },
 
@@ -36,8 +36,9 @@ main = {
         actionType: common.mode
       }
     };
-    if (this.add) {
-      response.requestData.add = this.add;
+    if (this.opt) {
+      const key = Object.keys(this.opt)[0];
+      response.requestData[key] = this.opt[key];
     }
     return response;
   },
@@ -75,8 +76,8 @@ document.querySelector("#remove").addEventListener("click", remove);
 document.querySelector("#expand").addEventListener("click", expand);
 document.querySelector("#edit").addEventListener("click", edit);
 document.querySelector("#logout").addEventListener("click", main.logout);
-for (let member of Object.keys(upload)) {
-  document
-    .querySelector("#upload_drop_area")
-    .addEventListener(upload[member].name, upload[member]);
-}
+
+let elm = document.getElementById("upload_drop_area");
+elm.addEventListener("dragover", upload.dragover);
+elm.addEventListener("dragleave", upload.dragleave);
+elm.addEventListener("drop", upload.drop);

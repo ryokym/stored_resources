@@ -1,5 +1,6 @@
 import $ from "jquery";
 import common from "../common/common.js";
+import { fetch as fetchPolyfill } from "whatwg-fetch";
 
 /* edit
 -------------------------------------------------------*/
@@ -27,11 +28,20 @@ export default function() {
         },
         { content: content }
       );
-      const dataSet = main.getElementData(),
-        done = function() {
-          edited.trigger("click");
-        };
-      common.postRequest(dataSet, done);
+      const done = function() {
+        edited.trigger("click");
+      };
+      const dataSet = main.getElementData();
+      const requests = new FormData();
+      requests.append("requests", JSON.stringify(dataSet));
+      fetchPolyfill(common.toAjax, {
+        method: "POST",
+        body: requests
+      }).then(function(response) {
+        if (response.ok) {
+          done();
+        }
+      });
     }
     common.rotate(common.mode, ["change", "edit"], function(another) {
       common.setmode(another);
