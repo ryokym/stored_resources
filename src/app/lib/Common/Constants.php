@@ -54,9 +54,4 @@ class Constants
     // Name of file to be excluded
     public const EXCLUDED_PATTERN = '/^[A-Za-z0-9_\-.()?!&\[\]]*$/';
 
-    /* Export Logfilepath
-    ------------------------------------------*/
-    public const DEBUG_LOG_PATH = DEBUG_LOG_PATH;
-
-    public const OPCACHE_LOG_PATH = OPCACHE_LOG_PATH;
 }
