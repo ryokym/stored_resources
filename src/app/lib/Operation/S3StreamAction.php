@@ -91,6 +91,7 @@ class S3StreamAction extends S3OptionFormatter
             'Body'   => fopen($uploaded['tmp_name'], 'r')
         ]);
         echo $filename;
+        exit;
     }
 
     public function edit()
@@ -108,7 +109,6 @@ class S3StreamAction extends S3OptionFormatter
 
     public function move()
     {
-        // var_dump($this->request->All());
         if (!parent::isRootDir()) {
             $path = parent::prependDS($this->request->getDirname());
             $this->request->setDirName($path);
@@ -119,5 +119,6 @@ class S3StreamAction extends S3OptionFormatter
         $movefrom = $this->getS3PathName($this->bucketname, $clipedname);
         rename($movefrom, $moveto);
         echo $filename;
+        exit;
     }
 }
