@@ -20,15 +20,17 @@ class Common extends Constants
 
     public static function exlog($param)
     {
-        $now = date('Y/m/d H:i:s');
-        error_log(var_export($now.' : '.$param, true), 3, parent::DEBUG_LOG_PATH);
-        error_log("\n", 3, parent::DEBUG_LOG_PATH);
-    }
-
-    public static function opcacheClearLog($param)
-    {
-        $now = date('Y/m/d H:i:s');
-        error_log(var_export($now.' : '.$param, true), 3, parent::OPCACHE_LOG_PATH);
-        error_log("\n", 3, parent::OPCACHE_LOG_PATH);
+        $fname = $_SERVER["DOCUMENT_ROOT"]."/log/debug.log";
+        $now = new \DateTime();
+        $param = mb_convert_encoding($param, 'UTF-8');
+        $strings = [
+            "[".$now->format('Y-m-d H:i:s')."]",
+            var_export($param, true),
+            "-------------",
+        ];
+        $handle = fopen($fname, 'a+');
+        $strings = @implode("\n", $strings);
+        fwrite($handle, $strings."\n");
+        fclose($handle);
     }
 }
