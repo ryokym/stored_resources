@@ -8,8 +8,9 @@ use App\Common\ApplicationInit\ApplicationDataValidator;
 $request = new AccountHTTPRequest();
 $validator = new ApplicationDataValidator();
 
-$requestData = filter_input(INPUT_POST, 'requestData', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
-$request->setProparties($requestData);
+if ($params = filter_input(INPUT_POST, 'requests')) {
+    $request->setProperties(json_decode($params, true));
+}
 
 try {
     $action = new AccountAction($request, $validator);
