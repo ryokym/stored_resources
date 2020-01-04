@@ -1,5 +1,6 @@
 import $ from "jquery";
 import common from "./modules/common/common.js";
+import { fetch as fetchPolyfill } from "whatwg-fetch";
 
 /**
 * account js
@@ -105,6 +106,18 @@ $send.click(function() {
   };
   const methods = { actionType: common.mode };
   const values = common.getFormElmsValue(account.inputnames);
-  const requestData = $.extend({}, methods, values);
-  common.postRequest({ requestData }, done);
+  const dataSet = $.extend({}, methods, values);
+  const requests = new FormData();
+  requests.append("requests", JSON.stringify(dataSet));
+  fetchPolyfill(common.toAjax, {
+    method: "POST",
+    body: requests
+  }).then(function(response) {
+    if (response.ok) {
+      response.text().then(data => {
+        done(data);
+      });
+    }
+  });
+  // common.postRequest({ requestData }, done);
 });
