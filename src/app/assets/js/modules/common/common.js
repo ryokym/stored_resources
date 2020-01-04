@@ -1,4 +1,6 @@
 import $ from "jquery";
+import { fetch as fetchPolyfill } from "whatwg-fetch";
+
 /**
  * common js
  */
@@ -73,23 +75,17 @@ export default common = {
     });
   },
 
-  postRequest: function(dataSet, successFn, isFormData) {
-    var params = {
-      url: common.toAjax,
-      type: "POST",
-      async: true,
-      dataType: "text",
-      data: dataSet,
-      success: successFn
-    };
-    if (isFormData) {
-      let paramsAdd = {
-        contentType: false,
-        processData: false
-      };
-      params = $.extend({}, params, paramsAdd);
-    }
-    return $.ajax(params);
+  postRequest: function(params, callback) {
+    fetchPolyfill(common.toAjax, {
+      method: "POST",
+      body: params
+    }).then(function(response) {
+      if (response.ok && callback != undefined) {
+        response.text().then(data => {
+          callback(data);
+        });
+      }
+    });
   },
 
   validateFiles: function(input) {
