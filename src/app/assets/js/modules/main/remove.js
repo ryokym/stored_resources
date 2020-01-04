@@ -2,7 +2,6 @@ import $ from "jquery";
 require("jui/widgets/draggable.js");
 require("jui/widgets/droppable.js");
 import common from "../common/common.js";
-import { fetch as fetchPolyfill } from "whatwg-fetch";
 
 /* remove
 -------------------------------------------------------*/
@@ -35,14 +34,7 @@ export default function() {
           dataSet = main.getElementData();
         const requests = new FormData();
         requests.append("requests", JSON.stringify(dataSet));
-        fetchPolyfill(common.toAjax, {
-          method: "POST",
-          body: requests
-        }).then(function(response) {
-          if (response.ok) {
-            done();
-          }
-        });
+        common.postRequest(requests, done);
       }
     }
   };

@@ -1,6 +1,5 @@
 import $ from "jquery";
 import common from "../common/common.js";
-import { fetch as fetchPolyfill } from "whatwg-fetch";
 
 /* upload
 -------------------------------------------------------*/
@@ -38,17 +37,7 @@ const upload = {
       upload.undecorate();
       common.setmode("change");
     };
-
-    fetchPolyfill(common.toAjax, {
-      method: "POST",
-      body: requests
-    }).then(function(response) {
-      if (response.ok) {
-        response.text().then(data => {
-          done(data);
-        });
-      }
-    });
+    common.postRequest(requests, done);
   }
 };
 
