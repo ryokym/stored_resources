@@ -44,15 +44,18 @@ main = {
   },
 
   adjust: function() {
-    $(".level").each(function() {
-      let anyLevel = parseInt($(this).data("level"));
-      if (anyLevel > main.level) $(this).remove();
+    const elms = document.querySelectorAll(".level");
+    elms.forEach(elm => {
+      let level = parseInt(elm.getAttribute("data-level"));
+      if (level > main.level) {
+        elm.remove();
+      }
     });
   },
 
   logout: function() {
     common.setmode("logout");
-    const done = function() {
+    const done = () => {
         location.href = "/index.php?logout";
       },
       dataSet = main.getElementData();
