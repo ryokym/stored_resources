@@ -1,30 +1,67 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { fetch as fetchPolyfill } from "whatwg-fetch";
-
-const done = function(response) {
-  if (response === "enter") {
-    location.href = Account.forward;
-  } else {
-    alert(response);
-  }
-};
+import common from "./modules/common/common.js";
 
 class Account extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { mode: "SIGN UP" };
+    this.state = {
+      mode: "",
+      context: "",
+      prev: "sign_up",
+      prevHover: "sign_up_hover",
+      username: "",
+      password: "",
+      bucket: "",
+      bucketkey: "",
+      bucketval: ""
+    };
+    this.modes = ["enter", "create"];
     this.forward = "/";
-    this.requestTo = "/app/content/login/execute.php";
+    this.execpath = common.basepath + "/login/execute.php";
+    this.done = response => {
+      let isFinish = false;
+      if (typeof this[response] == "function") {
+        isFinish = true;
+        this[response](isFinish);
+      } else {
+        alert(response);
+      }
+    };
+  }
+  componentDidMount() {
+    this.enter();
+  }
+
+  enter(isfinish) {
+    if (isfinish) {
+      location.href = this.forward;
+    } else {
+      this.setState(() => {
+        return { mode: "enter", context: "sign_in" };
+      });
+    }
+  }
+
+  create() {
+    this.setState(() => {
+      return { mode: "create", context: "sign_up" };
+    });
+  }
+
+  verify(isfinish) {
+    if (isfinish) {
+    }
   }
 
   toggleMode() {
-    this.setState(() => {
-      if (this.state.mode === "SIGN UP") {
-        return { mode: "SIGN IN" };
-      } else {
-        return { mode: "SIGN UP" };
-      }
+    const prev = this.state.context;
+    common.rotate(this.state.mode, this.modes, action => {
+      this.setState({
+        prev: prev,
+        prevHover: prev + "_hover"
+      });
+      this[action]();
     });
   }
 
@@ -36,28 +73,13 @@ class Account extends React.Component {
     this.setState({ password: e.target.value });
   }
 
-  showvalue() {
-    alert(this.state.username);
-  }
-
-  postrequest() {
-    const dataSet = {
+  postRequest() {
+    const params = {
       actionType: "enter",
       username: this.state.username,
       password: this.state.password
     };
-    const requests = new FormData();
-    requests.append("requests", JSON.stringify(dataSet));
-    fetchPolyfill(this.requestTo, {
-      method: "POST",
-      body: requests
-    }).then(function(response) {
-      if (response.ok) {
-        response.text().then(data => {
-          done(data);
-        });
-      }
-    });
+    common.postRequest(params, this.execpath, this.done);
   }
 
   render() {
@@ -68,10 +90,10 @@ class Account extends React.Component {
             <span>Do You Chenge To Mode ? </span>
             <div
               id="switcher"
-              className="sign_up_txt switch_txt"
+              className={this.state.prevHover + " switch_txt"}
               onClick={this.toggleMode.bind(this)}
             >
-              {this.state.mode}
+              {this.state.prev.toUpperCase()}
             </div>
           </div>
         </div>
@@ -79,7 +101,7 @@ class Account extends React.Component {
           <form name="form">
             <div className="wrapper">
               <div className="title">
-                <h1>{this.state.mode}</h1>
+                <h1>{common.appName}</h1>
               </div>
               <div>
                 <input
@@ -97,11 +119,11 @@ class Account extends React.Component {
               </div>
               <div id="send">
                 <input
-                  className="sign_in_bk btn_color"
+                  className={this.state.context}
                   type="text"
-                  value="Enter"
+                  value={this.state.context.toUpperCase()}
                   readonly
-                  onClick={this.postrequest.bind(this)}
+                  onClick={this.postRequest.bind(this)}
                 />
               </div>
             </div>
