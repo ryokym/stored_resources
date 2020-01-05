@@ -47,18 +47,18 @@ $fontfamily: "Lato", "Lucida Grande", "Lucida Sans Unicode", Tahoma, Sans-Serif;
   user-select: none;
 }
 
-.sign_up_bk {
+.sign_up {
   @include hoverLingten("background-color", $colorRed);
 }
 
-.sign_in_bk {
+.sign_in {
   @include hoverLingten("background-color", $colorBlue);
 }
 
-#switcher.sign_up_txt {
+#switcher.sign_up_hover {
   @include hoverLingten("color", $colorRed);
 }
 
-#switcher.sign_in_txt {
+#switcher.sign_in_hover {
   @include hoverLingten("color", $colorBlue);
 }
