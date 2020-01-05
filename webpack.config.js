@@ -5,8 +5,8 @@ const assets = path.join(__dirname, "./src/app/assets/");
 const dist = assets + "dist/";
 const froms = {
   js: {
-    account: assets + "js/account.js",
-    main: assets + "js/main.js"
+    account: assets + "js/account.jsx",
+    main: assets + "js/main.jsx"
   },
   css: {
     account: assets + "styles/account.scss",
@@ -29,6 +29,18 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.jsx?$/,
+        exclude: /(node_modules|bower_components)/,
+        use: [
+          {
+            loader: "babel-loader",
+            options: {
+              presets: ["@babel/preset-react", "@babel/preset-env"]
+            }
+          }
+        ]
+      },
+      {
         test: /\.scss/,
         use: [
           MiniCssExtractPlugin.loader,
@@ -42,7 +54,8 @@ module.exports = {
   plugins: [
     new FixStyleOnlyEntriesPlugin(),
     new MiniCssExtractPlugin({
-      filename: "css/[name]"
+      filename: "css/[name]",
+      path: dist
     })
   ],
   resolve: {
