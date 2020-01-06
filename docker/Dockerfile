@@ -17,7 +17,8 @@ RUN yum -y --enablerepo=remi,remi-php72 install \
 RUN ln -sf /etc/mime.types /etc/httpd/conf/mime.types
 RUN cp -p /usr/share/zoneinfo/Japan /etc/localtime
 COPY ./src /var/www/html
-RUN chmod 666 /var/www/html/app/auth/*.txt
+COPY ./docker/auth/ /var/www/auth/
+RUN chmod 666 /var/www/auth/*.txt
 RUN mkdir -p /var/www/html/log
 RUN chmod 003 /var/www/html/log
 COPY --from=composer /app/vendor /var/www/html/vendor
