@@ -6,7 +6,7 @@ define('ENC_METHOD', 'aes-256-cbc');
 define('SES_KEY', 'storedresources');
 
 // File path of personal information list
-define('UD_FILE', __DIR__.'/../auth/userDataList.txt');
+define('UD_FILE', 'path to userDataFile');
 
 // File path of token list used for automatic login authentication
-define('TL_FILE', __DIR__.'/../auth/tokenList.txt');
+define('TL_FILE', 'path to tokenFile');

@@ -7,7 +7,7 @@ services:
     ports:
       - 80:80
     volumes:
-      - "./src/app/:/var/www/html/app"
+      - "./:/var/www/html/"
       - "./docker/httpd.conf:/etc/httpd/conf/httpd.conf"
 volumes:
   storage:

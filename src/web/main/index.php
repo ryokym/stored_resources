@@ -10,8 +10,8 @@ use Common\Common;
     <div id="column">
         <div class="level" data-level="1" data-dir="">
             <div class="row">
-                <img src="/app/assets/img/add.svg" class="open enable" />
-                <img src="/app/assets/img/close.svg" class="close" />
+                <img src="/assets/img/add.svg" class="open enable" />
+                <img src="/assets/img/close.svg" class="close" />
             </div>
             <div class="row createNewDirRow">
                 <input class="textbox" type="text" />
@@ -30,14 +30,14 @@ use Common\Common;
     <div id="display">
         <div id="toggles">
             <div id="upload_area">
-                <img id="upload_drop_area" src="/app/assets/img/dragDrop.svg" />
+                <img id="upload_drop_area" src="/assets/img/dragDrop.svg" />
             </div>
             <pre id="preview">
                 <code class="prettyprint"></code>
             </pre>
             <div id="remove_area">
                 <div id="remove_drop_area">
-                    <img src="/app/assets/img/trush.png" />
+                    <img src="/assets/img/trush.png" />
                 </div>
             </div>
         </div>

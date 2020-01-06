@@ -1,12 +1,13 @@
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
-const assets = path.join(__dirname, "./src/app/assets/");
-const dist = assets + "dist/";
+const assets = path.join(__dirname, "./src/assets/");
+const views = path.join(__dirname, "/src/views/");
+const dist = path.join(__dirname, "./src/dist/");
 const froms = {
   js: {
-    account: assets + "js/account.jsx",
-    main: assets + "js/main.jsx"
+    account: views + "account.jsx",
+    main: views + "main.jsx"
   },
   css: {
     account: assets + "styles/account.scss",

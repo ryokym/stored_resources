@@ -1,16 +1,18 @@
 <?php
+
 /**
-* Main
-*/
-require_once($_SERVER["DOCUMENT_ROOT"].'/app/include/initialize.inc.php');
+ * Main
+ */
+require_once($_SERVER["DOCUMENT_ROOT"] . '/api/include/initialize.inc.php');
 
 use Common\Common;
 use Adapter\S3Adapter;
 
 /* Check Auto login */
+
 $token = [
-    'ses'  => (Common::getSession('token'))?? null,
-    'path' => (Common::TL_FILE)?? null,
+    'ses'  => (Common::getSession('token')) ?? null,
+    'path' => (Common::TL_FILE) ?? null,
 ];
 $isAutologin = $validator->isAuthenticatesToken($token['path'], $token['ses']);
 
