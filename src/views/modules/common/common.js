@@ -8,7 +8,6 @@ export default class Common {
   constructor() {}
 
   static appName = "STORED_RESOURCES";
-  static basepath = "/api/exec";
 
   static postRequest(params, to, callback) {
     const requests = new FormData();

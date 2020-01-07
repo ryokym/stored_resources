@@ -18,7 +18,7 @@ class Account extends React.Component {
     };
     this.modes = ["enter", "create"];
     this.forward = "/";
-    this.execpath = common.basepath + "/account.php";
+    this.execpath = "/api/account.php";
     this.done = response => {
       let isFinish = false;
       if (typeof this[response] == "function") {
