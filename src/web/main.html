@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="robots" content="none" />
+    <title></title>
+    <link rel="stylesheet" href="/dist/css/main.css" />
+
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sunburst"></script>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <div class="header">
+        <div id="title" contenteditable="true">STORED RESOURCES</div>
+        <div class="menu">
+          <div class="menu_item">
+            <img
+              id="expand"
+              class="menu_items menu_item_icon"
+              src="/assets/img/expand.svg"
+            />
+          </div>
+          <div class="menu_item">
+            <img
+              id="remove"
+              class="menu_items menu_item_icon"
+              src="/assets/img/remove.svg"
+            />
+          </div>
+          <div class="menu_item">
+            <img
+              id="download"
+              class="menu_items menu_item_icon"
+              src="/assets/img/download.svg"
+            />
+          </div>
+          <div class="menu_item">
+            <img
+              id="edit"
+              class="menu_items menu_item_icon"
+              src="/assets/img/edit.svg"
+            />
+          </div>
+          <div class="menu_item">
+            <img
+              id="logout"
+              class="menu_items menu_item_icon"
+              src="/assets/img/logout.svg"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div id="column">
+          <div class="level" data-level="1" data-dir="">
+            <div class="row">
+              <img src="/assets/img/add.svg" class="open enable" />
+              <img src="/assets/img/close.svg" class="close" />
+            </div>
+            <div class="row createNewDirRow">
+              <input class="textbox" type="text" />
+            </div>
+            <div class="row" style="display: none;">
+              <p class="row_item"></p>
+            </div>
+          </div>
+        </div>
+        <div id="display">
+          <div id="toggles">
+            <div id="upload_area">
+              <img id="upload_drop_area" src="/assets/img/dragDrop.svg" />
+            </div>
+            <pre id="preview">
+		                <code class="prettyprint"></code>
+		            </pre>
+            <div id="remove_area">
+              <div id="remove_drop_area">
+                <img src="/assets/img/trush.png" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="/dist/js/main.js"></script>
+  </body>
+</html>
