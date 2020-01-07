@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Common;
 
 class Constants
@@ -10,6 +11,10 @@ class Constants
 
     // Resisted Tokenlist
     public const TL_FILE = TL_FILE;
+
+    /* Meta
+    ------------------------------------------*/
+    public const HTML_EXTENSION = ".html";
 
     /* TOKEN String length
     ------------------------------------------*/
@@ -53,5 +58,4 @@ class Constants
 
     // Name of file to be excluded
     public const EXCLUDED_PATTERN = '/^[A-Za-z0-9_\-.()?!&\[\]]*$/';
-
 }
