@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER["DOCUMENT_ROOT"] . '/api/include/initialize.inc.php');
+require_once(__DIR__ . '/../initialize.php');
 
 use App\Account\AccountHTTPRequest;
 use App\Account\AccountAction;
