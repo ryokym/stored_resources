@@ -1,11 +1,10 @@
 RewriteEngine On
 RewriteBase /
-RewriteCond %{QUERY_STRING} (logout|signin)
-RewriteRule ^index\.php$ /web/account/ [L]
-RewriteRule ^$ /web/main/ [L]
+RewriteRule ^index\.php$ /web/controller.php [L]
+RewriteRule ^$ /web/controller.php [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /web/main/ [L]
+RewriteRule . / [L]
 
 <Files ~ "^\.htaccess$">
 deny from all
