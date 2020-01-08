@@ -20,13 +20,15 @@ const account = (state = initialAppState, action) => {
       prev: prev,
       prevHover: prev + "_hover"
     };
-  } else if (action.type === "SOMETHING") {
+  } else if (action.type === "INPUT_USERNAME") {
     return {
-      ...state
+      ...state,
+      username: action.username
     };
   } else {
     return {
-      ...state
+      ...state,
+      password: action.password
     };
   }
 };

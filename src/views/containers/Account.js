@@ -34,13 +34,13 @@ class Account extends React.Component {
                   type="text"
                   name="username"
                   placeholder="yourname?"
-                  // onChange={() => actions.inputId()}
+                  onChange={e => actions.inputUserName(e.target.value)}
                 />
                 <input
                   type="password"
                   name="password"
                   placeholder="password?"
-                  // onChange={() => actions.inputPass()}
+                  onChange={e => actions.inputPassword(e.target.value)}
                 />
               </div>
               <div id="send">
