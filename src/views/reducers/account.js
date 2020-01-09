@@ -1,6 +1,10 @@
 import common from "../utils/common";
 
-const modes = [{ enter: "sign_in" }, { create: "sign_up" }];
+const modes = new Map([
+  ["enter", "sign_in"],
+  ["create", "sign_up"]
+]);
+
 const initialAppState = {
   mode: "enter",
   context: "sign_in",
@@ -25,10 +29,27 @@ const account = (state = initialAppState, action) => {
       ...state,
       username: action.username
     };
-  } else {
+  } else if (action.type === "INPUT_PASSWORD") {
     return {
       ...state,
       password: action.password
+    };
+  } else if (action.type === "REQUEST_POST") {
+    return {
+      ...state
+    };
+  } else if (action.type === "RECEIVE_POST") {
+    if (action.response === "enter") {
+      location.href = "/";
+    } else {
+      alert(action.response);
+    }
+    return {
+      ...state
+    };
+  } else {
+    return {
+      ...state
     };
   }
 };
