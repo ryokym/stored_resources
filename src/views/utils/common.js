@@ -5,33 +5,33 @@ export default class Common {
 
   static appName = "STORED_RESOURCES";
 
-  static postRequest(params, to, callback) {
-    const requests = new FormData();
-    requests.append("requests", JSON.stringify(params));
-    fetchPolyfill(to, {
-      method: "POST",
-      body: requests
-    }).then(function(response) {
-      if (response.ok && callback != undefined) {
-        response.text().then(data => {
-          callback(data);
-        });
-      }
+  static callFetch(params, pathto) {
+    return new Promise(resolve => {
+      const requests = new FormData();
+      requests.append("requests", JSON.stringify(params));
+      fetchPolyfill(pathto, {
+        method: "POST",
+        body: requests
+      }).then(response => {
+        if (response.ok) {
+          response.text().then(data => {
+            resolve(data);
+          });
+        }
+      });
     });
   }
 
   static rotate(param, params) {
-    if (params instanceof Array) {
-      const count = params.length;
-      if (Object.keys(params[count - 1])[0] === param) {
-        return params[0];
-      } else {
-        for (var i = 0; i < count; i++) {
-          if (param === Object.keys(params[i])[0]) {
-            return params[++i];
-            break;
-          }
+    if ([...params.keys()][params.size - 1] === param) {
+      return [...params][0];
+    } else {
+      let index = 0;
+      for (const key of params.keys()) {
+        if (key === param) {
+          return [...params][++index];
         }
+        index++;
       }
     }
   }
