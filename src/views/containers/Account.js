@@ -49,7 +49,7 @@ class Account extends React.Component {
                   type="text"
                   value={account.context.toUpperCase()}
                   readonly
-                  // onClick={() => actions.postRequest()}
+                  onClick={() => actions.requestPost()}
                 />
               </div>
             </div>
