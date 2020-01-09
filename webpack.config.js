@@ -34,19 +34,7 @@ module.exports = {
         exclude: /(node_modules|bower_components)/,
         use: [
           {
-            loader: "babel-loader",
-            query: {
-              babelrc: false,
-              presets: ["@babel/preset-env", "@babel/preset-react"],
-              plugins: [
-                [
-                  "@babel/plugin-proposal-class-properties",
-                  {
-                    loose: true
-                  }
-                ]
-              ]
-            }
+            loader: "babel-loader"
           }
         ]
       },
