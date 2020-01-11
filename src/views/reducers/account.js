@@ -16,7 +16,7 @@ const account = (state = initialAppState, action) => {
   if (action.type === "TOGGLE_MODE") {
     const prev = state.context;
     const next = common.rotate(state.mode, modes);
-    const [mode, context] = Object.entries(next)[0];
+    const [mode, context] = next;
     return {
       ...state,
       mode: mode,
