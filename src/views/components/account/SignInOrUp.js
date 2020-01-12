@@ -1,7 +1,7 @@
 import React from "react";
 import common from "../../utils/common";
 
-const SignInComponent = props => {
+const SignInOrUpComponent = props => {
   return (
     <div className="wrapper">
       <div className="title">
@@ -34,4 +34,4 @@ const SignInComponent = props => {
   );
 };
 
-export default SignInComponent;
+export default SignInOrUpComponent;
