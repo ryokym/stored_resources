@@ -10,8 +10,11 @@ import CreateAccount from "../components/account/CreateAccount";
 const view = (account, actions) => {
   return account.mode === "verify" ? (
     <CreateAccount
+      inputBucket={actions.inputBucket}
+      inputBucketVal={actions.inputBucketVal}
       bucketkey={account.bucketkey}
       closeModal={actions.closeModal}
+      requestPost={actions.requestPost}
     />
   ) : (
     <SignInOrUp
@@ -25,7 +28,6 @@ const view = (account, actions) => {
 class Account extends React.Component {
   render() {
     const { account, actions } = this.props;
-    console.log(account.mode);
     return (
       <React.Fragment>
         <div className="menu">
