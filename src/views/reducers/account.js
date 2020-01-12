@@ -34,9 +34,18 @@ const account = (state = initialAppState, action) => {
       ...state,
       password: action.password
     };
-  } else if (action.type === "REQUEST_POST") {
+  } else if (action.type === "CLOSE_MODAL") {
     return {
-      ...state
+      ...state,
+      mode: "create"
+    };
+  } else if (action.type === "REQUEST_POST") {
+    const mode = state.mode === "create" ? "verify" : state.mode;
+    const bucketkey = common.createKey();
+    return {
+      ...state,
+      mode: mode,
+      bucketkey: bucketkey
     };
   } else if (action.type === "RECEIVE_POST") {
     if (action.response === "enter") {
