@@ -34,21 +34,40 @@ const account = (state = initialAppState, action) => {
       ...state,
       password: action.password
     };
+  } else if (action.type === "INPUT_BUCKET") {
+    return {
+      ...state,
+      bucket: action.bucket
+    };
+  } else if (action.type === "INPUT_BUCKETVAL") {
+    return {
+      ...state,
+      bucketval: action.bucketval
+    };
   } else if (action.type === "CLOSE_MODAL") {
     return {
       ...state,
       mode: "create"
     };
   } else if (action.type === "REQUEST_POST") {
-    const mode = state.mode === "create" ? "verify" : state.mode;
-    const bucketkey = common.createKey();
     return {
-      ...state,
-      mode: mode,
-      bucketkey: bucketkey
+      ...state
     };
   } else if (action.type === "RECEIVE_POST") {
-    if (action.response === "enter") {
+    if (state.mode === "create") {
+      const mode = "verify";
+      return {
+        ...state,
+        mode: mode,
+        bucketkey: common.createKey()
+      };
+    }
+
+    if (action.response === "verify") {
+      alert("account creation suceeded!");
+    }
+
+    if (action.response === state.mode) {
       location.href = "/";
     } else {
       alert(action.response);
