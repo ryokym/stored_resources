@@ -4,13 +4,28 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as actions from "../actions";
 import common from "../utils/common";
-import SignIn from "../components/account/SignIn";
-import SignUp from "../components/account/SignUp";
+import SignInOrUp from "../components/account/SignInOrUp";
+import CreateAccount from "../components/account/CreateAccount";
 
+const view = (account, actions) => {
+  return account.mode === "verify" ? (
+    <CreateAccount
+      bucketkey={account.bucketkey}
+      closeModal={actions.closeModal}
+    />
+  ) : (
+    <SignInOrUp
+      context={account.context}
+      inputUserName={actions.inputUserName}
+      inputPassword={actions.inputPassword}
+      requestPost={actions.requestPost}
+    />
+  );
+};
 class Account extends React.Component {
   render() {
     const { account, actions } = this.props;
-    // console.log(this.props);
+    console.log(account.mode);
     return (
       <React.Fragment>
         <div className="menu">
@@ -26,15 +41,7 @@ class Account extends React.Component {
           </div>
         </div>
         <div className="container">
-          <form name="form">
-            <SignIn
-              context={account.context}
-              inputUserName={actions.inputUserName}
-              inputPassword={actions.inputPassword}
-              requestPost={actions.requestPost}
-            />
-            <SignUp />
-          </form>
+          <form name="form">{view(account, actions)}</form>
         </div>
       </React.Fragment>
     );
