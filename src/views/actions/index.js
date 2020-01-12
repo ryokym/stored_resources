@@ -13,6 +13,20 @@ export const inputPassword = password => ({
   password
 });
 
+export const inputBucket = bucket => ({
+  type: "INPUT_BUCKET",
+  bucket
+});
+
+export const inputBucketVal = bucketval => ({
+  type: "INPUT_BUCKETVAL",
+  bucketval
+});
+
+export const closeModal = () => ({
+  type: "CLOSE_MODAL"
+});
+
 export const requestPost = () => ({
   type: "REQUEST_POST"
 });
