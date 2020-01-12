@@ -33,6 +33,7 @@ class Account extends React.Component {
               inputPassword={actions.inputPassword}
               requestPost={actions.requestPost}
             />
+            <SignUp />
           </form>
         </div>
       </React.Fragment>
