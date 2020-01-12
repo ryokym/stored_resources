@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as actions from "../actions";
 import common from "../utils/common";
+import SignIn from "../components/account/SignIn";
+import SignUp from "../components/account/SignUp";
 
 class Account extends React.Component {
   render() {
@@ -25,34 +27,12 @@ class Account extends React.Component {
         </div>
         <div className="container">
           <form name="form">
-            <div className="wrapper">
-              <div className="title">
-                <h1>{common.appName}</h1>
-              </div>
-              <div>
-                <input
-                  type="text"
-                  name="username"
-                  placeholder="yourname?"
-                  onChange={e => actions.inputUserName(e.target.value)}
-                />
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="password?"
-                  onChange={e => actions.inputPassword(e.target.value)}
-                />
-              </div>
-              <div id="send">
-                <input
-                  className={account.context}
-                  type="text"
-                  value={account.context.toUpperCase()}
-                  readonly
-                  onClick={() => actions.requestPost()}
-                />
-              </div>
-            </div>
+            <SignIn
+              context={account.context}
+              inputUserName={actions.inputUserName}
+              inputPassword={actions.inputPassword}
+              requestPost={actions.requestPost}
+            />
           </form>
         </div>
       </React.Fragment>
