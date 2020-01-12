@@ -1,5 +1,5 @@
 FROM composer as composer
-COPY ./src/composer.json /app
+COPY ./composer.json /app
 RUN composer install --ignore-platform-reqs --no-scripts
 
 FROM centos:7
