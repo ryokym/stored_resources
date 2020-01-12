@@ -44,6 +44,7 @@ const CreateAccountComponent = props => {
           type="text"
           value="Enter"
           readonly
+          onClick={() => props.requestPost()}
         />
       </div>
     </div>
