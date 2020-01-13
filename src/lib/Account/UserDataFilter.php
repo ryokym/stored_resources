@@ -1,6 +1,8 @@
 <?php
+
 namespace App\Account;
 
+use App\Common\Constants;
 use Aws\S3\S3ClientInterface;
 use Aws\Exception\AwsException;
 
@@ -18,9 +20,9 @@ class UserDataFilter
     }
 
     /**
-    * This class property $error is immutable
-    * @return void
-    */
+     * This class property $error is immutable
+     * @return void
+     */
     private function setError($error)
     {
         if (empty($this->error)) {
@@ -29,12 +31,12 @@ class UserDataFilter
     }
 
     /**
-    * Search for exactly matching user data then return this data
-    * @param  array    $accountList   = array('user' =>  $username, 'pass' => $password);
-    * @param  boolean  $requireVerify = Whether hashed by PHP builtin method password_hash()
-    * @param  boolean  $onlyUsername  = When the lookup target is only the username
-    * @return boolean  Were there or not
-    */
+     * Search for exactly matching user data then return this data
+     * @param  array    $accountList   = array('user' =>  $username, 'pass' => $password);
+     * @param  boolean  $requireVerify = Whether hashed by PHP builtin method password_hash()
+     * @param  boolean  $onlyUsername  = When the lookup target is only the username
+     * @return boolean  Were there or not
+     */
     public function lookupAccount(array $accountList, $requireVerify = true, $onlyUsername = false)
     {
         $inputname = $this->request->getUserName();
@@ -51,7 +53,8 @@ class UserDataFilter
             // case : username and password
             else {
                 if ($account['user'] === $inputname
-                && ($requireVerify) ? password_verify($inputpass, $account['pass']) : $inputpass === $account['pass']) {
+                    && ($requireVerify) ? password_verify($inputpass, $account['pass']) : $inputpass === $account['pass']
+                ) {
                     $this->account = $account;
                     return true;
                 }
@@ -61,10 +64,10 @@ class UserDataFilter
     }
 
     /**
-    * It verifies whether the entered username is already in use
-    * @param array The argument $accountList is inherited to the internal method
-    * @return void
-    */
+     * It verifies whether the entered username is already in use
+     * @param array The argument $accountList is inherited to the internal method
+     * @return void
+     */
     public function checkRegistedName(array $accountList)
     {
         $isfind = $this->lookupAccount($accountList, false, true);
@@ -74,9 +77,9 @@ class UserDataFilter
     }
 
     /**
-    * Check if all input values ​​are filled
-    * @return boolean
-    */
+     * Check if all input values ​​are filled
+     * @return boolean
+     */
     public function isfillAll($required = [])
     {
         $props = [];
@@ -88,7 +91,7 @@ class UserDataFilter
         }
 
         foreach ($props as $prop) {
-            if ($prop === '') {
+            if (empty($prop)) {
                 $this->setError('Please fill in all the input fields');
             }
         }
@@ -96,11 +99,41 @@ class UserDataFilter
     }
 
     /**
-    * Verify that the correct value is set to the "Tags" property of S3
-    * For security reasons, when registering a user, the user has to access Amazon S3 once using his account.
-    * @param object Aws\S3\S3Client
-    * @return boolean
-    */
+     * Checks whether the entered user name is valid
+     * @return boolean
+     */
+    public function isValidUsername()
+    {
+        $prop = $this->request->getUsername();
+        $pattern = Constants::PATTERN_OF_USERNAME;
+
+        if (preg_match($pattern, $prop) !== 1) {
+            $this->setError('The name you entered cannot be used. You can enter 3 to 15 alphanumeric characters');
+        }
+        return true;
+    }
+
+    /**
+     * Checks whether the entered password is valid
+     * @return boolean
+     */
+    public function isValidPassword()
+    {
+        $prop = $this->request->getPassword();
+        $pattern = Constants::PATTERN_OF_PASSWORD;
+
+        if (preg_match($pattern, $prop) !== 1) {
+            $this->setError("The password you entered cannot be used. \nThe conditions that can be entered are as follows\n[Combination of uppercase and lowercase alphanumeric characters, special characters prohibited, length 12-32]");
+        }
+        return true;
+    }
+
+    /**
+     * Verify that the correct value is set to the "Tags" property of S3
+     * For security reasons, when registering a user, the user has to access Amazon S3 once using his account.
+     * @param object Aws\S3\S3Client
+     * @return boolean
+     */
     protected function isVerifyTags(S3ClientInterface $S3Client)
     {
         $result = [];
@@ -113,7 +146,8 @@ class UserDataFilter
         if (!empty($result["TagSet"])) {
             foreach ($result["TagSet"] as $tagset) {
                 if (($tagset["Key"]  === $this->request->getBucketkey())
-                &&  $tagset["Value"] === $this->request->getBucketval()) {
+                    &&  $tagset["Value"] === $this->request->getBucketval()
+                ) {
                     return true;
                 }
             }
@@ -123,11 +157,11 @@ class UserDataFilter
     }
 
     /**
-    * Bucket Existence Confirmation
-    * @param string $bucket
-    * @param object Aws\S3\S3Client Instance
-    * @return boolean
-    */
+     * Bucket Existence Confirmation
+     * @param string $bucket
+     * @param object Aws\S3\S3Client Instance
+     * @return boolean
+     */
     protected function isAvailableBucket(S3ClientInterface $S3Client, $bucket)
     {
         $result = $this->checkBucket($S3Client, $bucket);
@@ -145,9 +179,9 @@ class UserDataFilter
     }
 
     /**
-    * Set an error if there is an error in the user input value
-    * @return void
-    */
+     * Set an error if there is an error in the user input value
+     * @return void
+     */
     protected function invalidEntered()
     {
         $this->setError('username or password is invalid');
