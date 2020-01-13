@@ -2,8 +2,8 @@ import { receivePost } from "../actions";
 import { select, call, fork, takeLatest, put } from "redux-saga/effects";
 import {
   selectMode,
-  selectFormdataForEnter,
-  selectFormdataForVerify
+  selectFormdataForSignInOrUp,
+  selectFormdataForCreateAccount
 } from "../selectors";
 import common from "../utils/common";
 
@@ -14,14 +14,12 @@ function doAsync(formdata) {
 
 function* executeIfNeeded(action) {
   const mode = yield select(selectMode);
-  if (mode === "enter") {
-    const formdata = yield select(selectFormdataForEnter);
+  if (mode === "enter" || mode === "create") {
+    const formdata = yield select(selectFormdataForSignInOrUp);
     const data = yield call(doAsync, formdata);
     yield put(receivePost(data));
-  } else if (mode === "create") {
-    yield put(receivePost(""));
   } else if (mode === "verify") {
-    const formdata = yield select(selectFormdataForVerify);
+    const formdata = yield select(selectFormdataForCreateAccount);
     const data = yield call(doAsync, formdata);
     yield put(receivePost(data));
   }
