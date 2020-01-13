@@ -55,26 +55,33 @@ const account = (state = initialAppState, action) => {
     };
   } else if (action.type === "RECEIVE_POST") {
     if (state.mode === "create") {
-      const mode = "verify";
+      if (action.response === "create") {
+        const mode = "verify";
+        return {
+          ...state,
+          mode: mode,
+          bucketkey: common.createKey()
+        };
+      } else {
+        alert(action.response);
+        return {
+          ...state
+        };
+      }
+    } else {
+      if (action.response === "verify") {
+        alert("account creation suceeded!");
+      }
+
+      if (action.response === state.mode) {
+        location.href = "/";
+      } else {
+        alert(action.response);
+      }
       return {
-        ...state,
-        mode: mode,
-        bucketkey: common.createKey()
+        ...state
       };
     }
-
-    if (action.response === "verify") {
-      alert("account creation suceeded!");
-    }
-
-    if (action.response === state.mode) {
-      location.href = "/";
-    } else {
-      alert(action.response);
-    }
-    return {
-      ...state
-    };
   } else {
     return {
       ...state
