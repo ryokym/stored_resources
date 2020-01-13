@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Account;
 
 use App\DataTransferInterface;
@@ -19,8 +20,8 @@ class AccountAction extends UserDataCrypto
     }
 
     /**
-    * Destroy file handling. fclose as it were.
-    */
+     * Destroy file handling. fclose as it were.
+     */
     public function __destruct()
     {
         $stream = null;
@@ -34,7 +35,7 @@ class AccountAction extends UserDataCrypto
     /* sign in
     ------------------------------------------------------------------------------*/
     public function enter()
-    { 
+    {
         if (parent::isfillAll(['username', 'password'])) {
             $isContentFill = false;
             $issucceed = false;
@@ -56,7 +57,7 @@ class AccountAction extends UserDataCrypto
                         $newContents = str_replace($oldToken, $newToken, $stream->contents);
                         $stream->foverwrite($newContents);
                     } else {
-                        $stream->fwrite($newToken.',');
+                        $stream->fwrite($newToken . ',');
                     }
                     $issucceed = true;
                 } else {
@@ -84,7 +85,11 @@ class AccountAction extends UserDataCrypto
     ------------------------------------------------------------------------------*/
     public function create()
     {
-        if (parent::isfillAll(['username', 'password'])) {
+        if (
+            $this->isfillAll(['username', 'password'])
+            && $this->isValidUsername()
+            && $this->isValidPassword()
+        ) {
             $stream = new Stream(Common::UD_FILE, 'r+');
             $isContentFill = false;
             $isContentFill = $stream->read();
@@ -107,22 +112,23 @@ class AccountAction extends UserDataCrypto
             $list = $stream->convertJson();
             $inputs  = $this->request->All();
             $S3Client = S3Adapter::getS3Client(S3_SET_OPTIONS);
-            if ($this->isAvailableBucket($S3Client, $inputs['bucket'])
-            && !$this->isContainDot($inputs['bucket'])
-            &&  $this->isVerifyTags($S3Client)
+            if (
+                $this->isAvailableBucket($S3Client, $inputs['bucket'])
+                && !$this->isContainDot($inputs['bucket'])
+                &&  $this->isVerifyTags($S3Client)
             ) {
                 $newData = [
                     'user'  => $inputs['username'],
                     'pass'  => password_hash($inputs['password'], PASSWORD_DEFAULT),
                     'iv'    => $iv = parent::getIvparam(openssl_cipher_iv_length(ENC_METHOD)),
-                    'bucket'=> parent::encryptOSL($inputs['bucket'], ENC_METHOD, $inputs['password'], $iv),
+                    'bucket' => parent::encryptOSL($inputs['bucket'], ENC_METHOD, $inputs['password'], $iv),
                     'token' => $newToken = $this->encryptToken(Common::TOKEN_MIN_LENGTH, Common::TOKEN_MAX_LENGTH),
                 ];
                 $list[] = $newData;
                 $stream->foverwrite($list, 'json');
                 $stream = new Stream(Common::TL_FILE, 'r+');
                 $stream->read();
-                $stream->fwrite($newToken.',');
+                $stream->fwrite($newToken . ',');
                 $issucceed = true;
 
                 if ($issucceed) {
