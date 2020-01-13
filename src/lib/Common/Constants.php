@@ -58,4 +58,10 @@ class Constants
 
     // Name of file to be excluded
     public const EXCLUDED_PATTERN = '/^[A-Za-z0-9_\-.()?!&\[\]]*$/';
+
+    // Exact match pattern of username
+    public const PATTERN_OF_USERNAME = '/^[a-zA-Z0-9_\-.]{3,15}$/';
+
+    // Exact match pattern of password
+    public const PATTERN_OF_PASSWORD = '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{12,32}$/';
 }
