@@ -1,6 +1,13 @@
 import React from "react";
 import common from "../../utils/common";
 
+const inputUserNameCallback = (callback, e) => {
+  callback(e.target.value);
+};
+const inputPasswordCallback = (callback, e) => {
+  callback(e.target.value);
+};
+
 const SignInOrUpComponent = props => {
   return (
     <div className="wrapper">
@@ -12,13 +19,15 @@ const SignInOrUpComponent = props => {
           type="text"
           name="username"
           placeholder="yourname?"
-          onChange={e => props.inputUserName(e.target.value)}
+          onChange={e => inputUserNameCallback(props.inputUserName, e)}
+          value={props.username}
         />
         <input
           type="password"
           name="password"
           placeholder="password?"
-          onChange={e => props.inputPassword(e.target.value)}
+          onChange={e => inputPasswordCallback(props.inputPassword, e)}
+          value={props.password}
         />
       </div>
       <div id="send">

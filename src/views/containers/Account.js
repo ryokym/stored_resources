@@ -21,6 +21,8 @@ const view = (account, actions) => {
       context={account.context}
       inputUserName={actions.inputUserName}
       inputPassword={actions.inputPassword}
+      username={account.username}
+      password={account.password}
       requestPost={actions.requestPost}
     />
   );
