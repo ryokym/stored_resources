@@ -3,9 +3,9 @@ import React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
 import Account from "./containers/Account";
-import configureStore from "./configureStore";
+import { accountConfigureStore } from "./configureStore";
 
-const store = configureStore();
+const store = accountConfigureStore();
 
 render(
   <Provider store={store}>
