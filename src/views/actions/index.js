@@ -1,37 +1,56 @@
-export const toggleMode = mode => ({
-  type: "TOGGLE_MODE",
-  mode
-});
+import common from "../utils/common";
+
+export const toggleMode = (mode, context) => {
+  const modes = new Map([
+    ["enter", "sign_in"],
+    ["create", "sign_up"]
+  ]);
+  const next = common.rotate(mode, modes);
+  const [nextMode, nextContext] = next;
+  return {
+    type: "TOGGLE_MODE",
+    payload: {
+      mode: nextMode,
+      context: nextContext,
+      prev: context,
+      prevHover: context + "_hover"
+    }
+  };
+};
 
 export const inputUserName = username => ({
   type: "INPUT_USERNAME",
-  username
+  payload: { username }
 });
 
 export const inputPassword = password => ({
   type: "INPUT_PASSWORD",
-  password
+  payload: { password }
 });
 
 export const inputBucket = bucket => ({
   type: "INPUT_BUCKET",
-  bucket
+  payload: { bucket }
 });
 
 export const inputBucketVal = bucketval => ({
   type: "INPUT_BUCKETVAL",
-  bucketval
+  payload: { bucketval }
 });
 
 export const closeModal = () => ({
-  type: "CLOSE_MODAL"
+  type: "CLOSE_MODAL",
+  payload: { mode: "create" }
+});
+
+export const openModal = (mode, bucketkey) => ({
+  type: "OPEN_MODAL",
+  payload: {
+    mode: mode,
+    bucketkey: bucketkey
+  }
 });
 
 export const requestPost = () => ({
   type: "REQUEST_POST"
-});
-
-export const receivePost = response => ({
-  type: "RECEIVE_POST",
-  response
 });
