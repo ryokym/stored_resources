@@ -1,4 +1,4 @@
-import { receivePost } from "../actions";
+import { openModal } from "../actions";
 import { select, call, fork, takeLatest, put } from "redux-saga/effects";
 import {
   selectMode,
@@ -12,17 +12,29 @@ function doAsync(formdata) {
   return common.callFetch(formdata, pathto);
 }
 
-function* executeIfNeeded(action) {
-  const mode = yield select(selectMode);
-  if (mode === "enter" || mode === "create") {
-    const formdata = yield select(selectFormdataForSignInOrUp);
-    const data = yield call(doAsync, formdata);
-    yield put(receivePost(data));
-  } else if (mode === "verify") {
-    const formdata = yield select(selectFormdataForCreateAccount);
-    const data = yield call(doAsync, formdata);
-    yield put(receivePost(data));
+function* dispatch(response) {
+  if (response === "enter") {
+    location.href = "/";
+  } else if (response === "create") {
+    yield put(openModal("verify", common.createKey()));
+  } else if (response === "verify") {
+    alert("account creation suceeded!");
+    location.href = "/";
+  } else {
+    alert(response);
   }
+}
+
+function* executeIfNeeded() {
+  const mode = yield select(selectMode);
+  let formdata;
+  if (mode === "verify") {
+    formdata = yield select(selectFormdataForCreateAccount);
+  } else {
+    formdata = yield select(selectFormdataForSignInOrUp);
+  }
+  const response = yield call(doAsync, formdata);
+  yield call(dispatch, response);
 }
 
 export default function* rootSaga() {
