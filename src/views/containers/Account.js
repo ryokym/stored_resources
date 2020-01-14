@@ -3,33 +3,32 @@ import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as actions from "../actions";
-import common from "../utils/common";
 import SignInOrUp from "../components/account/SignInOrUp";
 import CreateAccount from "../components/account/CreateAccount";
 
-const view = (account, actions) => {
-  return account.mode === "verify" ? (
+const view = (modeState, formState, actions) => {
+  return modeState.mode === "verify" ? (
     <CreateAccount
       inputBucket={actions.inputBucket}
       inputBucketVal={actions.inputBucketVal}
-      bucketkey={account.bucketkey}
+      bucketkey={modeState.bucketkey}
       closeModal={actions.closeModal}
       requestPost={actions.requestPost}
     />
   ) : (
     <SignInOrUp
-      context={account.context}
+      context={modeState.context}
       inputUserName={actions.inputUserName}
       inputPassword={actions.inputPassword}
-      username={account.username}
-      password={account.password}
+      username={formState.username}
+      password={formState.password}
       requestPost={actions.requestPost}
     />
   );
 };
 class Account extends React.Component {
   render() {
-    const { account, actions } = this.props;
+    const { formState, modeState, actions } = this.props;
     return (
       <React.Fragment>
         <div className="menu">
@@ -37,15 +36,17 @@ class Account extends React.Component {
             <span>Do You Chenge To Mode ? </span>
             <div
               id="switcher"
-              className={account.prevHover + " switch_txt"}
-              onClick={() => actions.toggleMode()}
+              className={modeState.prevHover + " switch_txt"}
+              onClick={() =>
+                actions.toggleMode(modeState.mode, modeState.context)
+              }
             >
-              {account.prev.toUpperCase()}
+              {modeState.prev.toUpperCase()}
             </div>
           </div>
         </div>
         <div className="container">
-          <form name="form">{view(account, actions)}</form>
+          <form name="form">{view(modeState, formState, actions)}</form>
         </div>
       </React.Fragment>
     );
@@ -53,7 +54,8 @@ class Account extends React.Component {
 }
 
 const mapState = (state, ownProps) => ({
-  account: state.account
+  formState: state.formReducer,
+  modeState: state.modeReducer
 });
 
 function mapDispatch(dispatch) {
