@@ -1,14 +1,14 @@
-export const selectMode = state => state.account.mode;
+export const selectMode = state => state.modeReducer.mode;
 export const selectFormdataForSignInOrUp = state => ({
-  actionType: state.account.mode,
-  username: state.account.username,
-  password: state.account.password
+  actionType: state.modeReducer.mode,
+  username: state.formReducer.username,
+  password: state.formReducer.password
 });
 
 const formdataForCreateAccount = state => ({
-  bucket: state.account.bucket,
-  bucketkey: state.account.bucketkey,
-  bucketval: state.account.bucketval
+  bucket: state.formReducer.bucket,
+  bucketkey: state.modeReducer.bucketkey,
+  bucketval: state.formReducer.bucketval
 });
 
 export const selectFormdataForCreateAccount = state => {
