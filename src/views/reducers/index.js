@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import account from "./account";
+import modeReducer from "./account/modeReducer";
+import formReducer from "./account/formReducer";
 
-const reducer = combineReducers({
-  account
+export const accountReducer = combineReducers({
+  modeReducer,
+  formReducer
 });
-
-export default reducer;
