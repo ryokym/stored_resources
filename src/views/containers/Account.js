@@ -3,12 +3,14 @@ import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as actions from "../actions";
+import Menu from "../components/account/Menu";
 import SignInOrUp from "../components/account/SignInOrUp";
 import CreateAccount from "../components/account/CreateAccount";
 
 const view = (modeState, formState, actions) => {
   return modeState.mode === "verify" ? (
     <CreateAccount
+      mode={modeState.mode}
       inputBucket={actions.inputBucket}
       inputBucketVal={actions.inputBucketVal}
       bucketkey={modeState.bucketkey}
@@ -30,25 +32,16 @@ class Account extends React.Component {
   render() {
     const { formState, modeState, actions } = this.props;
     return (
-      <React.Fragment>
-        <div className="menu">
-          <div className="menu_wrapper">
-            <span>Do You Chenge To Mode ? </span>
-            <div
-              id="switcher"
-              className={modeState.prevHover + " switch_txt"}
-              onClick={() =>
-                actions.toggleMode(modeState.mode, modeState.context)
-              }
-            >
-              {modeState.prev.toUpperCase()}
-            </div>
-          </div>
-        </div>
-        <div className="container">
-          <form name="form">{view(modeState, formState, actions)}</form>
-        </div>
-      </React.Fragment>
+      <>
+        <Menu
+          mode={modeState.mode}
+          context={modeState.context}
+          prevHover={modeState.prevHover}
+          toggleMode={actions.toggleMode}
+          prev={modeState.prev}
+        />
+        {view(modeState, formState, actions)}
+      </>
     );
   }
 }
