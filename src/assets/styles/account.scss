@@ -71,6 +71,7 @@ input {
     height: 8vh;
     input {
       color: $colorLight;
+      cursor: pointer !important;
     }
   }
   div:not(:last-of-type) input {
@@ -112,6 +113,7 @@ input {
     input {
       color: $colorLight;
       background-color: $colorGreen;
+      cursor: pointer !important;
     }
   }
   > div:not(:last-of-type) input {
