@@ -162,15 +162,15 @@ class UserDataFilter
      * @param object Aws\S3\S3Client Instance
      * @return boolean
      */
-    protected function isAvailableBucket(S3ClientInterface $S3Client, $bucket)
+    protected function isAvailableBucket(S3ClientInterface $S3Client, $bucket = "")
     {
-        $result = $this->checkBucket($S3Client, $bucket);
-        if ($result) {
-            return true;
-        } else {
-            $this->setError('bucket name is invalid');
-            return false;
+        $result = false;
+        if (!empty($bucket)) {
+            if (($result = $this->checkBucket($S3Client, $bucket)) === false) {
+                $this->setError('bucket name is invalid');
+            }
         }
+        return $result;
     }
 
     protected function isContainDot($bucket)
