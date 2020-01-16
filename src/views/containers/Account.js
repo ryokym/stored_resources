@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as actions from "../actions";
+import * as actions from "../actions/accountAction";
 import Menu from "../components/account/Menu";
 import SignInOrUp from "../components/account/SignInOrUp";
 import CreateAccount from "../components/account/CreateAccount";
