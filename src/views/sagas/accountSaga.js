@@ -1,10 +1,10 @@
-import { openModal } from "../actions";
+import { openModal } from "../actions/accountAction";
 import { select, call, fork, takeLatest, put } from "redux-saga/effects";
 import {
   selectMode,
   selectFormdataForSignInOrUp,
   selectFormdataForCreateAccount
-} from "../selectors";
+} from "../selectors/accountSelector";
 import common from "../utils/common";
 
 function doAsync(formdata) {
