@@ -1,19 +1,20 @@
 import React from "react";
 
-const CreateAccountComponent = props => {
+const MenuComponent = props => {
+  const { modeState, actions } = props;
   return (
     <div className="menu">
       <div className="menu_wrapper">
         <span>Do You Chenge To Mode ? </span>
         <div
           id="switcher"
-          className={props.prevHover}
-          onClick={() => props.toggleMode(props.mode, props.context)}
+          className={modeState.prevHover}
+          onClick={() => actions.toggleMode(modeState.mode, modeState.context)}
         >
-          {props.prev.toUpperCase()}
+          {modeState.prev.toUpperCase()}
         </div>
       </div>
     </div>
   );
 };
-export default CreateAccountComponent;
+export default MenuComponent;
