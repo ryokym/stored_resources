@@ -3,14 +3,18 @@ import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as actions from "../actions/mainAction";
+import Layout from "../components/main/Layout";
+import Header from "../components/main/Header";
+import Body from "../components/main/Body";
 
 class Main extends React.Component {
   render() {
-    console.log(this.props);
+    const { behaviorState, actions } = this.props;
     return (
-      <>
-        <div>Hello React.</div>
-      </>
+      <Layout>
+        <Header actions={actions} />
+        <Body behaviorState={behaviorState} actions={actions}></Body>
+      </Layout>
     );
   }
 }
