@@ -22,8 +22,7 @@ const modeReducer = (state = initialAppState, action) => {
   } else if (action.type === "OPEN_MODAL") {
     return {
       ...state,
-      mode: action.payload.mode,
-      bucketkey: action.payload.bucketkey
+      mode: action.payload.mode
     };
   } else {
     return {

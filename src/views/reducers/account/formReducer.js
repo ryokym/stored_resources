@@ -19,6 +19,11 @@ const formReducer = (state, action) => {
       ...state,
       bucketval: action.payload.bucketval
     };
+  } else if (action.type === "OPEN_MODAL") {
+    return {
+      ...state,
+      bucketkey: action.payload.bucketkey
+    };
   } else {
     return {
       ...state

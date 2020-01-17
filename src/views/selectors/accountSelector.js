@@ -7,7 +7,7 @@ export const selectFormdataForSignInOrUp = state => ({
 
 const formdataForCreateAccount = state => ({
   bucket: state.formReducer.bucket,
-  bucketkey: state.modeReducer.bucketkey,
+  bucketkey: state.formReducer.bucketkey,
   bucketval: state.formReducer.bucketval
 });
 
