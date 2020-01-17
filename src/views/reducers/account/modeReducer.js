@@ -6,7 +6,7 @@ const initialAppState = {
 };
 
 const modeReducer = (state = initialAppState, action) => {
-  if (action.type === "TOGGLE_MODE") {
+  if (action.type === "CLICK_SIGNIN_OR_UP") {
     return {
       ...state,
       mode: action.payload.mode,

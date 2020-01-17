@@ -1,6 +1,6 @@
 import common from "../utils/common";
 
-export const toggleMode = (mode, context) => {
+export const clickSigninOrUp = (mode, context) => {
   const modes = new Map([
     ["enter", "sign_in"],
     ["create", "sign_up"]
@@ -8,7 +8,7 @@ export const toggleMode = (mode, context) => {
   const next = common.rotate(mode, modes);
   const [nextMode, nextContext] = next;
   return {
-    type: "TOGGLE_MODE",
+    type: "CLICK_SIGNIN_OR_UP",
     payload: {
       mode: nextMode,
       context: nextContext,

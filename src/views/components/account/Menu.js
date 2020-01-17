@@ -9,7 +9,9 @@ const MenuComponent = props => {
         <div
           id="switcher"
           className={modeState.prevHover}
-          onClick={() => actions.toggleMode(modeState.mode, modeState.context)}
+          onClick={() =>
+            actions.clickSigninOrUp(modeState.mode, modeState.context)
+          }
         >
           {modeState.prev.toUpperCase()}
         </div>
