@@ -25,6 +25,13 @@ class S3StreamAction extends S3OptionFormatter
         return $this->$actionType();
     }
 
+    public function initiate()
+    {
+        $response = S3Stream::getRootdirItems($this->bucketname);
+        echo json_encode($response);
+        exit;
+    }
+
     public function change()
     {
         if (!parent::isRootDir()) {

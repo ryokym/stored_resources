@@ -47,13 +47,11 @@ class S3Stream
 
     /**
      * get object list of root directory
-     * @param Aws\S3\S3Client $S3Client
      * @param string $bucketname
      * @return array object list
      */
-    public static function getRootdirItems(S3ClientInterface $S3Client, $bucketname)
+    public static function getRootdirItems($bucketname)
     {
-        $S3Client->registerStreamWrapper();
         $rows[] = scandir(Common::S3_PROTOCOL . $bucketname);
         $rows = array_values($rows[0]);
         return $rows;
