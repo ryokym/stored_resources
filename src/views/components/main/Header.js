@@ -1,4 +1,5 @@
 import React from "react";
+import Common from "../../utils/common";
 
 class HeaderComponent extends React.Component {
   constructor(props) {
@@ -33,7 +34,7 @@ class HeaderComponent extends React.Component {
     return (
       <div className="header">
         <div id="title" contenteditable="true">
-          STORED RESOURCES
+          {Common.appName}
         </div>
         <div className="menu">
           {this.renderMenuitems(this.mapMaterialToAction, this.props.actions)}
