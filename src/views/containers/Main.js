@@ -8,19 +8,28 @@ import Header from "../components/main/Header";
 import Body from "../components/main/Body";
 
 class Main extends React.Component {
+  componentDidMount() {
+    this.props.actions.initiate();
+  }
+
   render() {
-    const { behaviorState, actions } = this.props;
+    const { behaviorState, structureState, actions } = this.props;
     return (
       <Layout>
         <Header actions={actions} />
-        <Body behaviorState={behaviorState} actions={actions}></Body>
+        <Body
+          behaviorState={behaviorState}
+          structureState={structureState}
+          actions={actions}
+        ></Body>
       </Layout>
     );
   }
 }
 
 const mapState = (state, ownProps) => ({
-  behaviorState: state.behaviorReducer
+  behaviorState: state.behaviorReducer,
+  structureState: state.structureReducer
 });
 
 function mapDispatch(dispatch) {
