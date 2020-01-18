@@ -1,3 +1,15 @@
+export const initiate = () => ({
+  type: "INITIATE"
+});
+
+export const getResources = (behavior, resources) => ({
+  type: "GET_RESOURCES",
+  payload: {
+    behavior: behavior,
+    resources: resources
+  }
+});
+
 export const click_expand = () => ({
   type: "CLICK_EXPAND",
   payload: { behavior: "expand" }
