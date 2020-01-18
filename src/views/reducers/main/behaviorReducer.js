@@ -18,11 +18,6 @@ const behaviorReducer = (state = initialAppState, action) => {
       ...state,
       behavior: action.payload.behavior
     };
-  } else if (action.type === "CLICK_LOGOUT") {
-    return {
-      ...state,
-      behavior: action.payload.behavior
-    };
   } else {
     return {
       ...state
