@@ -1,5 +1,5 @@
 const initialAppState = {
-  mode: "change"
+  behavior: "change"
 };
 
 const behaviorReducer = (state = initialAppState, action) => {
@@ -14,6 +14,11 @@ const behaviorReducer = (state = initialAppState, action) => {
       behavior: action.payload.behavior
     };
   } else if (action.type === "CLICK_EDIT") {
+    return {
+      ...state,
+      behavior: action.payload.behavior
+    };
+  } else if (action.type === "GET_RESOURCES") {
     return {
       ...state,
       behavior: action.payload.behavior
