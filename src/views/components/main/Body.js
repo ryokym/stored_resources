@@ -2,10 +2,14 @@ import React from "react";
 import Column from "./Column";
 
 const BodyComponent = ({ ...props }) => {
-  const { behaviorState, actions } = props;
+  const { behaviorState, structureState, actions } = props;
   return (
     <div className="container">
-      <Column behaviorState={behaviorState} actions={actions}>
+      <Column
+        behaviorState={behaviorState}
+        structureState={structureState}
+        actions={actions}
+      >
         {props.children}
       </Column>
       <div id="display">

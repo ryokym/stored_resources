@@ -1,15 +1,20 @@
 import React from "react";
 
-const RowComponent = ({ ...props }) => {
-  const { behaviorState, actions } = props;
-  console.log(behaviorState);
-  return (
-    <>
-      <div className="row" data-hierarchy="0" data-path="">
-        <p className="row_item">{behaviorState.behavior}</p>
-      </div>
-    </>
-  );
+const renderRows = items => {
+  const result = items.map(item => {
+    return (
+      <>
+        <div className="row" data-hierarchy="0" data-path="">
+          <p className="row_item">{item}</p>
+        </div>
+      </>
+    );
+  });
+  return result;
+};
+const RowComponent = structure => {
+  const items = Object.values(structure)[0];
+  return items.length !== 0 && renderRows(items);
 };
 
 export default RowComponent;
