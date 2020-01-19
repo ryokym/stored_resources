@@ -2,7 +2,7 @@ import React from "react";
 import Row from "./Row";
 
 const ColumnComponent = ({ ...props }) => {
-  const { behaviorState, structureState, actions } = props;
+  const { behaviorState, structureState, index, actions } = props;
   return (
     <div id="column">
       <div className="level">
@@ -13,7 +13,11 @@ const ColumnComponent = ({ ...props }) => {
         <div className="row createNewDirRow">
           <input className="textbox" type="text" />
         </div>
-        <Row structure={structureState.structure} />
+        <Row
+          structure={structureState.structure.get(index)}
+          hierarchy={index}
+          click_row={actions.click_row}
+        />
       </div>
     </div>
   );
