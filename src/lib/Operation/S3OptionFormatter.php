@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Operation;
 
 use App\Common\Common;
@@ -15,7 +16,7 @@ class S3OptionFormatter extends S3StreamException
 
     protected function getPathName()
     {
-        $pathName = $this->request->getDirname().'/'.$this->request->getName();
+        $pathName = $this->request->getPath() . '/' . $this->request->getName();
         return $pathName;
     }
 
@@ -26,7 +27,7 @@ class S3OptionFormatter extends S3StreamException
         } else {
             $pathName = $this->prependDS($specified);
         }
-        return Common::S3_PROTOCOL.$bucketname.$pathName;
+        return Common::S3_PROTOCOL . $bucketname . $pathName;
     }
 
     protected function prependDS($str)
@@ -44,7 +45,7 @@ class S3OptionFormatter extends S3StreamException
 
     protected function isRootDir()
     {
-        if (empty($this->request->getDirname())) {
+        if (empty($this->request->getPath())) {
             return true;
         }
     }

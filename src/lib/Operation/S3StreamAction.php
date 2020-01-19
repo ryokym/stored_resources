@@ -35,8 +35,8 @@ class S3StreamAction extends S3OptionFormatter
     public function change()
     {
         if (!parent::isRootDir()) {
-            $path = parent::prependDS($this->request->getDirname());
-            $this->request->setDirName($path);
+            $path = parent::prependDS($this->request->getPath());
+            $this->request->setPath($path);
         }
         $s3Path = parent::getS3PathName($this->bucketname);
         $response = [];
@@ -88,7 +88,7 @@ class S3StreamAction extends S3OptionFormatter
 
     public function upload()
     {
-        $dirName = parent::appendDS($this->request->getDirname());
+        $dirName = parent::appendDS($this->request->getPath());
         $uploaded = S3Stream::getUploadedFile($this->request->getFilename(), [$this, 'checkUploadedfileformat']);
         $filename = $uploaded['name'];
         $pathName = $dirName . $filename;
@@ -104,8 +104,8 @@ class S3StreamAction extends S3OptionFormatter
     public function edit()
     {
         if (!parent::isRootDir()) {
-            $path = parent::prependDS($this->request->getDirname());
-            $this->request->setDirName($path);
+            $path = parent::prependDS($this->request->getPath());
+            $this->request->setPath($path);
         }
         $s3Path = parent::getS3PathName($this->bucketname);
         $stream = new S3Stream($s3Path, 'w');
@@ -117,8 +117,8 @@ class S3StreamAction extends S3OptionFormatter
     public function move()
     {
         if (!parent::isRootDir()) {
-            $path = parent::prependDS($this->request->getDirname());
-            $this->request->setDirName($path);
+            $path = parent::prependDS($this->request->getPath());
+            $this->request->setPath($path);
         }
         $clipedname = $this->request->getCliped();
         $filename = pathinfo($clipedname)['basename'];

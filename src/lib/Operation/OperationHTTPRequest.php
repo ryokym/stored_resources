@@ -1,7 +1,9 @@
 <?php
+
 /**
-* Data Transfer Object with HTTP request parameters
-*/
+ * Data Transfer Object with HTTP request parameters
+ */
+
 namespace App\Operation;
 
 use App\DataTransferInterface;
@@ -9,9 +11,9 @@ use App\DataTransferInterface;
 class OperationHTTPRequest implements DataTransferInterface
 {
     private $actionType;
-    private $dirname  = null;
+    private $path  = null;
     private $name     = null;
-    private $level    = null;
+    private $hierarchy    = null;
     private $filename = null;
     private $content  = null;
     private $cliped   = null;
@@ -26,14 +28,14 @@ class OperationHTTPRequest implements DataTransferInterface
         $this->actionType = $actionType;
     }
 
-    public function getDirname()
+    public function getPath()
     {
-        return $this->dirname;
+        return $this->path;
     }
 
-    public function setDirName($dirname)
+    public function setPath($path)
     {
-        $this->dirname = $dirname;
+        $this->path = $path;
     }
 
     public function getName()
@@ -46,14 +48,14 @@ class OperationHTTPRequest implements DataTransferInterface
         $this->name = $name;
     }
 
-    public function getLevel()
+    public function getHierarchy()
     {
-        return $this->level;
+        return $this->hierarchy;
     }
 
-    public function setLevel($level)
+    public function setHierarchy($hierarchy)
     {
-        $this->level = $level;
+        $this->hierarchy = $hierarchy;
     }
 
     public function getFilename()
@@ -94,9 +96,9 @@ class OperationHTTPRequest implements DataTransferInterface
     }
 
     /**
-    * retrieving all data
-    * @return array
-    */
+     * retrieving all data
+     * @return array
+     */
     public function All()
     {
         $results = [];
@@ -108,15 +110,15 @@ class OperationHTTPRequest implements DataTransferInterface
     }
 
     /**
-    * retrieving properties that specified names of array
-    */
+     * retrieving properties that specified names of array
+     */
     public function getValues(array $propnames)
     {
         if (!empty($propnames)) {
             $getter = 'get';
             $values = [];
             foreach ($propnames as $propname) {
-                $values[] = $this->{$getter.ucfirst($propname)}();
+                $values[] = $this->{$getter . ucfirst($propname)}();
             }
             return $values;
         } else {
