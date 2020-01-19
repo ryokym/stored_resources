@@ -2,12 +2,22 @@ export const initiate = () => ({
   type: "INITIATE"
 });
 
-export const getResources = (behavior, resources) => ({
-  type: "GET_RESOURCES",
+export const click_row = ({ ...props }) => ({
+  type: "CLICK_ROW",
+  payload: props
+});
+
+export const getStructure = (behavior, structure) => ({
+  type: "GET_STRUCTURE",
   payload: {
     behavior: behavior,
-    resources: resources
+    structure: structure
   }
+});
+
+export const printWorkingDirectory = workdir => ({
+  type: "PRINT_WORKING_DIRECTORY",
+  payload: { workdir: workdir }
 });
 
 export const click_expand = () => ({
