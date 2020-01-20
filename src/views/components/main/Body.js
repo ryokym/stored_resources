@@ -1,7 +1,20 @@
 import React from "react";
 import Column from "./Column";
+import UploadField from "./fields/UploadField";
+import PreviewField from "./fields/PreviewField";
+import RemoveField from "./fields/RemoveField";
 
 class BodyComponent extends React.Component {
+  renderField = fieldState => {
+    if (fieldState.isview === true) {
+      return <PreviewField text={fieldState.content} />;
+    } else if (fieldState.isremove === true) {
+      return <RemoveField />;
+    } else {
+      return <UploadField />;
+    }
+  };
+
   renderColumns = props => {
     const { behaviorState, structureState, actions } = props;
     if (structureState.structure.size > 0) {
@@ -28,19 +41,7 @@ class BodyComponent extends React.Component {
       <div className="container">
         {this.renderColumns(this.props)}
         <div id="display">
-          <div id="toggles">
-            <div id="upload_area">
-              <img id="upload_drop_area" src="/assets/img/dragDrop.svg" />
-            </div>
-            <pre id="preview">
-              <code className="prettyprint"></code>
-            </pre>
-            <div id="remove_area">
-              <div id="remove_drop_area">
-                <img src="/assets/img/trush.png" />
-              </div>
-            </div>
-          </div>
+          <div id="toggles">{this.renderField(this.props.fieldState)}</div>
         </div>
       </div>
     );
