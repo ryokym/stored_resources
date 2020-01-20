@@ -20,6 +20,22 @@ export const printWorkingDirectory = workdir => ({
   payload: { workdir: workdir }
 });
 
+export const getFileContent = content => ({
+  type: "GET_FILE_CONTENT",
+  payload: {
+    content: content,
+    isview: true
+  }
+});
+
+export const clickDirectoryResource = () => ({
+  type: "CLICK_DIRECTORY_RESOURCE",
+  payload: {
+    content: "",
+    isview: false
+  }
+});
+
 export const click_expand = () => ({
   type: "CLICK_EXPAND",
   payload: { behavior: "expand" }
