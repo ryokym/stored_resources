@@ -3,6 +3,7 @@ import modeReducer from "./account/modeReducer";
 import formReducer from "./account/formReducer";
 import behaviorReducer from "./main/behaviorReducer";
 import structureReducer from "./main/structureReducer";
+import fieldReducer from "./main/fieldReducer";
 
 export const accountReducer = combineReducers({
   modeReducer,
@@ -11,5 +12,6 @@ export const accountReducer = combineReducers({
 
 export const mainReducer = combineReducers({
   behaviorReducer,
-  structureReducer
+  structureReducer,
+  fieldReducer
 });
