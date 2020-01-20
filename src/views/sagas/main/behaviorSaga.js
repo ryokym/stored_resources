@@ -5,7 +5,11 @@ import {
   selectStructure,
   selectWorkingDirectory
 } from "../../selectors/mainSelector";
-import { getStructure, printWorkingDirectory } from "../../actions/mainAction";
+import {
+  getStructure,
+  printWorkingDirectory,
+  getFileContent
+} from "../../actions/mainAction";
 
 function doAsync(params) {
   const pathto = "/api/main.php";
@@ -27,19 +31,23 @@ function* fetchResources(props) {
   workdir = yield call(rebuildWorkdir, workdir, params.hierarchy);
   params.actionType = "change";
   params.path = workdir;
-  const response = yield call(doAsync, params);
-  const resources = JSON.parse(response).result;
-  const structure = yield select(selectStructure);
-  const newStructure = yield call(
-    rebuildStructure,
-    structure,
-    params.hierarchy
-  );
-  newStructure.set(newStructure.size, resources);
-  yield put(getStructure("change", newStructure));
-  const nextWorkdir =
-    workdir !== "" ? [workdir, params.name].join("/") : params.name;
-  yield put(printWorkingDirectory(nextWorkdir));
+  let response = yield call(doAsync, params);
+  response = JSON.parse(response);
+  if (response.isFile === false) {
+    const structure = yield select(selectStructure);
+    const newStructure = yield call(
+      rebuildStructure,
+      structure,
+      params.hierarchy
+    );
+    newStructure.set(newStructure.size, response.result);
+    yield put(getStructure("change", newStructure));
+    const nextWorkdir =
+      workdir !== "" ? [workdir, params.name].join("/") : params.name;
+    yield put(printWorkingDirectory(nextWorkdir));
+  } else {
+    yield put(getFileContent(response.result));
+  }
 }
 
 const behaviorSaga = [
