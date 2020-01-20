@@ -13,13 +13,14 @@ class Main extends React.Component {
   }
 
   render() {
-    const { behaviorState, structureState, actions } = this.props;
+    const { behaviorState, structureState, fieldState, actions } = this.props;
     return (
       <Layout>
         <Header actions={actions} />
         <Body
           behaviorState={behaviorState}
           structureState={structureState}
+          fieldState={fieldState}
           actions={actions}
         ></Body>
       </Layout>
@@ -29,7 +30,8 @@ class Main extends React.Component {
 
 const mapState = (state, ownProps) => ({
   behaviorState: state.behaviorReducer,
-  structureState: state.structureReducer
+  structureState: state.structureReducer,
+  fieldState: state.fieldReducer
 });
 
 function mapDispatch(dispatch) {
