@@ -2,7 +2,7 @@ export const initiate = () => ({
   type: "INITIATE"
 });
 
-export const click_row = ({ ...props }) => ({
+export const clickRow = ({ ...props }) => ({
   type: "CLICK_ROW",
   payload: props
 });
@@ -36,22 +36,22 @@ export const clickDirectoryResource = () => ({
   }
 });
 
-export const click_expand = () => ({
+export const clickExpand = () => ({
   type: "CLICK_EXPAND",
   payload: { behavior: "expand" }
 });
 
-export const click_remove = () => ({
+export const clickRemove = () => ({
   type: "CLICK_REMOVE",
   payload: { behavior: "remove" }
 });
 
-export const click_edit = () => ({
+export const clickEdit = () => ({
   type: "CLICK_EDIT",
   payload: { behavior: "edit" }
 });
 
-export const click_logout = () => ({
+export const clickLogout = () => ({
   type: "CLICK_LOGOUT",
   payload: { behavior: "logout" }
 });

@@ -9,7 +9,7 @@ class RowComponent extends React.Component {
             className="row"
             data-hierarchy={this.props.hierarchy}
             onClick={e =>
-              this.props.click_row({
+              this.props.clickRow({
                 name: e.target.innerText,
                 hierarchy: e.target.getAttribute("data-hierarchy")
               })
