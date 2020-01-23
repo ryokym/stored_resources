@@ -7,8 +7,8 @@ export const clickRow = ({ ...props }) => ({
   payload: props
 });
 
-export const getStructure = (behavior, structure) => ({
-  type: "GET_STRUCTURE",
+export const getNewStructure = (behavior, structure) => ({
+  type: "GET_NEW_STRUCTURE",
   payload: {
     behavior: behavior,
     structure: structure

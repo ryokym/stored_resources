@@ -4,7 +4,7 @@ const initialAppState = {
 };
 
 const structureReducer = (state = initialAppState, action) => {
-  if (action.type === "GET_STRUCTURE") {
+  if (action.type === "GET_NEW_STRUCTURE") {
     return {
       ...state,
       structure: action.payload.structure
