@@ -6,8 +6,9 @@ import {
   selectWorkingDirectory
 } from "../../selectors/mainSelector";
 import {
-  getStructure,
+  getNewStructure,
   printWorkingDirectory,
+  clickDirectoryResource,
   getFileContent
 } from "../../actions/mainAction";
 
@@ -22,32 +23,34 @@ function* fetchListBucket() {
   const resources = JSON.parse(response);
   let structure = yield select(selectStructure);
   structure.set(structure.size, resources);
-  yield put(getStructure("change", structure));
+  yield put(getNewStructure("change", structure));
 }
 
 function* fetchResources(props) {
   let params = props.payload;
   let workdir = yield select(selectWorkingDirectory);
+
   workdir = yield call(rebuildWorkdir, workdir, params.hierarchy);
+  const isRootdir = workdir === "" ? true : false;
+  const newWorkdir = isRootdir ? params.name : [workdir, params.name].join("/");
+  yield put(printWorkingDirectory(newWorkdir));
   params.actionType = "change";
   params.path = workdir;
   let response = yield call(doAsync, params);
   response = JSON.parse(response);
+  const structure = yield select(selectStructure);
+  const newStructure = yield call(
+    rebuildStructure,
+    structure,
+    params.hierarchy
+  );
   if (response.isFile === false) {
-    const structure = yield select(selectStructure);
-    const newStructure = yield call(
-      rebuildStructure,
-      structure,
-      params.hierarchy
-    );
+    yield put(clickDirectoryResource());
     newStructure.set(newStructure.size, response.result);
-    yield put(getStructure("change", newStructure));
-    const nextWorkdir =
-      workdir !== "" ? [workdir, params.name].join("/") : params.name;
-    yield put(printWorkingDirectory(nextWorkdir));
   } else {
     yield put(getFileContent(response.result));
   }
+  yield put(getNewStructure("change", newStructure));
 }
 
 const behaviorSaga = [
