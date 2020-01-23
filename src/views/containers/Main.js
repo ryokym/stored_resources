@@ -13,16 +13,10 @@ class Main extends React.Component {
   }
 
   render() {
-    const { behaviorState, structureState, fieldState, actions } = this.props;
     return (
       <Layout>
-        <Header actions={actions} />
-        <Body
-          behaviorState={behaviorState}
-          structureState={structureState}
-          fieldState={fieldState}
-          actions={actions}
-        ></Body>
+        <Header actions={this.props.actions} />
+        <Body {...this.props}></Body>
       </Layout>
     );
   }
