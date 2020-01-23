@@ -21,17 +21,18 @@ class BodyComponent extends React.Component {
   }
 
   renderColumns(props) {
-    const { behaviorState, structureState, actions } = props;
+    const { structureState, actions } = props;
     if (structureState.structure.size > 0) {
+      const items = structureState.workdir.split("/");
       const size = structureState.structure.size;
       const sizes = [...Array(size).keys()];
       const result = sizes.map(index => {
         return (
           <Column
-            behaviorState={behaviorState}
             structureState={structureState}
             index={index}
             actions={actions}
+            highLight={items[index] || ""}
           >
             {this.props.children}
           </Column>
