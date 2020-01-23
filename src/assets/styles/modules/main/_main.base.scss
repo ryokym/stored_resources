@@ -20,7 +20,7 @@ $titleFontWidth: 2.2vw;
 -------------------------------------------------------*/
 
 $columnsBorderColor: rgb(81, 81, 81);
-$changeColor: rgb(137, 189, 255) !important;
+$highLightItemColor: rgb(137, 189, 255) !important;
 $removeColor: rgb(255, 203, 137) !important;
 $movefromColor: rgb(34, 191, 138) !important;
 $removeAreaMouseOverColor: rgb(68, 44, 52);
@@ -34,8 +34,8 @@ $errorColor: rgb(255, 180, 180);
 $columnsRightBorder: 1px solid $columnsBorderColor;
 $removeAreaBorder: 2px dashed $removeAreaBorderColor;
 
-.change > .row_item {
-  color: $changeColor;
+.highLighted {
+  color: $highLightItemColor;
 }
 
 .remove > .row_item {
