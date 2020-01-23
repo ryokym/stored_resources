@@ -5,7 +5,12 @@ import PreviewField from "./fields/PreviewField";
 import RemoveField from "./fields/RemoveField";
 
 class BodyComponent extends React.Component {
-  renderField = fieldState => {
+  constructor(props) {
+    super(props);
+    this.renderField = this.renderField.bind(this);
+    this.renderColumns = this.renderColumns.bind(this);
+  }
+  renderField(fieldState) {
     if (fieldState.isview === true) {
       return <PreviewField text={fieldState.content} />;
     } else if (fieldState.isremove === true) {
@@ -13,9 +18,9 @@ class BodyComponent extends React.Component {
     } else {
       return <UploadField />;
     }
-  };
+  }
 
-  renderColumns = props => {
+  renderColumns(props) {
     const { behaviorState, structureState, actions } = props;
     if (structureState.structure.size > 0) {
       const size = structureState.structure.size;
@@ -34,7 +39,7 @@ class BodyComponent extends React.Component {
       });
       return result;
     }
-  };
+  }
 
   render() {
     return (

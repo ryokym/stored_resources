@@ -4,17 +4,18 @@ import Common from "../../utils/common";
 class HeaderComponent extends React.Component {
   constructor(props) {
     super(props);
+    this.renderMenuitems = this.renderMenuitems.bind(this);
   }
 
   mapMaterialToAction = [
-    ["expand.svg", "click_expand"],
-    ["remove.svg", "click_remove"],
-    ["download.svg", "click_download"],
-    ["edit.svg", "click_edit"],
-    ["logout.svg", "click_logout"]
+    ["expand.svg", "clickExpand"],
+    ["remove.svg", "clickRemove"],
+    ["download.svg", "clickDownload"],
+    ["edit.svg", "clickEdit"],
+    ["logout.svg", "clickLogout"]
   ];
 
-  renderMenuitems = (list, actions) => {
+  renderMenuitems(list, actions) {
     const result = list.map(ary => {
       const [material, action] = ary;
       return (
@@ -28,7 +29,7 @@ class HeaderComponent extends React.Component {
       );
     });
     return result;
-  };
+  }
 
   render() {
     return (
