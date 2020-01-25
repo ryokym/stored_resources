@@ -15,6 +15,15 @@
   }
 }
 
+@mixin modalContent($height, $width) {
+  height: $height;
+  width: $width;
+  background-color: white;
+  border-radius: 4px;
+  border: none;
+  outline: none;
+}
+
 %title {
   font-family: $titleFontFamily;
   color: $titleFontColor;
