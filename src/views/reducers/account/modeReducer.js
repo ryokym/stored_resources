@@ -1,11 +1,11 @@
-const initialAppState = {
+const initialState = {
   mode: "enter",
   context: "sign_in",
   prev: "sign_up",
   prevHover: "sign_up_hover"
 };
 
-const modeReducer = (state = initialAppState, action) => {
+const modeReducer = (state = initialState, action) => {
   if (action.type === "CLICK_SIGNIN_OR_UP") {
     return {
       ...state,

@@ -1,9 +1,9 @@
-const initialAppState = {
+const initialState = {
   structure: new Map(),
   workdir: ""
 };
 
-const structureReducer = (state = initialAppState, action) => {
+const structureReducer = (state = initialState, action) => {
   if (action.type === "GET_NEW_STRUCTURE") {
     return {
       ...state,

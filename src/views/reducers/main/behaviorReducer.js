@@ -1,8 +1,8 @@
-const initialAppState = {
+const initialState = {
   behavior: "change"
 };
 
-const behaviorReducer = (state = initialAppState, action) => {
+const behaviorReducer = (state = initialState, action) => {
   if (action.type === "CLICK_EXPAND") {
     return {
       ...state,
