@@ -25,7 +25,8 @@ class Main extends React.Component {
 const mapState = (state, ownProps) => ({
   behaviorState: state.behaviorReducer,
   structureState: state.structureReducer,
-  fieldState: state.fieldReducer
+  fieldState: state.fieldReducer,
+  modalFormState: state.modalFormReducer
 });
 
 function mapDispatch(dispatch) {

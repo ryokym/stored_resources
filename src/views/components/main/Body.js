@@ -3,6 +3,7 @@ import Column from "./Column";
 import UploadField from "./fields/UploadField";
 import PreviewField from "./fields/PreviewField";
 import RemoveField from "./fields/RemoveField";
+import MkdirModal from "../modals/MkdirModal";
 
 class BodyComponent extends React.Component {
   constructor(props) {
@@ -10,6 +11,7 @@ class BodyComponent extends React.Component {
     this.renderField = this.renderField.bind(this);
     this.renderColumns = this.renderColumns.bind(this);
   }
+
   renderField(fieldState) {
     if (fieldState.isview === true) {
       return <PreviewField text={fieldState.content} />;
@@ -43,12 +45,19 @@ class BodyComponent extends React.Component {
   }
 
   render() {
+    const { structureState, fieldState, modalFormState, actions } = this.props;
     return (
       <div className="container">
         {this.renderColumns(this.props)}
         <div id="display">
-          <div id="toggles">{this.renderField(this.props.fieldState)}</div>
+          <div id="toggles">{this.renderField(fieldState)}</div>
         </div>
+        <MkdirModal
+          structureState={structureState}
+          fieldState={fieldState}
+          modalFormState={modalFormState}
+          actions={actions}
+        />
       </div>
     );
   }
