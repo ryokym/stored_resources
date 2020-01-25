@@ -36,6 +36,26 @@ export const clickDirectoryResource = () => ({
   }
 });
 
+export const clickMkdir = () => ({
+  type: "CLICK_MKDIR",
+  payload: { modalIsOpen: true }
+});
+
+export const clickCloseModal = () => ({
+  type: "CLICK_CLOSE_MODAL",
+  payload: { modalIsOpen: false }
+});
+
+export const breakFormEntered = () => ({
+  type: "BREAK_FORM_ENTERED",
+  payload: { dirname: "" }
+});
+
+export const inputDirectoryName = dirname => ({
+  type: "INPUT_DIRECTORY_NAME",
+  payload: { dirname: dirname }
+});
+
 export const clickExpand = () => ({
   type: "CLICK_EXPAND",
   payload: { behavior: "expand" }
