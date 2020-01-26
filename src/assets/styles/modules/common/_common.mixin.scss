@@ -15,16 +15,52 @@
   }
 }
 
+%title {
+  font-family: $titleFontFamily;
+  color: $titleFontColor;
+}
+
+/* modal
+-------------------------------------------------------*/
+
 @mixin modalContent($height, $width) {
+  position: relative;
   height: $height;
   width: $width;
   background-color: white;
   border-radius: 4px;
   border: none;
   outline: none;
+  transform: translate(0, -80px);
 }
 
-%title {
+@mixin modalContentTitle($color: black) {
   font-family: $titleFontFamily;
-  color: $titleFontColor;
+  color: $color;
+  font-size: 1.3rem;
+  text-align: center;
+  padding-top: 1rem;
+}
+
+@mixin modalContentBtns($backgroundColor: wheat, $height: 25%) {
+  width: 100%;
+  height: $height;
+  background-color: $backgroundColor;
+  position: absolute;
+  bottom: 0;
+  div {
+    &:first-of-type {
+      border-right: 1px solid;
+    }
+    font-family: $titleFontFamily;
+    display: inline-block;
+    height: 100%;
+    box-sizing: border-box;
+    width: 50%;
+    font-size: 1.2rem;
+    line-height: 2.2;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 0 0 4px 4px;
+  }
 }
