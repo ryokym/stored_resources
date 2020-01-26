@@ -14,12 +14,12 @@ const modeReducer = (state = initialState, action) => {
       prev: action.payload.prev,
       prevHover: action.payload.prevHover
     };
-  } else if (action.type === "CLOSE_MODAL") {
+  } else if (action.type === "REQUIRE_VERIFY_FORM") {
     return {
       ...state,
       mode: action.payload.mode
     };
-  } else if (action.type === "OPEN_MODAL") {
+  } else if (action.type === "REQUIRE_SIGNIN_OR_UP_FORM") {
     return {
       ...state,
       mode: action.payload.mode
