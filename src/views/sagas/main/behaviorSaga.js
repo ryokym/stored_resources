@@ -53,9 +53,14 @@ function* fetchResources(props) {
   yield put(getNewStructure("change", newStructure));
 }
 
+function* fetchMakeDirectory(props) {
+  console.log(props);
+}
+
 const behaviorSaga = [
   takeLatest("INITIATE", fetchListBucket),
-  takeLatest("CLICK_ROW", fetchResources)
+  takeLatest("CLICK_ROW", fetchResources),
+  takeLatest("MAKE_DIRECTORY", fetchMakeDirectory)
 ];
 
 export default behaviorSaga;
