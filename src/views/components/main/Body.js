@@ -45,19 +45,14 @@ class BodyComponent extends React.Component {
   }
 
   render() {
-    const { structureState, fieldState, modalFormState, actions } = this.props;
+    const { fieldState } = this.props;
     return (
       <div className="container">
         {this.renderColumns(this.props)}
         <div id="display">
           <div id="toggles">{this.renderField(fieldState)}</div>
         </div>
-        <MkdirModal
-          structureState={structureState}
-          fieldState={fieldState}
-          modalFormState={modalFormState}
-          actions={actions}
-        />
+        <MkdirModal {...this.props} />
       </div>
     );
   }

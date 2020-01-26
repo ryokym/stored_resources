@@ -23,6 +23,7 @@ class Main extends React.Component {
 }
 
 const mapState = (state, ownProps) => ({
+  modalState: state.modalReducer,
   behaviorState: state.behaviorReducer,
   structureState: state.structureReducer,
   fieldState: state.fieldReducer,
