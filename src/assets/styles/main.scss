@@ -119,26 +119,11 @@
 
 /* React-modal
 -------------------------------------------------------*/
-.modal_overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  @include flex();
-}
+
 .mkdir_modal_content {
   @include modalContent(160px, 360px);
-  background-color: white;
-  position: relative;
-  transform: translate(0, -80px);
   .mkdir_modal_content_title {
-    font-family: $titleFontFamily;
-    color: #455c8c;
-    font-size: 1.3rem;
-    text-align: center;
-    padding-top: 1rem;
+    @include modalContentTitle($mkdirThemeColor);
   }
   .mkdir_modal_content_workdir {
     color: black;
@@ -153,7 +138,7 @@
     text-indent: 0.2rem;
     color: black;
     outline: none;
-    border: 1px solid #455c8c;
+    border: 1px solid $mkdirThemeColor;
     border-radius: 4px;
     position: absolute;
     top: 45%;
@@ -161,26 +146,7 @@
     transform: translate(-50%, 0);
   }
   .mkdir_modal_content_btns {
-    width: 100%;
-    height: 25%;
-    background-color: #455c8c;
-    position: absolute;
-    bottom: 0;
-    div {
-      &:first-of-type {
-        border-right: 1px solid;
-      }
-      font-family: $titleFontFamily;
-      display: inline-block;
-      height: 100%;
-      box-sizing: border-box;
-      width: 50%;
-      font-size: 1.2rem;
-      line-height: 2.2;
-      text-align: center;
-      cursor: pointer;
-      border-radius: 0 0 4px 4px;
-    }
+    @include modalContentBtns($mkdirThemeColor);
   }
 }
 
