@@ -19,7 +19,7 @@ const formReducer = (state, action) => {
       ...state,
       bucketval: action.payload.bucketval
     };
-  } else if (action.type === "OPEN_MODAL") {
+  } else if (action.type === "REQUIRE_VERIFY_FORM") {
     return {
       ...state,
       bucketkey: action.payload.bucketkey
