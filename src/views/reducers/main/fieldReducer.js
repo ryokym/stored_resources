@@ -1,8 +1,7 @@
 const initialState = {
   content: "",
   isview: false,
-  isremove: false,
-  modalIsOpen: false
+  isremove: false
 };
 
 const fieldReducer = (state = initialState, action) => {
@@ -17,16 +16,6 @@ const fieldReducer = (state = initialState, action) => {
       ...state,
       content: action.payload.content,
       isview: action.payload.isview
-    };
-  } else if (action.type === "CLICK_MKDIR") {
-    return {
-      ...state,
-      modalIsOpen: action.payload.modalIsOpen
-    };
-  } else if (action.type === "CLICK_CLOSE_MODAL") {
-    return {
-      ...state,
-      modalIsOpen: action.payload.modalIsOpen
     };
   } else {
     return {
