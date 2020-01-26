@@ -38,17 +38,29 @@ export const inputBucketVal = bucketval => ({
   payload: { bucketval }
 });
 
-export const closeModal = () => ({
-  type: "CLOSE_MODAL",
-  payload: { mode: "create" }
+export const clickOpenModalVerify = () => ({
+  type: "CLICK_OPEN_MODAL_VERIFY",
+  payload: {
+    modalIsOpen: true
+  }
 });
 
-export const openModal = (mode, bucketkey) => ({
-  type: "OPEN_MODAL",
+export const requireVerifyForm = (mode, bucketkey) => ({
+  type: "REQUIRE_VERIFY_FORM",
   payload: {
     mode: mode,
     bucketkey: bucketkey
   }
+});
+
+export const clickCloseModal = () => ({
+  type: "CLICK_CLOSE_MODAL",
+  payload: { modalIsOpen: false }
+});
+
+export const requireSigninOrUpForm = () => ({
+  type: "REQUIRE_SIGNIN_OR_UP_FORM",
+  payload: { mode: "create" }
 });
 
 export const requestPost = () => ({
