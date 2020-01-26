@@ -8,7 +8,7 @@ class HeaderComponent extends React.Component {
   }
 
   mapMaterialToAction = [
-    ["mkdir.svg", "clickMkdir"],
+    ["mkdir.svg", "clickOpenModalMkdir"],
     ["expand.svg", "clickExpand"],
     ["remove.svg", "clickRemove"],
     ["download.svg", "clickDownload"],
