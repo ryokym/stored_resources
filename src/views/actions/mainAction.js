@@ -36,9 +36,14 @@ export const clickDirectoryResource = () => ({
   }
 });
 
-export const clickMkdir = () => ({
-  type: "CLICK_MKDIR",
+export const clickOpenModalMkdir = () => ({
+  type: "CLICK_OPEN_MODAL_MKDIR",
   payload: { modalIsOpen: true }
+});
+
+export const requireMkdirForm = () => ({
+  type: "REQUIRE_MKDIR_FORM",
+  payload: { behavior: "mkdir" }
 });
 
 export const clickCloseModal = () => ({
@@ -46,9 +51,14 @@ export const clickCloseModal = () => ({
   payload: { modalIsOpen: false }
 });
 
-export const breakFormEntered = () => ({
-  type: "BREAK_FORM_ENTERED",
-  payload: { dirname: "" }
+export const breakMkdirForm = () => ({
+  type: "BREAK_MKDIR_FORM",
+  payload: { behavior: "change", dirname: "" }
+});
+
+export const makeDirectory = ({ ...props }) => ({
+  type: "MAKE_DIRECTORY",
+  payload: props
 });
 
 export const inputDirectoryName = dirname => ({
