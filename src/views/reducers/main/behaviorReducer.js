@@ -3,17 +3,12 @@ const initialState = {
 };
 
 const behaviorReducer = (state = initialState, action) => {
-  if (action.type === "CLICK_EXPAND") {
+  if (action.type === "REQUIRE_MKDIR_FORM") {
     return {
       ...state,
       behavior: action.payload.behavior
     };
-  } else if (action.type === "CLICK_REMOVE") {
-    return {
-      ...state,
-      behavior: action.payload.behavior
-    };
-  } else if (action.type === "CLICK_EDIT") {
+  } else if (action.type === "BREAK_MKDIR_FORM") {
     return {
       ...state,
       behavior: action.payload.behavior

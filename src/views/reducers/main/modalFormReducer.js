@@ -8,7 +8,7 @@ const modalFormReducer = (state = initialState, action) => {
       ...state,
       dirname: action.payload.dirname
     };
-  } else if (action.type === "BREAK_FORM_ENTERED") {
+  } else if (action.type === "BREAK_MKDIR_FORM") {
     return {
       ...state,
       dirname: action.payload.dirname
