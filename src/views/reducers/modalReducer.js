@@ -16,9 +16,7 @@ const modalReducer = (state = initialState, action) => {
     };
   } else if (action.type === "CLICK_CLOSE_MODAL") {
     return {
-      ...state,
-      modalMkdirIsOpen: action.payload.modalIsOpen,
-      modalVerifyIsOpen: action.payload.modalIsOpen
+      ...initialState
     };
   } else {
     return {
