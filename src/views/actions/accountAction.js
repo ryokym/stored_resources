@@ -38,24 +38,12 @@ export const inputBucketVal = bucketval => ({
   payload: { bucketval }
 });
 
-export const clickOpenModalVerify = () => ({
-  type: "CLICK_OPEN_MODAL_VERIFY",
-  payload: {
-    modalIsOpen: true
-  }
-});
-
 export const requireVerifyForm = (mode, bucketkey) => ({
   type: "REQUIRE_VERIFY_FORM",
   payload: {
     mode: mode,
     bucketkey: bucketkey
   }
-});
-
-export const clickCloseModal = () => ({
-  type: "CLICK_CLOSE_MODAL",
-  payload: { modalIsOpen: false }
 });
 
 export const requireSigninOrUpForm = () => ({

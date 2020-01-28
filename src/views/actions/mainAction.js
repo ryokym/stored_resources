@@ -36,19 +36,9 @@ export const clickDirectoryResource = () => ({
   }
 });
 
-export const clickOpenModalMkdir = () => ({
-  type: "CLICK_OPEN_MODAL_MKDIR",
-  payload: { modalIsOpen: true }
-});
-
 export const requireMkdirForm = () => ({
   type: "REQUIRE_MKDIR_FORM",
   payload: { behavior: "mkdir" }
-});
-
-export const clickCloseModal = () => ({
-  type: "CLICK_CLOSE_MODAL",
-  payload: { modalIsOpen: false }
 });
 
 export const breakMkdirForm = () => ({
