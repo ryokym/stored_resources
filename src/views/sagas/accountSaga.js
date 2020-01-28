@@ -1,7 +1,4 @@
-import {
-  requireVerifyForm,
-  clickOpenModalVerify
-} from "../actions/accountAction";
+import { accountActions } from "../actions";
 import { select, call, fork, takeLatest, put } from "redux-saga/effects";
 import {
   selectMode,
@@ -19,8 +16,8 @@ function* dispatch(response) {
   if (response === "enter") {
     location.href = "/";
   } else if (response === "create") {
-    yield put(requireVerifyForm("verify", common.createKey()));
-    yield put(clickOpenModalVerify());
+    yield put(accountActions.requireVerifyForm("verify", common.createKey()));
+    yield put(accountActions.clickOpenModalVerify());
   } else if (response === "verify") {
     alert("account creation suceeded!");
     location.href = "/";

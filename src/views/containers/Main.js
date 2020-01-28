@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as actions from "../actions/mainAction";
+import { mainActions } from "../actions";
 import Layout from "../components/main/Layout";
 import Header from "../components/main/Header";
 import Body from "../components/main/Body";
@@ -32,7 +32,7 @@ const mapState = (state, ownProps) => ({
 
 function mapDispatch(dispatch) {
   return {
-    actions: bindActionCreators(actions, dispatch)
+    actions: bindActionCreators(mainActions, dispatch)
   };
 }
 

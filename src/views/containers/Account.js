@@ -2,12 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as actions from "../actions/accountAction";
+import { accountActions } from "../actions";
 import Body from "../components/account/Body";
 import Menu from "../components/account/Menu";
 
 class Account extends React.Component {
   render() {
+    console.log(accountActions);
     const { modeState, actions } = this.props;
     return (
       <>
@@ -26,7 +27,7 @@ const mapState = (state, ownProps) => ({
 
 function mapDispatch(dispatch) {
   return {
-    actions: bindActionCreators(actions, dispatch)
+    actions: bindActionCreators(accountActions, dispatch)
   };
 }
 

@@ -5,12 +5,7 @@ import {
   selectStructure,
   selectWorkingDirectory
 } from "../../selectors/mainSelector";
-import {
-  getNewStructure,
-  printWorkingDirectory,
-  clickDirectoryResource,
-  getFileContent
-} from "../../actions/mainAction";
+import { mainActions } from "../../actions";
 
 function doAsync(params) {
   const pathto = "/api/main.php";
@@ -23,7 +18,7 @@ function* fetchListBucket() {
   const resources = JSON.parse(response);
   let structure = yield select(selectStructure);
   structure.set(structure.size, resources);
-  yield put(getNewStructure("change", structure));
+  yield put(mainActions.getNewStructure("change", structure));
 }
 
 function* fetchResources(props) {
@@ -33,7 +28,7 @@ function* fetchResources(props) {
   workdir = yield call(rebuildWorkdir, workdir, params.hierarchy);
   const isRootdir = workdir === "" ? true : false;
   const newWorkdir = isRootdir ? params.name : [workdir, params.name].join("/");
-  yield put(printWorkingDirectory(newWorkdir));
+  yield put(mainActions.printWorkingDirectory(newWorkdir));
   params.actionType = "change";
   params.path = workdir;
   let response = yield call(doAsync, params);
@@ -45,12 +40,12 @@ function* fetchResources(props) {
     params.hierarchy
   );
   if (response.isFile === false) {
-    yield put(clickDirectoryResource());
+    yield put(mainActions.clickDirectoryResource());
     newStructure.set(newStructure.size, response.result);
   } else {
-    yield put(getFileContent(response.result));
+    yield put(mainActions.getFileContent(response.result));
   }
-  yield put(getNewStructure("change", newStructure));
+  yield put(mainActions.getNewStructure("change", newStructure));
 }
 
 function* fetchMakeDirectory(props) {
