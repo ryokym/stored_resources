@@ -1,15 +1,13 @@
 import { combineReducers } from "redux";
 import modalReducer from "./modalReducer";
-import modeReducer from "./account/modeReducer";
-import formReducer from "./account/formReducer";
-import behaviorReducer from "./main/behaviorReducer";
-import structureReducer from "./main/structureReducer";
-import fieldReducer from "./main/fieldReducer";
-import modalFormReducer from "./main/modalFormReducer";
+import formReducer from "./formReducer";
+import behaviorReducer from "./behaviorReducer";
+import structureReducer from "./structureReducer";
+import fieldReducer from "./fieldReducer";
 
 export const accountReducer = combineReducers({
   modalReducer,
-  modeReducer,
+  behaviorReducer,
   formReducer
 });
 
@@ -18,5 +16,5 @@ export const mainReducer = combineReducers({
   behaviorReducer,
   structureReducer,
   fieldReducer,
-  modalFormReducer
+  formReducer
 });

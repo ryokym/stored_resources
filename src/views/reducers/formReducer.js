@@ -1,5 +1,15 @@
 const formReducer = (state, action) => {
-  if (action.type === "INPUT_USERNAME") {
+  if (action.type === "INPUT_DIRECTORY_NAME") {
+    return {
+      ...state,
+      dirname: action.payload.dirname
+    };
+  } else if (action.type === "BREAK_MKDIR_FORM") {
+    return {
+      ...state,
+      dirname: action.payload.dirname
+    };
+  } else if (action.type === "INPUT_USERNAME") {
     return {
       ...state,
       username: action.payload.username
