@@ -1,8 +1,5 @@
 const initialState = {
-  behavior: "enter",
-  context: "sign_in",
-  prev: "sign_up",
-  prevHover: "sign_up_hover"
+  behavior: "enter"
 };
 
 const behaviorReducer = (state = initialState, action) => {
@@ -24,10 +21,7 @@ const behaviorReducer = (state = initialState, action) => {
   } else if (action.type === "CLICK_SIGNIN_OR_UP") {
     return {
       ...state,
-      behavior: action.payload.behavior,
-      context: action.payload.context,
-      prev: action.payload.prev,
-      prevHover: action.payload.prevHover
+      behavior: action.payload.behavior
     };
   } else if (action.type === "REQUIRE_VERIFY_FORM") {
     return {
