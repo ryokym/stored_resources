@@ -27,7 +27,7 @@ const mapState = (state, ownProps) => ({
   behaviorState: state.behaviorReducer,
   structureState: state.structureReducer,
   fieldState: state.fieldReducer,
-  modalFormState: state.modalFormReducer
+  formState: state.formReducer
 });
 
 function mapDispatch(dispatch) {

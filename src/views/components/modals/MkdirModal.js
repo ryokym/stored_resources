@@ -30,7 +30,7 @@ class MkdirModalComponent extends React.Component {
       modalState,
       structureState,
       fieldState,
-      modalFormState,
+      formState,
       actions
     } = this.props;
     this.path = fieldState.isview
@@ -59,7 +59,7 @@ class MkdirModalComponent extends React.Component {
           <div
             onClick={() =>
               actions.makeDirectory({
-                name: modalFormState.dirname,
+                name: formState.dirname,
                 path: this.path
               })
             }
