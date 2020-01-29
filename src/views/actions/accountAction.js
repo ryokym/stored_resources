@@ -1,22 +1,7 @@
-import common from "../utils/common";
-
-export const clickSigninOrUp = (behavior, context) => {
-  const behaviors = new Map([
-    ["enter", "sign_in"],
-    ["create", "sign_up"]
-  ]);
-  const next = common.rotate(behavior, behaviors);
-  const [nextBehavior, nextContext] = next;
-  return {
-    type: "CLICK_SIGNIN_OR_UP",
-    payload: {
-      behavior: nextBehavior,
-      context: nextContext,
-      prev: context,
-      prevHover: context + "_hover"
-    }
-  };
-};
+export const clickSigninOrUp = behavior => ({
+  type: "CLICK_SIGNIN_OR_UP",
+  payload: { behavior: behavior }
+});
 
 export const inputUserName = username => ({
   type: "INPUT_USERNAME",
