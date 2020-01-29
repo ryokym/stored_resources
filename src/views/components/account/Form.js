@@ -36,9 +36,9 @@ const FormComponent = props => {
         </div>
         <div id="send">
           <input
-            className={behaviorState.context}
+            className={props.context}
             type="text"
-            value={behaviorState.context.toUpperCase()}
+            value={props.context.toUpperCase()}
             readonly
             onClick={() => actions.requestPost()}
           />
