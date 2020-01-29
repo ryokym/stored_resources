@@ -1,16 +1,16 @@
 import common from "../utils/common";
 
-export const clickSigninOrUp = (mode, context) => {
-  const modes = new Map([
+export const clickSigninOrUp = (behavior, context) => {
+  const behaviors = new Map([
     ["enter", "sign_in"],
     ["create", "sign_up"]
   ]);
-  const next = common.rotate(mode, modes);
-  const [nextMode, nextContext] = next;
+  const next = common.rotate(behavior, behaviors);
+  const [nextBehavior, nextContext] = next;
   return {
     type: "CLICK_SIGNIN_OR_UP",
     payload: {
-      mode: nextMode,
+      behavior: nextBehavior,
       context: nextContext,
       prev: context,
       prevHover: context + "_hover"
@@ -38,17 +38,17 @@ export const inputBucketVal = bucketval => ({
   payload: { bucketval }
 });
 
-export const requireVerifyForm = (mode, bucketkey) => ({
+export const requireVerifyForm = (behavior, bucketkey) => ({
   type: "REQUIRE_VERIFY_FORM",
   payload: {
-    mode: mode,
+    behavior: behavior,
     bucketkey: bucketkey
   }
 });
 
 export const requireSigninOrUpForm = () => ({
   type: "REQUIRE_SIGNIN_OR_UP_FORM",
-  payload: { mode: "create" }
+  payload: { behavior: "create" }
 });
 
 export const requestPost = () => ({

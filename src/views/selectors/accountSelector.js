@@ -1,6 +1,6 @@
-export const selectMode = state => state.modeReducer.mode;
+export const selectBehavior = state => state.behaviorReducer.behavior;
 export const selectFormdataForSignInOrUp = state => ({
-  actionType: state.modeReducer.mode,
+  actionType: state.behaviorReducer.behavior,
   username: state.formReducer.username,
   password: state.formReducer.password
 });

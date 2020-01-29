@@ -8,11 +8,10 @@ import Menu from "../components/account/Menu";
 
 class Account extends React.Component {
   render() {
-    console.log(accountActions);
-    const { modeState, actions } = this.props;
+    const { behaviorState, actions } = this.props;
     return (
       <>
-        <Menu modeState={modeState} actions={actions} />
+        <Menu behaviorState={behaviorState} actions={actions} />
         <Body {...this.props}>{this.props.children}</Body>
       </>
     );
@@ -22,7 +21,7 @@ class Account extends React.Component {
 const mapState = (state, ownProps) => ({
   modalState: state.modalReducer,
   formState: state.formReducer,
-  modeState: state.modeReducer
+  behaviorState: state.behaviorReducer
 });
 
 function mapDispatch(dispatch) {

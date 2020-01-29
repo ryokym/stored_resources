@@ -1,19 +1,22 @@
 import React from "react";
 
 const MenuComponent = props => {
-  const { modeState, actions } = props;
+  const { behaviorState, actions } = props;
   return (
     <div className="menu">
       <div className="menu_wrapper">
         <span>Do You Chenge To Mode ? </span>
         <div
           id="switcher"
-          className={modeState.prevHover}
+          className={behaviorState.prevHover}
           onClick={() =>
-            actions.clickSigninOrUp(modeState.mode, modeState.context)
+            actions.clickSigninOrUp(
+              behaviorState.behavior,
+              behaviorState.context
+            )
           }
         >
-          {modeState.prev.toUpperCase()}
+          {behaviorState.prev.toUpperCase()}
         </div>
       </div>
     </div>

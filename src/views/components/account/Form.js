@@ -10,7 +10,7 @@ const inputPasswordCallback = (callback, e) => {
 };
 
 const FormComponent = props => {
-  const { modeState, formState, actions } = props;
+  const { behaviorState, formState, actions } = props;
   return (
     <>
       <VerifyModal {...props} />
@@ -36,9 +36,9 @@ const FormComponent = props => {
         </div>
         <div id="send">
           <input
-            className={modeState.context}
+            className={behaviorState.context}
             type="text"
-            value={modeState.context.toUpperCase()}
+            value={behaviorState.context.toUpperCase()}
             readonly
             onClick={() => actions.requestPost()}
           />
