@@ -14,6 +14,11 @@ const structureReducer = (state = initialState, action) => {
       ...state,
       workdir: action.payload.workdir
     };
+  } else if (action.type === "REDRAW_STRUCTURE") {
+    return {
+      ...state,
+      structure: action.payload.structure
+    };
   } else {
     return {
       ...state
