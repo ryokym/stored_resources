@@ -9,6 +9,11 @@ const formReducer = (state, action) => {
       ...state,
       dirname: action.payload.dirname
     };
+  } else if (action.type === "CONTINUOUS_INPUT_MKDIR_FORM") {
+    return {
+      ...state,
+      dirname: action.payload.dirname
+    };
   } else if (action.type === "INPUT_USERNAME") {
     return {
       ...state,
