@@ -5,6 +5,10 @@ class MkdirModalComponent extends React.Component {
   constructor(props) {
     super(props);
     this.inputFocus = this.inputFocus.bind(this);
+    this.clickDone = this.clickDone.bind(this);
+    this.inputDirectoryNameCallback = this.inputDirectoryNameCallback.bind(
+      this
+    );
     this.extractPathWithOnlyDirectory = this.extractPathWithOnlyDirectory.bind(
       this
     );
@@ -13,6 +17,18 @@ class MkdirModalComponent extends React.Component {
 
   inputFocus(node) {
     node.current.focus();
+  }
+
+  clickDone(actions, dirname) {
+    actions.makeDirectory({
+      name: dirname,
+      path: this.path
+    });
+    this.inputFocus(this.input);
+  }
+
+  inputDirectoryNameCallback(callback, e) {
+    callback(e.target.value);
   }
 
   extractPathWithOnlyDirectory(workdir) {
@@ -53,17 +69,13 @@ class MkdirModalComponent extends React.Component {
         <input
           type="text"
           ref={this.input}
-          onChange={e => actions.inputDirectoryName(e.target.value)}
+          onChange={e =>
+            this.inputDirectoryNameCallback(actions.inputDirectoryName, e)
+          }
+          value={formState.dirname}
         />
         <div className="mkdir_modal_content_btns">
-          <div
-            onClick={() =>
-              actions.makeDirectory({
-                name: formState.dirname,
-                path: this.path
-              })
-            }
-          >
+          <div onClick={() => this.clickDone(actions, formState.dirname)}>
             DONE
           </div>
           <div onClick={() => actions.clickCloseModal()}>DISMISS</div>
