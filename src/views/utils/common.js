@@ -49,4 +49,18 @@ export default class Common {
     }
     return key;
   }
+
+  static validateFileFormat(input) {
+    const judgment =
+      input !== "" &&
+      input.length <= 40 &&
+      input.match(/^[A-Za-z0-9_\-.()?!&\[\]]*$/)
+        ? true
+        : false;
+    return judgment;
+  }
+
+  static getHierarchy(workdir) {
+    return workdir !== "" ? workdir.split("/").length : 0;
+  }
 }
