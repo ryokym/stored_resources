@@ -56,6 +56,16 @@ export const inputDirectoryName = dirname => ({
   payload: { dirname: dirname }
 });
 
+export const continuousInputMkdirForm = () => ({
+  type: "CONTINUOUS_INPUT_MKDIR_FORM",
+  payload: { dirname: "" }
+});
+
+export const redrawStructure = structure => ({
+  type: "REDRAW_STRUCTURE",
+  payload: { structure: structure }
+});
+
 export const clickExpand = () => ({
   type: "CLICK_EXPAND",
   payload: { behavior: "expand" }
