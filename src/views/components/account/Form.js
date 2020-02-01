@@ -1,6 +1,6 @@
 import React from "react";
-import common from "../../utils/common";
-import VerifyModal from "../modals/VerifyModal";
+import common from "~/utils/common";
+import VerifyModal from "~/components/modals/VerifyModal";
 
 const inputUserNameCallback = (callback, e) => {
   callback(e.target.value);

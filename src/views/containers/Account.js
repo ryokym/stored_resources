@@ -3,9 +3,9 @@ import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { accountActions } from "../actions";
-import common from "../utils/common";
-import Body from "../components/account/Body";
-import Menu from "../components/account/Menu";
+import common from "~/utils/common";
+import Body from "~/components/account/Body";
+import Menu from "~/components/account/Menu";
 
 class Account extends React.Component {
   constructor(props) {
