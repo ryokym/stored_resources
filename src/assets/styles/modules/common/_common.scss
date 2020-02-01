@@ -5,6 +5,7 @@
 @import "reset-css";
 @import "common.variable";
 @import "common.mixin";
+@import "react-toastify/scss/main";
 
 html {
   font-size: $baseFontSize;
