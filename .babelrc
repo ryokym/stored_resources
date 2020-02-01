@@ -2,6 +2,17 @@
   "presets": ["@babel/preset-env", "@babel/preset-react"],
   "plugins": [
     [
+      "babel-plugin-root-import",
+      {
+        "paths": [
+          {
+            "rootPathSuffix": "./src/views",
+            "rootPathPrefix": "~/"
+          }
+        ]
+      }
+    ],
+    [
       "@babel/plugin-proposal-class-properties",
       {
         "loose": true
