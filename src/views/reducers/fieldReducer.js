@@ -17,6 +17,11 @@ const fieldReducer = (state = initialState, action) => {
       content: action.payload.content,
       isview: action.payload.isview
     };
+  } else if (action.type === "CLICK_REMOVE_NEXT") {
+    return {
+      ...state,
+      isremove: action.payload.isremove
+    };
   } else {
     return {
       ...state

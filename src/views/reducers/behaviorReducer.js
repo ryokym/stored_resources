@@ -33,6 +33,11 @@ const behaviorReducer = (state = initialState, action) => {
       ...state,
       behavior: action.payload.behavior
     };
+  } else if (action.type === "CLICK_REMOVE_NEXT") {
+    return {
+      ...state,
+      behavior: action.payload.behavior
+    };
   } else {
     return {
       ...state
