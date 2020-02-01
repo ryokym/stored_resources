@@ -1,5 +1,7 @@
 import React from "react";
 import Modal from "react-modal";
+import baseToast from "~/configureToast";
+import { toast } from "react-toastify";
 
 class MkdirModalComponent extends React.Component {
   constructor(props) {
@@ -13,6 +15,7 @@ class MkdirModalComponent extends React.Component {
       this
     );
     this.input = React.createRef();
+    toast.configure(baseToast);
   }
 
   inputFocus(node) {
@@ -25,6 +28,7 @@ class MkdirModalComponent extends React.Component {
       path: this.path
     });
     this.inputFocus(this.input);
+    toast.info("Make Directory Succeeded!");
   }
 
   inputDirectoryNameCallback(callback, e) {

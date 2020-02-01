@@ -1,13 +1,11 @@
 import React from "react";
+import baseToast from "~/configureToast";
+import { toast } from "react-toastify";
 
 const RemoveFieldComponent = () => {
-  return (
-    <div id="remove_area">
-      <div id="remove_drop_area">
-        <img src="/assets/img/trush.png" />
-      </div>
-    </div>
-  );
+  toast.configure(baseToast);
+  toast.error("mode remove");
+  return <div id="remove_area">Click on the resource you want to delete</div>;
 };
 
 export default RemoveFieldComponent;
