@@ -72,8 +72,15 @@ export const clickExpand = () => ({
 });
 
 export const clickRemove = () => ({
-  type: "CLICK_REMOVE",
-  payload: { behavior: "remove" }
+  type: "CLICK_REMOVE"
+});
+
+export const clickRemoveNext = (hehavior, isremove) => ({
+  type: "CLICK_REMOVE_NEXT",
+  payload: {
+    behavior: hehavior,
+    isremove: isremove
+  }
 });
 
 export const clickEdit = () => ({
