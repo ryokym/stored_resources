@@ -3,9 +3,9 @@ import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { mainActions } from "../actions";
-import Layout from "../components/main/Layout";
-import Header from "../components/main/Header";
-import Body from "../components/main/Body";
+import Layout from "~/components/main/Layout";
+import Header from "~/components/main/Header";
+import Body from "~/components/main/Body";
 
 class Main extends React.Component {
   componentDidMount() {
@@ -15,7 +15,10 @@ class Main extends React.Component {
   render() {
     return (
       <Layout>
-        <Header actions={this.props.actions} />
+        <Header
+          actions={this.props.actions}
+          fieldState={this.props.fieldState}
+        />
         <Body {...this.props}></Body>
       </Layout>
     );
