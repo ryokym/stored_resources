@@ -56,10 +56,5 @@ module.exports = {
       path: dist
     })
   ],
-  resolve: {
-    alias: {
-      jui: "jquery-ui/ui"
-    }
-  },
   cache: true
 };
