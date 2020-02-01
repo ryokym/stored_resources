@@ -104,17 +104,16 @@
 
 #remove_area {
   @include flex();
-  display: none;
-  #remove_drop_area {
-    display: none;
-    height: 50vh;
-    @include flex();
-    border: $removeAreaBorder;
-    border-radius: 4%;
-    img {
-      max-width: 40%;
-    }
-  }
+  font-size: 20px;
+  color: #a6a6a6;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+.disabledIcon {
+  opacity: 0.2;
+  pointer-events: none;
+  cursor: default;
 }
 
 /* React-modal
