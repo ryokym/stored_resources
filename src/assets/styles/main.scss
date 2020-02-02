@@ -125,7 +125,7 @@
     @include modalContentTitle($mkdirThemeColor);
   }
   .mkdir_modal_content_workdir {
-    color: black;
+    color: $colorBlack;
     padding-top: 0.8rem;
     text-align: center;
   }
@@ -135,7 +135,7 @@
     font-size: 16px;
     line-height: 2;
     text-indent: 0.2rem;
-    color: black;
+    color: $colorBlack;
     outline: none;
     border: 1px solid $mkdirThemeColor;
     border-radius: 4px;
@@ -146,6 +146,25 @@
   }
   .mkdir_modal_content_btns {
     @include modalContentBtns($mkdirThemeColor);
+  }
+}
+
+.remove_modal_content {
+  @include modalContent(160px, 380px);
+  .remove_modal_content_title {
+    @include modalContentTitle($removeThemeColor);
+  }
+  .remove_modal_content_target {
+    @include flex();
+    color: $colorBlack;
+    font-weight: bold;
+    font-size: 17px;
+    height: 62px;
+    word-break: break-word;
+    padding: 0 1rem;
+  }
+  .remove_modal_content_btns {
+    @include modalContentBtns($removeThemeColor);
   }
 }
 
