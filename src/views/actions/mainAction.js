@@ -1,3 +1,7 @@
+import baseToast from "~/configureToast";
+import { toast } from "react-toastify";
+toast.configure(baseToast);
+
 export const initiate = () => ({
   type: "INITIATE"
 });
@@ -46,10 +50,13 @@ export const breakMkdirForm = () => ({
   payload: { behavior: "change", dirname: "" }
 });
 
-export const makeDirectory = ({ ...props }) => ({
-  type: "MAKE_DIRECTORY",
-  payload: props
-});
+export const makeDirectory = ({ ...props }) => {
+  toast.info("Make Directory Succeeded!");
+  return {
+    type: "MAKE_DIRECTORY",
+    payload: props
+  };
+};
 
 export const inputDirectoryName = dirname => ({
   type: "INPUT_DIRECTORY_NAME",
@@ -81,6 +88,34 @@ export const clickRemoveNext = (hehavior, isremove) => ({
     behavior: hehavior,
     isremove: isremove
   }
+});
+
+export const requireRemoveModal = (name, path) => ({
+  type: "REQUIRE_REMOVE_MODAL",
+  payload: {
+    name: name,
+    path: path
+  }
+});
+
+export const removeResource = ({ ...props }) => ({
+  type: "REMOVE_RESOURCE",
+  payload: props
+});
+
+export const didRemoveResource = () => {
+  toast.success("remove success!");
+  return {
+    type: "DID_REMOVE_RESOURCE",
+    payload: {
+      name: "",
+      path: ""
+    }
+  };
+};
+
+export const breakWorkingResource = () => ({
+  type: "BREAK_WORKING_RESOURCE"
 });
 
 export const clickEdit = () => ({
