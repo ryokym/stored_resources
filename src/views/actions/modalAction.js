@@ -5,12 +5,15 @@ export const clickCloseModal = () => ({
 
 export const clickOpenModalVerify = () => ({
   type: "CLICK_OPEN_MODAL_VERIFY",
-  payload: {
-    modalIsOpen: true
-  }
+  payload: { modalIsOpen: true }
 });
 
 export const clickOpenModalMkdir = () => ({
   type: "CLICK_OPEN_MODAL_MKDIR",
+  payload: { modalIsOpen: true }
+});
+
+export const clickOpenModalRemove = () => ({
+  type: "CLICK_OPEN_MODAL_REMOVE",
   payload: { modalIsOpen: true }
 });
