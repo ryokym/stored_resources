@@ -30,7 +30,8 @@ const mapState = (state, ownProps) => ({
   behaviorState: state.behaviorReducer,
   structureState: state.structureReducer,
   fieldState: state.fieldReducer,
-  formState: state.formReducer
+  formState: state.formReducer,
+  workState: state.workReducer
 });
 
 function mapDispatch(dispatch) {
