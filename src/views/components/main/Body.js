@@ -3,7 +3,8 @@ import Column from "./Column";
 import UploadField from "./fields/UploadField";
 import PreviewField from "./fields/PreviewField";
 import RemoveField from "./fields/RemoveField";
-import MkdirModal from "../modals/MkdirModal";
+import MkdirModal from "~/components/modals/MkdirModal";
+import RemoveModal from "~/components/modals/RemoveModal";
 
 class BodyComponent extends React.Component {
   constructor(props) {
@@ -53,6 +54,7 @@ class BodyComponent extends React.Component {
           <div id="toggles">{this.renderField(fieldState)}</div>
         </div>
         <MkdirModal {...this.props} />
+        <RemoveModal {...this.props} />
       </div>
     );
   }
