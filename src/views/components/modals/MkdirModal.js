@@ -1,7 +1,6 @@
 import React from "react";
 import Modal from "react-modal";
-import baseToast from "~/configureToast";
-import { toast } from "react-toastify";
+import common from "../../utils/common";
 
 class MkdirModalComponent extends React.Component {
   constructor(props) {
@@ -11,11 +10,7 @@ class MkdirModalComponent extends React.Component {
     this.inputDirectoryNameCallback = this.inputDirectoryNameCallback.bind(
       this
     );
-    this.extractPathWithOnlyDirectory = this.extractPathWithOnlyDirectory.bind(
-      this
-    );
     this.input = React.createRef();
-    toast.configure(baseToast);
   }
 
   inputFocus(node) {
@@ -28,21 +23,10 @@ class MkdirModalComponent extends React.Component {
       path: this.path
     });
     this.inputFocus(this.input);
-    toast.info("Make Directory Succeeded!");
   }
 
   inputDirectoryNameCallback(callback, e) {
     callback(e.target.value);
-  }
-
-  extractPathWithOnlyDirectory(workdir) {
-    const dirs = workdir.split("/");
-    const dirlist = dirs.filter((dir, index) => {
-      if (index < dirs.length - 1) {
-        return dir;
-      }
-    });
-    return dirlist.join("/");
   }
 
   render() {
@@ -53,9 +37,13 @@ class MkdirModalComponent extends React.Component {
       formState,
       actions
     } = this.props;
+    const { workdir } = structureState;
     this.path = fieldState.isview
-      ? this.extractPathWithOnlyDirectory(structureState.workdir)
-      : structureState.workdir;
+      ? common.rebuildPathForSpecifiedHierarchy(
+          workdir,
+          common.getHierarchy(workdir) - 1
+        )
+      : workdir;
     return (
       <Modal
         isOpen={modalState.modalMkdirIsOpen}

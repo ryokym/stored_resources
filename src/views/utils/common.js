@@ -60,6 +60,16 @@ export default class Common {
     return judgment;
   }
 
+  static rebuildPathForSpecifiedHierarchy(path, hierarchy) {
+    const dirs = path.split("/");
+    const dirlist = dirs.filter((dir, index) => {
+      if (index < hierarchy) {
+        return dir;
+      }
+    });
+    return dirlist.join("/");
+  }
+
   static getHierarchy(workdir) {
     return workdir !== "" ? workdir.split("/").length : 0;
   }
