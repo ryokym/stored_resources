@@ -1,6 +1,7 @@
 const initialState = {
   modalMkdirIsOpen: false,
-  modalVerifyIsOpen: false
+  modalVerifyIsOpen: false,
+  modalRemoveIsOpen: false
 };
 
 const modalReducer = (state = initialState, action) => {
@@ -13,6 +14,11 @@ const modalReducer = (state = initialState, action) => {
     return {
       ...state,
       modalVerifyIsOpen: action.payload.modalIsOpen
+    };
+  } else if (action.type === "CLICK_OPEN_MODAL_REMOVE") {
+    return {
+      ...state,
+      modalRemoveIsOpen: action.payload.modalIsOpen
     };
   } else if (action.type === "CLICK_CLOSE_MODAL") {
     return {
