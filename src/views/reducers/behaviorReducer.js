@@ -3,7 +3,12 @@ const initialState = {
 };
 
 const behaviorReducer = (state = initialState, action) => {
-  if (action.type === "REQUIRE_MKDIR_FORM") {
+  if (action.type === "GET_NEW_STRUCTURE") {
+    return {
+      ...state,
+      behavior: action.payload.behavior
+    };
+  } else if (action.type === "REQUIRE_MKDIR_FORM") {
     return {
       ...state,
       behavior: action.payload.behavior
