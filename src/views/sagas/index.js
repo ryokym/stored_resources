@@ -5,6 +5,7 @@ import clickRowSaga from "./clickRowSaga";
 import clickRemoveSaga from "./clickRemoveSaga";
 import InitiateSaga from "./InitiateSaga";
 import makeDirectorySaga from "./makeDirectorySaga";
+import removeResourceSaga from "./removeResourceSaga";
 
 export function* accountRootSaga() {
   yield all([requestPostSaga]);
@@ -16,6 +17,7 @@ export function* mainRootSaga() {
     clickRowSaga,
     clickRemoveSaga,
     InitiateSaga,
-    makeDirectorySaga
+    makeDirectorySaga,
+    removeResourceSaga
   ]);
 }
