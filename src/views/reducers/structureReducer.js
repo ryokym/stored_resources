@@ -1,28 +1,29 @@
+import ActionTypes from "~/utils/actionTypes";
+
 const initialState = {
   structure: new Map(),
   workdir: ""
 };
 
 const structureReducer = (state = initialState, action) => {
-  if (action.type === "GET_NEW_STRUCTURE") {
-    return {
-      ...state,
-      structure: action.payload.structure
-    };
-  } else if (action.type === "PRINT_WORKING_DIRECTORY") {
-    return {
-      ...state,
-      workdir: action.payload.workdir
-    };
-  } else if (action.type === "REDRAW_STRUCTURE") {
-    return {
-      ...state,
-      structure: action.payload.structure
-    };
-  } else {
-    return {
-      ...state
-    };
+  switch (action.type) {
+    case ActionTypes.GET_NEW_STRUCTURE:
+      return {
+        ...state,
+        structure: action.payload.structure
+      };
+    case ActionTypes.PRINT_WORKING_DIRECTORY:
+      return {
+        ...state,
+        workdir: action.payload.workdir
+      };
+    case ActionTypes.REDRAW_STRUCTURE:
+      return {
+        ...state,
+        structure: action.payload.structure
+      };
+    default:
+      return { ...state };
   }
 };
 

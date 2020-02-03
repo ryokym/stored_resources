@@ -1,3 +1,5 @@
+import ActionTypes from "~/utils/actionTypes";
+
 const initialState = {
   content: "",
   isview: false,
@@ -5,27 +7,26 @@ const initialState = {
 };
 
 const fieldReducer = (state = initialState, action) => {
-  if (action.type === "GET_FILE_CONTENT") {
-    return {
-      ...state,
-      content: action.payload.content,
-      isview: action.payload.isview
-    };
-  } else if (action.type === "CLICK_DIRECTORY_RESOURCE") {
-    return {
-      ...state,
-      content: action.payload.content,
-      isview: action.payload.isview
-    };
-  } else if (action.type === "CLICK_REMOVE_NEXT") {
-    return {
-      ...state,
-      isremove: action.payload.isremove
-    };
-  } else {
-    return {
-      ...state
-    };
+  switch (action.type) {
+    case ActionTypes.GET_FILE_CONTENT:
+      return {
+        ...state,
+        content: action.payload.content,
+        isview: action.payload.isview
+      };
+    case ActionTypes.CLICK_DIRECTORY_RESOURCE:
+      return {
+        ...state,
+        content: action.payload.content,
+        isview: action.payload.isview
+      };
+    case ActionTypes.CLICK_REMOVE_NEXT:
+      return {
+        ...state,
+        isremove: action.payload.isremove
+      };
+    default:
+      return { ...state };
   }
 };
 

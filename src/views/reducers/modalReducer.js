@@ -1,3 +1,5 @@
+import ActionTypes from "~/utils/actionTypes";
+
 const initialState = {
   modalMkdirIsOpen: false,
   modalVerifyIsOpen: false,
@@ -5,29 +7,28 @@ const initialState = {
 };
 
 const modalReducer = (state = initialState, action) => {
-  if (action.type === "CLICK_OPEN_MODAL_MKDIR") {
-    return {
-      ...state,
-      modalMkdirIsOpen: action.payload.modalIsOpen
-    };
-  } else if (action.type === "CLICK_OPEN_MODAL_VERIFY") {
-    return {
-      ...state,
-      modalVerifyIsOpen: action.payload.modalIsOpen
-    };
-  } else if (action.type === "CLICK_OPEN_MODAL_REMOVE") {
-    return {
-      ...state,
-      modalRemoveIsOpen: action.payload.modalIsOpen
-    };
-  } else if (action.type === "CLICK_CLOSE_MODAL") {
-    return {
-      ...initialState
-    };
-  } else {
-    return {
-      ...state
-    };
+  switch (action.type) {
+    case ActionTypes.CLICK_OPEN_MODAL_MKDIR:
+      return {
+        ...state,
+        modalMkdirIsOpen: action.payload.modalIsOpen
+      };
+    case ActionTypes.CLICK_OPEN_MODAL_VERIFY:
+      return {
+        ...state,
+        modalVerifyIsOpen: action.payload.modalIsOpen
+      };
+    case ActionTypes.CLICK_OPEN_MODAL_REMOVE:
+      return {
+        ...state,
+        modalRemoveIsOpen: action.payload.modalIsOpen
+      };
+    case ActionTypes.CLICK_CLOSE_MODAL:
+      return {
+        ...initialState
+      };
+    default:
+      return { ...state };
   }
 };
 

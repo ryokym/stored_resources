@@ -1,52 +1,53 @@
+import ActionTypes from "~/utils/actionTypes";
+
 const initialState = {
   behavior: "enter"
 };
 
 const behaviorReducer = (state = initialState, action) => {
-  if (action.type === "GET_NEW_STRUCTURE") {
-    return {
-      ...state,
-      behavior: action.payload.behavior
-    };
-  } else if (action.type === "REQUIRE_MKDIR_FORM") {
-    return {
-      ...state,
-      behavior: action.payload.behavior
-    };
-  } else if (action.type === "BREAK_MKDIR_FORM") {
-    return {
-      ...state,
-      behavior: action.payload.behavior
-    };
-  } else if (action.type === "GET_RESOURCES") {
-    return {
-      ...state,
-      behavior: action.payload.behavior
-    };
-  } else if (action.type === "CLICK_SIGNIN_OR_UP") {
-    return {
-      ...state,
-      behavior: action.payload.behavior
-    };
-  } else if (action.type === "REQUIRE_VERIFY_FORM") {
-    return {
-      ...state,
-      behavior: action.payload.behavior
-    };
-  } else if (action.type === "REQUIRE_SIGNIN_OR_UP_FORM") {
-    return {
-      ...state,
-      behavior: action.payload.behavior
-    };
-  } else if (action.type === "CLICK_REMOVE_NEXT") {
-    return {
-      ...state,
-      behavior: action.payload.behavior
-    };
-  } else {
-    return {
-      ...state
-    };
+  switch (action.type) {
+    case ActionTypes.GET_NEW_STRUCTURE:
+      return {
+        ...state,
+        behavior: action.payload.behavior
+      };
+    case ActionTypes.REQUIRE_MKDIR_FORM:
+      return {
+        ...state,
+        behavior: action.payload.behavior
+      };
+    case ActionTypes.BREAK_MKDIR_FORM:
+      return {
+        ...state,
+        behavior: action.payload.behavior
+      };
+    case ActionTypes.GET_RESOURCES:
+      return {
+        ...state,
+        behavior: action.payload.behavior
+      };
+    case ActionTypes.CLICK_SIGNIN_OR_UP:
+      return {
+        ...state,
+        behavior: action.payload.behavior
+      };
+    case ActionTypes.REQUIRE_VERIFY_FORM:
+      return {
+        ...state,
+        behavior: action.payload.behavior
+      };
+    case ActionTypes.REQUIRE_SIGNIN_OR_UP_FORM:
+      return {
+        ...state,
+        behavior: action.payload.behavior
+      };
+    case ActionTypes.CLICK_REMOVE_NEXT:
+      return {
+        ...state,
+        behavior: action.payload.behavior
+      };
+    default:
+      return { ...state };
   }
 };
 

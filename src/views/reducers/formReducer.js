@@ -1,48 +1,49 @@
+import ActionTypes from "~/utils/actionTypes";
+
 const formReducer = (state, action) => {
-  if (action.type === "INPUT_DIRECTORY_NAME") {
-    return {
-      ...state,
-      dirname: action.payload.dirname
-    };
-  } else if (action.type === "BREAK_MKDIR_FORM") {
-    return {
-      ...state,
-      dirname: action.payload.dirname
-    };
-  } else if (action.type === "CONTINUOUS_INPUT_MKDIR_FORM") {
-    return {
-      ...state,
-      dirname: action.payload.dirname
-    };
-  } else if (action.type === "INPUT_USERNAME") {
-    return {
-      ...state,
-      username: action.payload.username
-    };
-  } else if (action.type === "INPUT_PASSWORD") {
-    return {
-      ...state,
-      password: action.payload.password
-    };
-  } else if (action.type === "INPUT_BUCKET") {
-    return {
-      ...state,
-      bucket: action.payload.bucket
-    };
-  } else if (action.type === "INPUT_BUCKETVAL") {
-    return {
-      ...state,
-      bucketval: action.payload.bucketval
-    };
-  } else if (action.type === "REQUIRE_VERIFY_FORM") {
-    return {
-      ...state,
-      bucketkey: action.payload.bucketkey
-    };
-  } else {
-    return {
-      ...state
-    };
+  switch (action.type) {
+    case ActionTypes.INPUT_DIRECTORY_NAME:
+      return {
+        ...state,
+        dirname: action.payload.dirname
+      };
+    case ActionTypes.BREAK_MKDIR_FORM:
+      return {
+        ...state,
+        dirname: action.payload.dirname
+      };
+    case ActionTypes.CONTINUOUS_INPUT_MKDIR_FORM:
+      return {
+        ...state,
+        dirname: action.payload.dirname
+      };
+    case ActionTypes.INPUT_USERNAME:
+      return {
+        ...state,
+        username: action.payload.username
+      };
+    case ActionTypes.INPUT_PASSWORD:
+      return {
+        ...state,
+        password: action.payload.password
+      };
+    case ActionTypes.INPUT_BUCKET:
+      return {
+        ...state,
+        bucket: action.payload.bucket
+      };
+    case ActionTypes.INPUT_BUCKETVAL:
+      return {
+        ...state,
+        bucketval: action.payload.bucketval
+      };
+    case ActionTypes.REQUIRE_VERIFY_FORM:
+      return {
+        ...state,
+        bucketkey: action.payload.bucketkey
+      };
+    default:
+      return { ...state };
   }
 };
 
