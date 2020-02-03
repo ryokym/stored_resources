@@ -1,41 +1,38 @@
 import ActionTypes from "~/utils/actionTypes";
 
-export const clickSigninOrUp = behavior => ({
+export const clickSigninOrUp = ({ ...props }) => ({
   type: ActionTypes.CLICK_SIGNIN_OR_UP,
-  payload: { behavior: behavior }
+  payload: props
 });
 
-export const inputUserName = username => ({
+export const inputUserName = ({ ...props }) => ({
   type: ActionTypes.INPUT_USERNAME,
-  payload: { username }
+  payload: props
 });
 
-export const inputPassword = password => ({
+export const inputPassword = ({ ...props }) => ({
   type: ActionTypes.INPUT_PASSWORD,
-  payload: { password }
+  payload: props
 });
 
-export const inputBucket = bucket => ({
+export const inputBucket = ({ ...props }) => ({
   type: ActionTypes.INPUT_BUCKET,
-  payload: { bucket }
+  payload: props
 });
 
-export const inputBucketVal = bucketval => ({
+export const inputBucketVal = ({ ...props }) => ({
   type: ActionTypes.INPUT_BUCKETVAL,
-  payload: { bucketval }
+  payload: props
 });
 
-export const requireVerifyForm = (behavior, bucketkey) => ({
+export const requireVerifyForm = ({ ...props }) => ({
   type: ActionTypes.REQUIRE_VERIFY_FORM,
-  payload: {
-    behavior: behavior,
-    bucketkey: bucketkey
-  }
+  payload: props
 });
 
-export const requireSigninOrUpForm = () => ({
+export const requireSigninOrUpForm = ({ ...props }) => ({
   type: ActionTypes.REQUIRE_SIGNIN_OR_UP_FORM,
-  payload: { behavior: "create" }
+  payload: props
 });
 
 export const requestPost = () => ({

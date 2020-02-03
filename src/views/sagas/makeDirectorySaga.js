@@ -19,8 +19,16 @@ function* fetchMakeDirectory(props) {
     let column = structure.get(hierarchy);
     column.push(params.name);
     structure.set(hierarchy, column);
-    yield put(mainActions.continuousInputMkdirForm());
-    yield put(mainActions.redrawStructure(structure));
+    yield put(
+      mainActions.continuousInputMkdirForm({
+        dirname: ""
+      })
+    );
+    yield put(
+      mainActions.redrawStructure({
+        structure: structure
+      })
+    );
   }
 }
 export default takeLatest("MAKE_DIRECTORY", fetchMakeDirectory);

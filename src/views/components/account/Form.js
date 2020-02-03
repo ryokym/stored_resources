@@ -3,10 +3,10 @@ import common from "~/utils/common";
 import VerifyModal from "~/components/modals/VerifyModal";
 
 const inputUserNameCallback = (callback, e) => {
-  callback(e.target.value);
+  callback({ username: e.target.value });
 };
 const inputPasswordCallback = (callback, e) => {
-  callback(e.target.value);
+  callback({ password: e.target.value });
 };
 
 const FormComponent = props => {

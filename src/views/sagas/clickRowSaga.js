@@ -14,7 +14,7 @@ function doAsync(params) {
 }
 
 function* dispatchActionAtBehavior(props) {
-  let params = props.payload;
+  let { isSelected, ...params } = props.payload;
   const behavior = yield select(selectBehavior);
   let workdir = yield select(selectWorkingDirectory);
   params.actionType = behavior;
@@ -25,7 +25,11 @@ function* dispatchActionAtBehavior(props) {
     const newWorkdir = isRootdir
       ? params.name
       : [workdir, params.name].join("/");
-    yield put(mainActions.printWorkingDirectory(newWorkdir));
+    yield put(
+      mainActions.printWorkingDirectory({
+        workdir: newWorkdir
+      })
+    );
     params.path = workdir;
     let response = yield call(doAsync, params);
     response = JSON.parse(response);
@@ -36,18 +40,39 @@ function* dispatchActionAtBehavior(props) {
       params.hierarchy
     );
     if (response.isFile === false) {
-      yield put(mainActions.clickDirectoryResource());
+      yield put(
+        mainActions.clickDirectoryResource({
+          content: "",
+          isview: false
+        })
+      );
       newStructure.set(newStructure.size, response.result);
     } else {
-      yield put(mainActions.getFileContent(response.result));
+      yield put(
+        mainActions.getFileContent({
+          content: response.result,
+          isview: true
+        })
+      );
     }
-    yield put(mainActions.getNewStructure("change", newStructure));
+    yield put(
+      mainActions.getNewStructure({
+        behavior: "change",
+        structure: newStructure
+      })
+    );
   } else if (params.actionType === "remove") {
     params.path = common.rebuildPathForSpecifiedHierarchy(
       workdir,
       params.hierarchy
     );
-    yield put(mainActions.requireRemoveModal(params.name, params.path));
+    yield put(
+      mainActions.requireRemoveModal({
+        name: params.name,
+        path: params.path,
+        isSelected: isSelected
+      })
+    );
     yield put(mainActions.clickOpenModalRemove());
   }
 }

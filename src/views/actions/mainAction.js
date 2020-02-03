@@ -1,5 +1,5 @@
 import ActionTypes from "~/utils/actionTypes";
-import baseToast from "~/configureToast";
+import { baseToast, toastMsg } from "~/configureToast";
 import { toast } from "react-toastify";
 toast.configure(baseToast);
 
@@ -12,91 +12,71 @@ export const clickRow = ({ ...props }) => ({
   payload: props
 });
 
-export const getNewStructure = (behavior, structure) => ({
+export const getNewStructure = ({ ...props }) => ({
   type: ActionTypes.GET_NEW_STRUCTURE,
-  payload: {
-    behavior: behavior,
-    structure: structure
-  }
+  payload: props
 });
 
-export const printWorkingDirectory = workdir => ({
+export const printWorkingDirectory = ({ ...props }) => ({
   type: ActionTypes.PRINT_WORKING_DIRECTORY,
-  payload: { workdir: workdir }
+  payload: props
 });
 
-export const getFileContent = content => ({
+export const getFileContent = ({ ...props }) => ({
   type: ActionTypes.GET_FILE_CONTENT,
-  payload: {
-    content: content,
-    isview: true
-  }
+  payload: props
 });
 
-export const clickDirectoryResource = () => ({
+export const clickDirectoryResource = ({ ...props }) => ({
   type: ActionTypes.CLICK_DIRECTORY_RESOURCE,
-  payload: {
-    content: "",
-    isview: false
-  }
+  payload: props
 });
 
-export const requireMkdirForm = () => ({
+export const requireMkdirForm = ({ ...props }) => ({
   type: ActionTypes.REQUIRE_MKDIR_FORM,
-  payload: { behavior: "mkdir" }
+  payload: props
 });
 
-export const breakMkdirForm = () => ({
+export const breakMkdirForm = ({ ...props }) => ({
   type: ActionTypes.BREAK_MKDIR_FORM,
-  payload: { behavior: "change", dirname: "" }
+  payload: props
 });
 
 export const makeDirectory = ({ ...props }) => {
-  toast.info("Make Directory Succeeded!");
+  toast.info(toastMsg.makeDirectory);
   return {
     type: ActionTypes.MAKE_DIRECTORY,
     payload: props
   };
 };
 
-export const inputDirectoryName = dirname => ({
+export const inputDirectoryName = ({ ...props }) => ({
   type: ActionTypes.INPUT_DIRECTORY_NAME,
-  payload: { dirname: dirname }
+  payload: props
 });
 
-export const continuousInputMkdirForm = () => ({
+export const continuousInputMkdirForm = ({ ...props }) => ({
   type: ActionTypes.CONTINUOUS_INPUT_MKDIR_FORM,
-  payload: { dirname: "" }
+  payload: props
 });
 
-export const redrawStructure = structure => ({
+export const redrawStructure = ({ ...props }) => ({
   type: ActionTypes.REDRAW_STRUCTURE,
-  payload: { structure: structure }
-});
-
-export const clickExpand = () => ({
-  type: ActionTypes.CLICK_EXPAND,
-  payload: { behavior: "expand" }
+  payload: props
 });
 
 export const clickRemove = () => ({
   type: ActionTypes.CLICK_REMOVE
 });
 
-export const clickRemoveNext = (hehavior, isremove) => ({
+export const clickRemoveNext = ({ ...props }) => ({
   type: ActionTypes.CLICK_REMOVE_NEXT,
-  payload: {
-    behavior: hehavior,
-    isremove: isremove
-  }
+  payload: props
 });
 
-export const requireRemoveModal = (name, path) => ({
+export const requireRemoveModal = ({ ...props }) => ({
   type: ActionTypes.REQUIRE_REMOVE_MODAL,
-  payload: {
-    name: name,
-    path: path
-  }
+  payload: props
 });
 
 export const removeResource = ({ ...props }) => ({
@@ -104,19 +84,21 @@ export const removeResource = ({ ...props }) => ({
   payload: props
 });
 
-export const didRemoveResource = () => {
-  toast.success("remove success!");
+export const didRemoveResource = ({ ...props }) => {
+  toast.success(toastMsg.didRemoveResource);
   return {
     type: ActionTypes.DID_REMOVE_RESOURCE,
-    payload: {
-      name: "",
-      path: ""
-    }
+    payload: props
   };
 };
 
 export const breakWorkingResource = () => ({
   type: ActionTypes.BREAK_WORKING_RESOURCE
+});
+
+export const clickExpand = () => ({
+  type: ActionTypes.CLICK_EXPAND,
+  payload: { behavior: "expand" }
 });
 
 export const clickEdit = () => ({

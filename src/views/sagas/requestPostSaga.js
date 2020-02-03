@@ -16,7 +16,12 @@ function* dispatch(response) {
   if (response === "enter") {
     location.href = "/";
   } else if (response === "create") {
-    yield put(accountActions.requireVerifyForm("verify", common.createKey()));
+    yield put(
+      accountActions.requireVerifyForm({
+        behavior: "verify",
+        bucketkey: common.createKey()
+      })
+    );
     yield put(accountActions.clickOpenModalVerify());
   } else if (response === "verify") {
     alert("account creation suceeded!");

@@ -26,7 +26,7 @@ class MkdirModalComponent extends React.Component {
   }
 
   inputDirectoryNameCallback(callback, e) {
-    callback(e.target.value);
+    callback({ dirname: e.target.value });
   }
 
   render() {
@@ -47,12 +47,14 @@ class MkdirModalComponent extends React.Component {
     return (
       <Modal
         isOpen={modalState.modalMkdirIsOpen}
-        onAfterOpen={actions.requireMkdirForm}
+        onAfterOpen={() => actions.requireMkdirForm({ behavior: "mkdir" })}
         className="mkdir_modal_content"
         overlayClassName="modal_overlay"
         onRequestClose={actions.clickCloseModal}
         contentRef={() => this.inputFocus(this.input)}
-        onAfterClose={() => actions.breakMkdirForm()}
+        onAfterClose={() =>
+          actions.breakMkdirForm({ behavior: "change", dirname: "" })
+        }
       >
         <p className="mkdir_modal_content_title">
           CREATE IN THE FOLLOWING DIRECTORY.
@@ -70,7 +72,15 @@ class MkdirModalComponent extends React.Component {
           <div onClick={() => this.clickDone(actions, formState.dirname)}>
             DONE
           </div>
-          <div onClick={() => actions.clickCloseModal()}>DISMISS</div>
+          <div
+            onClick={() =>
+              actions.clickCloseModal({
+                modalIsOpen: false
+              })
+            }
+          >
+            DISMISS
+          </div>
         </div>
       </Modal>
     );

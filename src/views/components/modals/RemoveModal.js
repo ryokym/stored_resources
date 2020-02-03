@@ -28,7 +28,15 @@ const RemoveModalComponent = props => {
         >
           SURE
         </div>
-        <div onClick={() => actions.clickCloseModal()}>CANCEL</div>
+        <div
+          onClick={() =>
+            actions.clickCloseModal({
+              modalIsOpen: false
+            })
+          }
+        >
+          CANCEL
+        </div>
       </div>
     </Modal>
   );

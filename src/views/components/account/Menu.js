@@ -9,7 +9,9 @@ const MenuComponent = props => {
         <div
           id="switcher"
           className={props.contextHover}
-          onClick={() => actions.clickSigninOrUp(props.anotherBehavior)}
+          onClick={() =>
+            actions.clickSigninOrUp({ behavior: props.anotherBehavior })
+          }
         >
           {props.anotherContext.toUpperCase()}
         </div>

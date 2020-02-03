@@ -13,7 +13,12 @@ function* fetchRemoveResource(props) {
   yield call(doAsync, params);
   // TODO
   // 背景ディレクトリ構造を再描画
-  yield put(mainActions.didRemoveResource());
+  yield put(
+    mainActions.didRemoveResource({
+      name: "",
+      path: ""
+    })
+  );
   yield put(mainActions.clickCloseModal());
 }
 export default takeLatest("REMOVE_RESOURCE", fetchRemoveResource);

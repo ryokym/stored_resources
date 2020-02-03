@@ -14,7 +14,12 @@ function* fetchListBucket() {
   const resources = JSON.parse(response);
   let structure = yield select(selectStructure);
   structure.set(structure.size, resources);
-  yield put(mainActions.getNewStructure("change", structure));
+  yield put(
+    mainActions.getNewStructure({
+      behavior: "change",
+      structure: structure
+    })
+  );
 }
 
 export default takeLatest("INITIATE", fetchListBucket);
