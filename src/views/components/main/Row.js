@@ -7,13 +7,14 @@ class RowComponent extends React.Component {
         <>
           <div
             className={`row ${
-              item === this.props.highLight ? "highLighted" : ""
+              item === this.props.selected ? "highLighted" : ""
             }`}
             data-hierarchy={this.props.hierarchy}
             onClick={e =>
               this.props.clickRow({
                 name: e.target.innerText,
-                hierarchy: e.target.getAttribute("data-hierarchy")
+                hierarchy: e.target.getAttribute("data-hierarchy"),
+                isSelected: item === this.props.selected ? true : false
               })
             }
           >

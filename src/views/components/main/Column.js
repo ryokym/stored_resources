@@ -2,7 +2,7 @@ import React from "react";
 import Row from "./Row";
 
 const ColumnComponent = ({ ...props }) => {
-  const { structureState, index, actions, highLight } = props;
+  const { structureState, index, actions, selected } = props;
   return (
     <div id="column">
       <div className="level">
@@ -10,7 +10,7 @@ const ColumnComponent = ({ ...props }) => {
           structure={structureState.structure.get(index)}
           hierarchy={index}
           clickRow={actions.clickRow}
-          highLight={highLight}
+          selected={selected}
         />
       </div>
     </div>

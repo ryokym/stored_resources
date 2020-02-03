@@ -35,7 +35,7 @@ class BodyComponent extends React.Component {
             structureState={structureState}
             index={index}
             actions={actions}
-            highLight={items[index] || ""}
+            selected={items[index] || ""}
           >
             {this.props.children}
           </Column>
