@@ -1,19 +1,21 @@
+import ActionTypes from "~/utils/actionTypes";
+
 export const clickCloseModal = () => ({
-  type: "CLICK_CLOSE_MODAL",
+  type: ActionTypes.CLICK_CLOSE_MODAL,
   payload: { modalIsOpen: false }
 });
 
 export const clickOpenModalVerify = () => ({
-  type: "CLICK_OPEN_MODAL_VERIFY",
+  type: ActionTypes.CLICK_OPEN_MODAL_VERIFY,
   payload: { modalIsOpen: true }
 });
 
 export const clickOpenModalMkdir = () => ({
-  type: "CLICK_OPEN_MODAL_MKDIR",
+  type: ActionTypes.CLICK_OPEN_MODAL_MKDIR,
   payload: { modalIsOpen: true }
 });
 
 export const clickOpenModalRemove = () => ({
-  type: "CLICK_OPEN_MODAL_REMOVE",
+  type: ActionTypes.CLICK_OPEN_MODAL_REMOVE,
   payload: { modalIsOpen: true }
 });
