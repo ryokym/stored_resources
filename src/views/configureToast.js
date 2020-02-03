@@ -4,7 +4,7 @@ import { css } from "glamor";
  * for more information : https://github.com/fkhadra/react-toastify#Api
  */
 
-const baseToast = {
+export const baseToast = {
   position: "top-right",
   autoClose: 3000,
   hideProgressBar: true,
@@ -25,4 +25,8 @@ const baseToast = {
   draggable: false
 };
 
-export default baseToast;
+export const toastMsg = {
+  makeDirectory: "Make Directory Succeeded!",
+  didRemoveResource: "remove success!",
+  clickRemove: "mode remove"
+};
