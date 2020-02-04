@@ -2,7 +2,9 @@ import ActionTypes from "~/utils/actionTypes";
 
 const initialState = {
   name: "",
-  path: ""
+  path: "",
+  hierarchy: "",
+  isSelected: false
 };
 
 const workReducer = (state = initialState, action) => {
@@ -11,7 +13,9 @@ const workReducer = (state = initialState, action) => {
       return {
         ...state,
         name: action.payload.name,
-        path: action.payload.path
+        path: action.payload.path,
+        hierarchy: action.payload.hierarchy,
+        isSelected: action.payload.isSelected
       };
     case ActionTypes.BREAK_WORKING_RESOURCE:
       return {
@@ -19,8 +23,7 @@ const workReducer = (state = initialState, action) => {
       };
     case ActionTypes.DID_REMOVE_RESOURCE:
       return {
-        name: action.payload.name,
-        path: action.payload.path
+        ...initialState
       };
     default:
       return { ...state };

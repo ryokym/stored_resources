@@ -63,14 +63,12 @@ function* dispatchActionAtBehavior(props) {
       })
     );
   } else if (params.actionType === "remove") {
-    params.path = common.rebuildPathForSpecifiedHierarchy(
-      workdir,
-      params.hierarchy
-    );
+    params.path = yield call(rebuildWorkdir, workdir, params.hierarchy);
     yield put(
       mainActions.requireRemoveModal({
         name: params.name,
         path: params.path,
+        hierarchy: params.hierarchy,
         isSelected: isSelected
       })
     );
