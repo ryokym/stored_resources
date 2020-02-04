@@ -14,10 +14,10 @@ class BodyComponent extends React.Component {
   }
 
   renderField(fieldState) {
-    if (fieldState.isview === true) {
-      return <PreviewField text={fieldState.content} />;
-    } else if (fieldState.isremove === true) {
+    if (fieldState.isremove === true) {
       return <RemoveField />;
+    } else if (fieldState.isview === true) {
+      return <PreviewField text={fieldState.content} />;
     } else {
       return <UploadField />;
     }
