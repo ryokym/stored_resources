@@ -1,5 +1,6 @@
 import { call, takeLatest, put } from "redux-saga/effects";
-import { mainActions } from "../actions";
+import { mainActions } from "~/actions";
+import ActionTypes from "~/utils/actionTypes";
 import common from "~/utils/common";
 
 function doAsync(params) {
@@ -21,4 +22,4 @@ function* fetchRemoveResource(props) {
   );
   yield put(mainActions.clickCloseModal());
 }
-export default takeLatest("REMOVE_RESOURCE", fetchRemoveResource);
+export default takeLatest(ActionTypes.REMOVE_RESOURCE, fetchRemoveResource);

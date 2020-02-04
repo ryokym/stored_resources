@@ -1,11 +1,12 @@
-import { accountActions } from "../actions";
 import { select, call, takeLatest, put } from "redux-saga/effects";
 import {
   selectBehavior,
   selectFormdataForSignInOrUp,
   selectFormdataForCreateAccount
-} from "../selectors/accountSelector";
-import common from "../utils/common";
+} from "~/selectors/accountSelector";
+import { accountActions } from "~/actions";
+import ActionTypes from "~/utils/actionTypes";
+import common from "~/utils/common";
 
 function doAsync(formdata) {
   const pathto = "/api/account.php";
@@ -43,4 +44,4 @@ function* executeIfNeeded() {
   yield call(dispatch, response);
 }
 
-export default takeLatest("REQUEST_POST", executeIfNeeded);
+export default takeLatest(ActionTypes.REQUEST_POST, executeIfNeeded);

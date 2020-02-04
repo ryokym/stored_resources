@@ -1,7 +1,8 @@
 import { select, call, takeLatest, put } from "redux-saga/effects";
-import { selectStructure } from "../selectors/mainSelector";
-import { mainActions } from "../actions";
-import common from "../utils/common";
+import { selectStructure } from "~/selectors/mainSelector";
+import { mainActions } from "~/actions";
+import ActionTypes from "~/utils/actionTypes";
+import common from "~/utils/common";
 
 function doAsync(params) {
   const pathto = "/api/main.php";
@@ -22,4 +23,4 @@ function* fetchListBucket() {
   );
 }
 
-export default takeLatest("INITIATE", fetchListBucket);
+export default takeLatest(ActionTypes.INITIATE, fetchListBucket);

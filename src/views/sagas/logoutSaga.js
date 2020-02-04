@@ -1,5 +1,6 @@
 import { call, takeLatest } from "redux-saga/effects";
-import common from "../utils/common";
+import ActionTypes from "~/utils/actionTypes";
+import common from "~/utils/common";
 
 function doAsync() {
   const pathto = "/api/main.php";
@@ -11,4 +12,4 @@ function* executeLogout() {
   location.href = "/";
 }
 
-export default takeLatest("CLICK_LOGOUT", executeLogout);
+export default takeLatest(ActionTypes.CLICK_LOGOUT, executeLogout);

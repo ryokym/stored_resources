@@ -1,6 +1,7 @@
 import { select, takeLatest, put } from "redux-saga/effects";
-import { selectFieldStatusForRemove } from "../selectors/mainSelector";
-import { mainActions } from "../actions";
+import { selectFieldStatusForRemove } from "~/selectors/mainSelector";
+import { mainActions } from "~/actions";
+import ActionTypes from "~/utils/actionTypes";
 import { baseToast, toastMsg } from "~/configureToast";
 import { toast } from "react-toastify";
 toast.configure(baseToast);
@@ -17,4 +18,4 @@ function* toggleRemove() {
   );
 }
 
-export default takeLatest("CLICK_REMOVE", toggleRemove);
+export default takeLatest(ActionTypes.CLICK_REMOVE, toggleRemove);

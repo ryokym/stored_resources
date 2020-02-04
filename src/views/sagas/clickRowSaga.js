@@ -1,12 +1,13 @@
 import { select, call, takeLatest, put } from "redux-saga/effects";
-import common from "../utils/common";
-import { rebuildWorkdir, rebuildStructure } from "./modules/generator";
 import {
   selectBehavior,
   selectStructure,
   selectWorkingDirectory
-} from "../selectors/mainSelector";
-import { mainActions } from "../actions";
+} from "~/selectors/mainSelector";
+import { rebuildWorkdir, rebuildStructure } from "./modules/generator";
+import { mainActions } from "~/actions";
+import ActionTypes from "~/utils/actionTypes";
+import common from "~/utils/common";
 
 function doAsync(params) {
   const pathto = "/api/main.php";
@@ -77,4 +78,4 @@ function* dispatchActionAtBehavior(props) {
   }
 }
 
-export default takeLatest("CLICK_ROW", dispatchActionAtBehavior);
+export default takeLatest(ActionTypes.CLICK_ROW, dispatchActionAtBehavior);
