@@ -22,7 +22,9 @@ const RemoveModalComponent = props => {
           onClick={() =>
             actions.removeResource({
               name: workState.name,
-              path: workState.path
+              path: workState.path,
+              isSelected: workState.isSelected,
+              hierarchy: workState.hierarchy
             })
           }
         >
