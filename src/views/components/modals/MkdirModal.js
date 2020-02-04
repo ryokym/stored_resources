@@ -1,6 +1,6 @@
 import React from "react";
 import Modal from "react-modal";
-import common from "../../utils/common";
+import common from "~/utils/common";
 
 class MkdirModalComponent extends React.Component {
   constructor(props) {
@@ -37,6 +37,7 @@ class MkdirModalComponent extends React.Component {
       formState,
       actions
     } = this.props;
+
     const { workdir } = structureState;
     this.path = fieldState.isview
       ? common.rebuildPathForSpecifiedHierarchy(
