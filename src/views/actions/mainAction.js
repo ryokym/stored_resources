@@ -27,6 +27,11 @@ export const getFileContent = ({ ...props }) => ({
   payload: props
 });
 
+export const clearContentView = ({ ...props }) => ({
+  type: ActionTypes.CLEAR_CONTENT_VIEW,
+  payload: props
+});
+
 export const clickDirectoryResource = ({ ...props }) => ({
   type: ActionTypes.CLICK_DIRECTORY_RESOURCE,
   payload: props

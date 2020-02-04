@@ -25,6 +25,12 @@ const fieldReducer = (state = initialState, action) => {
         ...state,
         isremove: action.payload.isremove
       };
+    case ActionTypes.CLEAR_CONTENT_VIEW:
+      return {
+        ...state,
+        content: action.payload.content,
+        isview: action.payload.isview
+      };
     default:
       return { ...state };
   }
