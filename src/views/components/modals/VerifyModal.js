@@ -3,7 +3,11 @@ import Modal from "react-modal";
 
 const breakVerifyModal = actions => {
   actions.clickCloseModal();
-  actions.breakVerifyForm();
+  actions.breakVerifyForm({
+    bucket: "",
+    bucketkey: "",
+    bucketval: ""
+  });
 };
 
 const VerifyModalComponent = props => {
