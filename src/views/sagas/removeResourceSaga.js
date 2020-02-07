@@ -1,9 +1,5 @@
 import { call, select, takeLatest, put } from "redux-saga/effects";
-import {
-  selectStructure,
-  selectWorkingDirectory,
-  selectFieldState
-} from "~/selectors/mainSelector";
+import { selectStructure, selectFieldState } from "~/utils/selectors";
 import { rebuildWorkdir } from "./modules/generator";
 import { mainActions } from "~/actions";
 import ActionTypes from "~/utils/actionTypes";
@@ -19,7 +15,7 @@ function* fetchRemoveResource(props) {
   hierarchy = Number(hierarchy);
   params.actionType = "remove";
   yield call(doAsync, params);
-  let structure = yield select(selectStructure);
+  let { structure, workdir } = yield select(selectStructure);
   let column = structure.get(hierarchy);
   column = column.filter(item => {
     return item !== params.name;
@@ -35,7 +31,6 @@ function* fetchRemoveResource(props) {
     );
   }
   if (isSelected) {
-    let workdir = yield select(selectWorkingDirectory);
     workdir = yield call(rebuildWorkdir, workdir, hierarchy);
     yield put(
       mainActions.printWorkingDirectory({

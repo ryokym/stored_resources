@@ -1,5 +1,5 @@
 import { select, takeLatest, put } from "redux-saga/effects";
-import { selectFieldState } from "~/selectors/mainSelector";
+import { selectFieldState } from "~/utils/selectors";
 import { mainActions } from "~/actions";
 import ActionTypes from "~/utils/actionTypes";
 import { baseToast, toastMsg } from "~/configureToast";

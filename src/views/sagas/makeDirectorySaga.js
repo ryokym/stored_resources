@@ -1,5 +1,5 @@
 import { select, call, takeLatest, put } from "redux-saga/effects";
-import { selectStructure } from "~/selectors/mainSelector";
+import { selectStructure } from "~/utils/selectors";
 import { mainActions } from "~/actions";
 import ActionTypes from "~/utils/actionTypes";
 import common from "~/utils/common";
@@ -15,7 +15,7 @@ function* fetchMakeDirectory(props) {
   if (isCorrectName) {
     params.actionType = "makedir";
     yield call(doAsync, params);
-    let structure = yield select(selectStructure);
+    let { structure } = yield select(selectStructure);
     const hierarchy = common.getHierarchy(params.path);
     let column = structure.get(hierarchy);
     column.push(params.name);

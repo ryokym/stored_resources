@@ -1,9 +1,5 @@
 import { select, call, takeLatest, put } from "redux-saga/effects";
-import {
-  selectBehavior,
-  selectStructure,
-  selectWorkingDirectory
-} from "~/selectors/mainSelector";
+import { selectBehavior, selectStructure } from "~/utils/selectors";
 import { rebuildWorkdir, rebuildStructure } from "./modules/generator";
 import { mainActions } from "~/actions";
 import ActionTypes from "~/utils/actionTypes";
@@ -16,8 +12,8 @@ function doAsync(params) {
 
 function* dispatchActionAtBehavior(props) {
   let { isSelected, ...params } = props.payload;
-  const behavior = yield select(selectBehavior);
-  let workdir = yield select(selectWorkingDirectory);
+  const { behavior } = yield select(selectBehavior);
+  let { workdir, structure } = yield select(selectStructure);
   params.actionType = behavior;
 
   if (params.actionType === "change") {
@@ -34,7 +30,6 @@ function* dispatchActionAtBehavior(props) {
     params.path = workdir;
     let response = yield call(doAsync, params);
     response = JSON.parse(response);
-    const structure = yield select(selectStructure);
     const newStructure = yield call(
       rebuildStructure,
       structure,
