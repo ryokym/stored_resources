@@ -1,9 +1,5 @@
 import { select, call, takeLatest, put } from "redux-saga/effects";
-import {
-  selectBehavior,
-  selectFormdataForSignInOrUp,
-  selectFormdataForCreateAccount
-} from "~/selectors/accountSelector";
+import { selectBehavior, selectForm } from "~/utils/selectors";
 import { accountActions } from "~/actions";
 import ActionTypes from "~/utils/actionTypes";
 import common from "~/utils/common";
@@ -13,35 +9,40 @@ function doAsync(formdata) {
   return common.callFetch(formdata, pathto);
 }
 
-function* dispatch(response) {
-  if (response === "enter") {
-    location.href = "/";
-  } else if (response === "create") {
-    yield put(
-      accountActions.requireVerifyForm({
-        behavior: "verify",
-        bucketkey: common.createKey()
-      })
-    );
-    yield put(accountActions.clickOpenModalVerify());
-  } else if (response === "verify") {
-    alert("account creation suceeded!");
-    location.href = "/";
-  } else {
-    alert(response);
-  }
+function* didEnter() {
+  location.href = "/";
+}
+
+function* didCreate() {
+  yield put(
+    accountActions.requireVerifyForm({
+      behavior: "verify",
+      bucketkey: common.createKey()
+    })
+  );
+  yield put(accountActions.clickOpenModalVerify());
+}
+
+function* didVerify() {
+  alert("account creation suceeded!");
+  location.href = "/";
 }
 
 function* executeIfNeeded() {
-  const behavior = yield select(selectBehavior);
-  let formdata;
-  if (behavior === "verify") {
-    formdata = yield select(selectFormdataForCreateAccount);
-  } else {
-    formdata = yield select(selectFormdataForSignInOrUp);
-  }
+  const { behavior } = yield select(selectBehavior);
+  const { ...formdata } = yield select(selectForm);
+  formdata.actionType = behavior;
   const response = yield call(doAsync, formdata);
-  yield call(dispatch, response);
+  switch (response) {
+    case "enter":
+      return yield call(didEnter);
+    case "create":
+      return yield call(didCreate);
+    case "verify":
+      return yield call(didVerify);
+    default:
+      alert(response);
+  }
 }
 
 export default takeLatest(ActionTypes.REQUEST_POST, executeIfNeeded);
