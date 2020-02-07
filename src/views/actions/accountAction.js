@@ -30,6 +30,11 @@ export const requireVerifyForm = ({ ...props }) => ({
   payload: props
 });
 
+export const breakVerifyForm = ({ props }) => ({
+  type: BREAK_VERIFY_FORM,
+  payload: props
+});
+
 export const requireSigninOrUpForm = ({ ...props }) => ({
   type: ActionTypes.REQUIRE_SIGNIN_OR_UP_FORM,
   payload: props

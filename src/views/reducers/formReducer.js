@@ -42,6 +42,13 @@ const formReducer = (state, action) => {
         ...state,
         bucketkey: action.payload.bucketkey
       };
+    case ActionTypes.BREAK_VERIFY_FORM:
+      return {
+        ...state,
+        bucket: "",
+        bucketkey: "",
+        bucketval: ""
+      };
     default:
       return { ...state };
   }

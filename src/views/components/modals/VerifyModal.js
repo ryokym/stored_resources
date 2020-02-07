@@ -1,6 +1,11 @@
 import React from "react";
 import Modal from "react-modal";
 
+const breakVerifyModal = actions => {
+  actions.clickCloseModal();
+  actions.breakVerifyForm();
+};
+
 const VerifyModalComponent = props => {
   const { modalState, formState, actions } = props;
   return (
@@ -36,7 +41,7 @@ const VerifyModalComponent = props => {
       />
       <div className="verify_modal_content_btns">
         <div onClick={() => actions.requestPost()}>VERIFY</div>
-        <div onClick={() => actions.clickCloseModal()}>DISMISS</div>
+        <div onClick={() => breakVerifyModal(actions)}>DISMISS</div>
       </div>
     </Modal>
   );
