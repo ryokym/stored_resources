@@ -27,6 +27,7 @@ export const baseToast = {
 
 export const toastMsg = {
   makeDirectory: "Make Directory Succeeded!",
-  didRemoveResource: "remove success!",
-  clickRemove: "mode remove"
+  didRemoveResource: "Remove Resource Succeeded!",
+  clickRemove: "mode remove",
+  dropResource: "Upload File Succeeded!"
 };
