@@ -5,10 +5,11 @@ export default class Common {
 
   static appName = "STORED_RESOURCES";
 
-  static callFetch(params, pathto) {
+  static callFetch(params, pathto, uploaded) {
     return new Promise(resolve => {
       const requests = new FormData();
       requests.append("requests", JSON.stringify(params));
+      if (uploaded && requests.append("uploaded", uploaded));
       fetchPolyfill(pathto, {
         method: "POST",
         body: requests
