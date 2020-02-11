@@ -19,7 +19,7 @@ class BodyComponent extends React.Component {
     } else if (fieldState.isview === true) {
       return <PreviewField text={fieldState.content} />;
     } else {
-      return <UploadField />;
+      return <UploadField actions={this.props.actions} />;
     }
   }
 

@@ -101,6 +101,11 @@ export const breakWorkingResource = () => ({
   type: ActionTypes.BREAK_WORKING_RESOURCE
 });
 
+export const dropedResource = ({ ...props }) => ({
+  type: ActionTypes.DROPED_RESOURCE,
+  payload: props
+});
+
 export const clickExpand = () => ({
   type: ActionTypes.CLICK_EXPAND,
   payload: { behavior: "expand" }
