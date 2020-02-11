@@ -9,11 +9,10 @@ use App\Operation\S3StreamAction;
 use App\Operation\OperationHTTPRequest;
 
 $request = new OperationHTTPRequest();
-
 if ($params = filter_input(INPUT_POST, 'requests')) {
     $data = json_decode($params, true);
-    if (S3Stream::isExistUploadedFile("uploaded")) {
-        $request->setFilename('uploaded');
+    if (!empty($data["filename"]) && S3Stream::isExistUploadedFile($data["filename"])) {
+        $request->setFilename($data["filename"]);
     }
     $request->setProperties($data);
     if ($request->getActionType() === 'logout') {

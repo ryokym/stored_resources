@@ -90,14 +90,14 @@ class S3StreamAction extends S3OptionFormatter
     {
         $dirName = parent::appendDS($this->request->getPath());
         $uploaded = S3Stream::getUploadedFile($this->request->getFilename(), [$this, 'checkUploadedfileformat']);
-        $filename = $uploaded['name'];
-        $pathName = $dirName . $filename;
+        $uploadedName = $uploaded['name'];
+        $pathName = $dirName . $uploadedName;
         $this->S3Client->putObject([
             'Bucket' => $this->bucketname,
             'Key'    => $pathName,
             'Body'   => fopen($uploaded['tmp_name'], 'r')
         ]);
-        echo $filename;
+        echo $uploadedName;
         exit;
     }
 
