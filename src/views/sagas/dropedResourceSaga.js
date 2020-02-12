@@ -12,7 +12,7 @@ function doAsync(params, resource) {
   return common.callFetch(params, pathto, resource);
 }
 
-function* test(props) {
+function* fetchUploadResource(props) {
   const { resource } = props.payload;
   const filename = resource[0].name;
   const isCorrectName = common.validateFileFormat(filename);
@@ -44,4 +44,4 @@ function* test(props) {
     }
   }
 }
-export default takeLatest(ActionTypes.DROPED_RESOURCE, test);
+export default takeLatest(ActionTypes.DROPED_RESOURCE, fetchUploadResource);
