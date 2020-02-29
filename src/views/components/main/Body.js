@@ -5,12 +5,21 @@ import PreviewField from "./fields/PreviewField";
 import RemoveField from "./fields/RemoveField";
 import MkdirModal from "~/components/modals/MkdirModal";
 import RemoveModal from "~/components/modals/RemoveModal";
+import ModuleExpand from "~/utils/modules/expand";
 
 class BodyComponent extends React.Component {
   constructor(props) {
     super(props);
     this.renderField = this.renderField.bind(this);
     this.renderColumns = this.renderColumns.bind(this);
+    this.side = React.createRef();
+    this.display = React.createRef();
+    this.width = 0;
+  }
+
+  componentDidMount() {
+    this.side = this.side.current;
+    this.display = this.display.current;
   }
 
   renderField(fieldState) {
@@ -45,13 +54,25 @@ class BodyComponent extends React.Component {
     }
   }
 
+  collapseSideIfNeeded(isview, ...props) {
+    this.width = isview === true && ModuleExpand([this.width, ...props]);
+  }
+
   render() {
-    const { fieldState } = this.props;
+    const { fieldState, behaviorState } = this.props;
+    this.collapseSideIfNeeded(
+      fieldState.isview,
+      behaviorState.behavior,
+      this.side,
+      this.display
+    );
     return (
       <div className="container">
-        {this.renderColumns(this.props)}
-        <div id="display">
-          <div id="toggles">{this.renderField(fieldState)}</div>
+        <div id="side" ref={this.side}>
+          {this.renderColumns(this.props)}
+        </div>
+        <div id="display" ref={this.display}>
+          <div>{this.renderField(fieldState)}</div>
         </div>
         <MkdirModal {...this.props} />
         <RemoveModal {...this.props} />
