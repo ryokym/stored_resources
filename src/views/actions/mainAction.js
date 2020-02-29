@@ -107,8 +107,12 @@ export const dropedResource = ({ ...props }) => ({
 });
 
 export const clickExpand = () => ({
-  type: ActionTypes.CLICK_EXPAND,
-  payload: { behavior: "expand" }
+  type: ActionTypes.CLICK_EXPAND
+});
+
+export const clickExpandNext = ({ ...props }) => ({
+  type: ActionTypes.CLICK_EXPAND_NEXT,
+  payload: props
 });
 
 export const clickEdit = () => ({
