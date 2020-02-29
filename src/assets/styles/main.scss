@@ -37,6 +37,11 @@
   @include flex(center, unset);
 }
 
+#side {
+  display: flex;
+  position: relative;
+}
+
 #column {
   display: flex;
   /* 幅可変拡張 */
@@ -77,10 +82,6 @@
   flex-basis: 100vw;
   overflow: scroll;
   position: relative;
-}
-
-#toggles {
-  width: 100%;
 }
 
 #upload_area {
