@@ -3,7 +3,8 @@ import ActionTypes from "~/utils/actionTypes";
 const initialState = {
   content: "",
   isview: false,
-  isremove: false
+  isremove: false,
+  isexpand: false
 };
 
 const fieldReducer = (state = initialState, action) => {
@@ -30,6 +31,11 @@ const fieldReducer = (state = initialState, action) => {
         ...state,
         content: action.payload.content,
         isview: action.payload.isview
+      };
+    case ActionTypes.CLICK_EXPAND_NEXT:
+      return {
+        ...state,
+        isexpand: action.payload.isexpand
       };
     default:
       return { ...state };

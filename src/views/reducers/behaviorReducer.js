@@ -46,6 +46,11 @@ const behaviorReducer = (state = initialState, action) => {
         ...state,
         behavior: action.payload.behavior
       };
+    case ActionTypes.CLICK_EXPAND_NEXT:
+      return {
+        ...state,
+        behavior: action.payload.behavior
+      };
     default:
       return { ...state };
   }
