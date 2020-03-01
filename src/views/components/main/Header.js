@@ -17,10 +17,17 @@ class HeaderComponent extends React.Component {
   ];
 
   disabledIfNeeded(action, fieldState) {
-    if (action !== "clickRemove" && fieldState.isremove === true) {
+    if (action === "clickLogout") {
+      return;
+    }
+    if (
+      (action !== "clickRemove" && fieldState.isremove === true) ||
+      (action !== "clickExpand" && fieldState.isexpand === true) ||
+      (action === "clickExpand" && fieldState.isview === false)
+    ) {
       return "disabledIcon";
     } else {
-      return "";
+      return;
     }
   }
 
