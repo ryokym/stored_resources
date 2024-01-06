@@ -32,7 +32,7 @@
     "style-loader": "^1.1.2",
     "web-animations-js": "^2.3.2",
     "webpack": "^4.41.4",
-    "webpack-cli": "^3.3.10",
+    "webpack-cli": "^5.1.4",
     "webpack-fix-style-only-entries": "^0.4.0",
     "whatwg-fetch": "^3.0.0"
   },
